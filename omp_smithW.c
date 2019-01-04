@@ -178,7 +178,6 @@ int main(int argc, char* argv[]) {
 
 //    #pragma omp parallel default(none) shared(H, P, maxPos, nDiag) private(i)
     {
-
         for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
         {
 	    long long int nEle, si, sj;
