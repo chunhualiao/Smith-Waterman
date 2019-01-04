@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
 
   if (useBuiltInData)
     printf ("Using built-in data for testing ..\n");
-  printf("Problem size: Matrix[%lld][%lld], FACTOR=%d CUTOFF=%d\n", n, m, FACTOR, CUTOFF);
+  printf("Problem size: Matrix[%lld][%lld], CUTOFF=%d\n", n, m, CUTOFF);
 
     //Allocates a and b
     a = (char*) malloc(m * sizeof(char));
