@@ -184,8 +184,6 @@ int main(int argc, char* argv[]) {
 	    long long int nEle, si, sj;
             nEle = nElement(i);
             calcFirstDiagElement(i, &si, &sj);
-//#pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) if (nEle>=thread_count*FACTOR)
-            //#pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) 
             #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) if (nEle>=CUTOFF)
               for (j = 0; j < nEle; ++j) 
               {  // going upwards : anti-diagnol direction
