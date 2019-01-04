@@ -28,7 +28,7 @@ A highly efficient and simple implementation of the Smith-Waterman algorithm for
 * Run the program:
     
     ```bash
-    ./omp_smithW <number_of_threads> <number_of_col> <number_of_rows>
+    ./omp_smithW <number_of_col> <number_of_rows>
     ```
     
 ## Bug Reports & Feature Requests
