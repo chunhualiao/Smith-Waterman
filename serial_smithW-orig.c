@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <omp.h>
-#include <assert.h>
 
 /*--------------------------------------------------------------------
  * Text Tweaks
@@ -39,8 +38,6 @@ int matchMissmatchScore(long long int i, long long int j);
 void backtrack(int* P, long long int maxPos);
 void printMatrix(int* matrix);
 void printPredecessorMatrix(int* matrix);
-
-// Generate random sequences for a and b
 void generate(void);
 /* End of prototypes */
 
@@ -48,17 +45,14 @@ void generate(void);
 /*--------------------------------------------------------------------
  * Global Variables
  */
-bool useBuiltInData=true; 
-
 //Defines size of strings to be compared
-long long int n = 9;  //Rows- Size of string b
-long long int m = 8; //Columns - Size of string a
+long long int m = 11; //Columns - Size of string a
+long long int n = 7;  //Lines - Size of string b
 
 //Defines scores
-// Follow https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm#Example
-int matchScore = 3;
+int matchScore = 5;
 int missmatchScore = -3;
-int gapScore = -2; 
+int gapScore = -4; 
 
 //Strings over the Alphabet Sigma
 char *a, *b;
@@ -69,114 +63,89 @@ char *a, *b;
  * Function:    main
  */
 int main(int argc, char* argv[]) {
-  if (argc==3)
-  {
     m = strtoll(argv[1], NULL, 10);
     n = strtoll(argv[2], NULL, 10);
-    useBuiltInData = false;
-  }
-  // if no arguments, use builtin data and size 9 x 8 
+    
+    #ifdef DEBUG
+    printf("\nMatrix[%lld][%lld]\n", n, m);
+    #endif
 
-#ifdef DEBUG
-  if (useBuiltInData)
-    printf ("\n Using built-in data for testing ..");
-  printf("\nMatrix[%lld][%lld]\n", n, m);
-#endif
+    //Allocates a and b
+    a = malloc(m * sizeof(char));
+    b = malloc(n * sizeof(char));
+    
+    //Because now we have zeros
+    m++;
+    n++;
+    
+    //Allocates similarity matrix H
+    int *H;
+    H = calloc(m * n, sizeof(int));
 
-  //Allocates a and b
-  a = (char*) malloc(m * sizeof(char));
-  b = (char*) malloc(n * sizeof(char));
+    //Allocates predecessor matrix P
+    int *P;
+    P = calloc(m * n, sizeof(int));
 
-  //Because now we have zeros
-  m++;
-  n++;
 
-  //Allocates similarity matrix H: scoring matrix
-  // this matrix is linearized. Need to convert i, j to linearized offset when using it
-  int *H;
-  H = (int *) calloc(m * n, sizeof(int));
-
-  //Allocates predecessor matrix P
-  // This is used to keep track of the max elements found along the path
-  // Later backtracking can restore them.
-  int *P;
-  P = (int *) calloc(m * n, sizeof(int));
-
-  if (useBuiltInData)
-  {
-   b[0] =   'G';
-   b[1] =   'G';
-   b[2] =   'T';
-   b[3] =   'T';
-   b[4] =   'G';
-   b[5] =   'A';
-   b[6] =   'C';
-   b[7] =   'T';
-   b[8] =   'A';
-
-   a[0] =   'T';
-   a[1] =   'G';
-   a[2] =   'T';
-   a[3] =   'T';
-   a[4] =   'A';
-   a[5] =   'C';
-   a[6] =   'G';
-   a[7] =   'G';
- }
-  else
-  {
-    //Gen random arrays a and b
+    //Gen rand arrays a and b
     generate();
-  }
-  //Start position for backtrack
-  long long int maxPos = 0;
+    // a[0] =   'C';
+    // a[1] =   'G';
+    // a[2] =   'T';
+    // a[3] =   'G';
+    // a[4] =   'A';
+    // a[5] =   'A';
+    // a[6] =   'T';
+    // a[7] =   'T';
+    // a[8] =   'C';
+    // a[9] =   'A';
+    // a[10] =  'T';
 
-  //Calculates the similarity matrix
-  long long int i, j;
+    // b[0] =   'G';
+    // b[1] =   'A';
+    // b[2] =   'C';
+    // b[3] =   'T';
+    // b[4] =   'T';
+    // b[5] =   'A';
+    // b[6] =   'C';
 
-  double initialTime = omp_get_wtime();
+    //Start position for backtrack
+    long long int maxPos = 0;
 
-  // original algorithm: sweep the matrix row by row, column by column
-  // all three neighbors (-1,-1), (-1,0) and (0,-1), are visited before the current element is visited in this sweep.
-  for (i = 1; i < n; i++) { //Rows
-    for (j = 1; j < m; j++) { //Columns
-      similarityScore(i, j, H, P, &maxPos);
+    //Calculates the similarity matrix
+    long long int i, j;
+
+    double initialTime = omp_get_wtime();
+    
+    for (i = 1; i < n; i++) { //Lines
+        for (j = 1; j < m; j++) { //Columns
+            similarityScore(i, j, H, P, &maxPos);
+        }
     }
-  }
 
-  double finalTime = omp_get_wtime();
-  printf("\nElapsed time for scoring matrix computation: %f\n\n", finalTime - initialTime);
+    backtrack(P, maxPos);
 
-  initialTime = omp_get_wtime();
-  backtrack(P, maxPos);
-  finalTime = omp_get_wtime();
+    //Gets final time
+    double finalTime = omp_get_wtime();
+    printf("\nElapsed time: %f\n\n", finalTime - initialTime);
 
-  //Gets backtrack time
-  finalTime = omp_get_wtime();
-  printf("\nElapsed time for backtracking: %f\n\n", finalTime - initialTime);
+    #ifdef DEBUG
+    printf("\nSimilarity Matrix:\n");
+    printMatrix(H);
 
-#ifdef DEBUG
-  printf("\nSimilarity Matrix:\n");
-  printMatrix(H);
+    printf("\nPredecessor Matrix:\n");
+    printPredecessorMatrix(P);
+    #endif
 
-  if (useBuiltInData)
-  {
-    printf("Verifying correctness using builtin data =%d",H[m*n-1]==7 );
-    assert (H[m*n-1]==7);
-  }
-  printf("\nPredecessor Matrix:\n");
-  printPredecessorMatrix(P);
-#endif
+    //Frees similarity matrixes
+    free(H);
+    free(P);
 
-  //Frees similarity matrixes
-  free(H);
-  free(P);
+    //Frees input arrays
+    free(a);
+    free(b);
 
-  //Frees input arrays
-  free(a);
-  free(b);
-
-  return 0;
+    return 0;
 }  /* End of main */
 
 
@@ -191,13 +160,13 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
     //Stores index of element
     long long int index = m * i + j;
 
-    //Get element above: (i, j-1)
+    //Get element above
     up = H[index - m] + gapScore;
 
-    //Get element on the left: (i-1, j)
+    //Get element on the left
     left = H[index - 1] + gapScore;
 
-    //Get element on the diagonal: (i-1, j-1)
+    //Get element on the diagonal
     diag = H[index - m - 1] + matchMissmatchScore(i, j);
 
     //Calculates the maximum

@@ -2,16 +2,8 @@
  * Smith–Waterman algorithm
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
- *
- * Compilation: gcc omp_smithW.c -o omp_smithW -fopenmp -DDEBUG // debugging mode
- *              gcc omp_smithW.c -O3 -o omp_smithW -fopenmp // production run
- * Execution:	./omp_smithW <number_of_col> <number_of_rows>
- *
- * Updated by C. Liao, Jan 4, 2019
- *   removed the first thread_count command line option
- *   add correctness checking using builtin data
- *   various changes to tighen OpenMP variable scopes and data-sharing attributes
- *   move parallel region to the inner loop to test effects of if-clause
+ * Compilation: gcc omp_smithW.c -o omp_smithW -fopenmp -DDEBUG
+ * Execution:	./omp_smithW <number_of_threads> <number_of_col> <number_of_rows>
  *********************************************************************************/
 
 #include <stdio.h>
@@ -19,9 +11,6 @@
 #include <math.h>
 #include <omp.h>
 #include <time.h>
-#include <assert.h>
-
-#include "parameters.h"
 
 /*--------------------------------------------------------------------
  * Text Tweaks
@@ -60,7 +49,7 @@ void printMatrix(int* matrix);
 void printPredecessorMatrix(int* matrix);
 void generate(void);
 long long int nElement(long long int i);
-void calcFirstDiagElement(long long int i, long long int *si, long long int *sj);
+void calcFirstDiagElement(long long int *i, long long int *si, long long int *sj);
 
 /* End of prototypes */
 
@@ -68,17 +57,14 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
 /*--------------------------------------------------------------------
  * Global Variables
  */
-bool useBuiltInData=true;
-
 //Defines size of strings to be compared
-long long int m = 8 ; //Columns - Size of string a
-long long int n = 9;  //Lines - Size of string b
-// the generated scoring matrix's size is m++ and n++ later to have the first row/column as 0s.
+long long int m ; //Columns - Size of string a
+long long int n ;  //Lines - Size of string b
 
 //Defines scores
-int matchScore = 3;
+int matchScore = 5;
 int missmatchScore = -3;
-int gapScore = -2;
+int gapScore = -4;
 
 //Strings over the Alphabet Sigma
 char *a, *b;
@@ -89,22 +75,17 @@ char *a, *b;
  * Function:    main
  */
 int main(int argc, char* argv[]) {
-  int thread_count;
+    int thread_count = strtol(argv[1], NULL, 10);
+    m = strtoll(argv[2], NULL, 10);
+    n = strtoll(argv[3], NULL, 10);
 
-  if (argc==3)
-  {
-    m = strtoll(argv[1], NULL, 10);
-    n = strtoll(argv[2], NULL, 10);
-    useBuiltInData = false;
-  }
-
-  if (useBuiltInData)
-    printf ("Using built-in data for testing ..\n");
-  printf("Problem size: Matrix[%lld][%lld], FACTOR=%d CUTOFF=%d\n", n, m, FACTOR, CUTOFF);
+#ifdef DEBUG
+    printf("\nMatrix[%lld][%lld]\n", n, m);
+#endif
 
     //Allocates a and b
-    a = (char*) malloc(m * sizeof(char));
-    b = (char*) malloc(n * sizeof(char));
+    a = malloc(m * sizeof(char));
+    b = malloc(n * sizeof(char));
 
     //Because now we have zeros
     m++;
@@ -112,41 +93,39 @@ int main(int argc, char* argv[]) {
 
     //Allocates similarity matrix H
     int *H;
-    H = (int *) calloc(m * n, sizeof(int));
+    H = calloc(m * n, sizeof(int));
 
     //Allocates predecessor matrix P
     int *P;
-    P = (int *)calloc(m * n, sizeof(int));
+    P = calloc(m * n, sizeof(int));
 
 
-    if (useBuiltInData)
-    {
-      // https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm#Example
-      // Using the wiki example to verify the results
-      b[0] =   'G';
-      b[1] =   'G';
-      b[2] =   'T';
-      b[3] =   'T';
-      b[4] =   'G';
-      b[5] =   'A';
-      b[6] =   'C';
-      b[7] =   'T';
-      b[8] =   'A';
+    //Gen rand arrays a and b
+    generate();
 
-      a[0] =   'T';
-      a[1] =   'G';
-      a[2] =   'T';
-      a[3] =   'T';
-      a[4] =   'A';
-      a[5] =   'C';
-      a[6] =   'G';
-      a[7] =   'G';
-    }
-    else
-    {
-      //Gen random arrays a and b
-      generate();
-    }
+    //Uncomment this to test the sequence available at 
+    //http://vlab.amrita.edu/?sub=3&brch=274&sim=1433&cnt=1
+    // OBS: m=11 n=7
+    // a[0] =   'C';
+    // a[1] =   'G';
+    // a[2] =   'T';
+    // a[3] =   'G';
+    // a[4] =   'A';
+    // a[5] =   'A';
+    // a[6] =   'T';
+    // a[7] =   'T';
+    // a[8] =   'C';
+    // a[9] =   'A';
+    // a[10] =  'T';
+
+    // b[0] =   'G';
+    // b[1] =   'A';
+    // b[2] =   'C';
+    // b[3] =   'T';
+    // b[4] =   'T';
+    // b[5] =   'A';
+    // b[6] =   'C';
+
 
     //Start position for backtrack
     long long int maxPos = 0;
@@ -156,62 +135,34 @@ int main(int argc, char* argv[]) {
     //Gets Initial time
     double initialTime = omp_get_wtime();
 
-    // The way to generate all wavefront is to go through the top edge elements
-    // starting from the left top of the matrix, go to the bottom top -> down, then left->right
-    // total top edge element count =  dim1_size + dim2_size -1 
+    long long int si, sj, ai, aj;
+
     //Because now we have zeros ((m-1) + (n-1) - 1)
     long long int nDiag = m + n - 3;
+    long long int nEle;
 
-#ifdef DEBUG
-    printf("nDiag=%d\n", nDiag);
-    printf("Number of wavefront lines and their first element positions:\n");
-#endif
-
-#pragma omp parallel 
+    #pragma omp parallel num_threads(thread_count) \
+    default(none) shared(H, P, maxPos, nDiag) private(nEle, i, si, sj, ai, aj)
     {
-#pragma omp master	    
-      {
-        thread_count = omp_get_num_threads();
-        printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
-      }
-    }
-
-//    #pragma omp parallel default(none) shared(H, P, maxPos, nDiag) private(i)
-    {
-
-        for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
+        for (i = 1; i <= nDiag; ++i)
         {
-	    long long int nEle, si, sj;
             nEle = nElement(i);
-            calcFirstDiagElement(i, &si, &sj);
-//#pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) if (nEle>=thread_count*FACTOR)
-            //#pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) 
-            #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) if (nEle>=CUTOFF)
-              for (j = 0; j < nEle; ++j) 
-              {  // going upwards : anti-diagnol direction
-                long long int ai = si - j ; // going up vertically
-                long long int aj = sj + j;  //  going right in horizontal
-                similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
-              }
+            calcFirstDiagElement(&i, &si, &sj);
+            #pragma omp for
+            for (j = 1; j <= nEle; ++j)
+            {
+                ai = si - j + 1;
+                aj = sj + j - 1;
+                similarityScore(ai, aj, H, P, &maxPos);
+            }
         }
     }
 
-  double finalTime = omp_get_wtime();
-  printf("\nElapsed time for scoring matrix computation: %f\n", finalTime - initialTime);
+    backtrack(P, maxPos);
 
-  initialTime = omp_get_wtime();
-  backtrack(P, maxPos);
-  finalTime = omp_get_wtime();
-
-  //Gets backtrack time
-  finalTime = omp_get_wtime();
-  printf("Elapsed time for backtracking: %f\n", finalTime - initialTime);
-
-    if (useBuiltInData)
-    {
-      printf ("Verifying results using the builtinIn data: %s\n", (H[n*m-1]==7)?"true":"false");
-      assert (H[n*m-1]==7);
-    }
+    //Gets final time
+    double finalTime = omp_get_wtime();
+    printf("\nElapsed time: %f\n\n", finalTime - initialTime);
 
 #ifdef DEBUG
     printf("\nSimilarity Matrix:\n");
@@ -234,17 +185,16 @@ int main(int argc, char* argv[]) {
 
 /*--------------------------------------------------------------------
  * Function:    nElement
- * Purpose:     Calculate the number of i-diagonal's elements
- * i value range 1 to nDiag.  we inclulde the upper bound value. 0 is for the padded wavefront, which is ignored.
+ * Purpose:     Calculate the number of i-diagonal elements
  */
 long long int nElement(long long int i) {
-    if (i < m && i < n) { // smaller than both directions
+    if (i < m && i < n) {
         //Number of elements in the diagonal is increasing
         return i;
     }
-    else if (i < max(m, n)) { // smaller than only one direction
+    else if (i < max(m, n)) {
         //Number of elements in the diagonal is stable
-        long int min = min(m, n);  // the longer direction has the edge elements, the number is the smaller direction's size
+        long int min = min(m, n);
         return min - 1;
     }
     else {
@@ -255,58 +205,23 @@ long long int nElement(long long int i) {
 }
 
 /*--------------------------------------------------------------------
- * Function:    calcElement: expect valid i value is from 1 to nDiag. since the first one is 0 padding
+ * Function:    calcElement
  * Purpose:     Calculate the position of (si, sj)-element
- * n rows, m columns: we sweep the matrix on the left edge then bottom edge to get the wavefront
  */
-void calcFirstDiagElement(long long int i, long long int *si, long long int *sj) {
+void calcFirstDiagElement(long long int *i, long long int *si, long long int *sj) {
     // Calculate the first element of diagonal
-    if (i < n) { // smaller than row count
-        *si = i;
-        *sj = 1; // start from the j==1 since j==0 is the padding
-    } else {  // now we sweep horizontally at the bottom of the matrix
-        *si = n - 1;  // i is fixed
-        *sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
+    if (*i < n) {
+        *si = *i;
+        *sj = 1;
+    } else {
+        *si = n - 1;
+        *sj = *i - n + 2;
     }
 }
 
-/*
- // understanding the calculation by an example
- n =6 // row
- m =2  // col
-
- padded scoring matrix
- n=7
- m=3
-
-   0 1 2
- -------
- 0 x x x
- 1 x x x
- 2 x x x
- 3 x x x
- 4 x x x
- 5 x x x
- 6 x x x
-
- We should peel off top row and left column since they are the padding
- the remaining 6x2 sub matrix is what is interesting for us
- Now find the number of wavefront lines and their first element's position in the scoring matrix
-
-total diagnol frontwave = (n-1) + (m-1) -1 // submatrix row+column -1
-We use the left most element in each wavefront line as its first element.
-Then we have the first elements like
-(1,1),
-(2,1)
-(3,1)
-..
-(6,1) (6,2)
- 
- */
 /*--------------------------------------------------------------------
  * Function:    SimilarityScore
- * Purpose:     Calculate  value of scoring matrix element H(i,j) : the maximum Similarity-Score H(i,j)
- *             int *P; the predecessor array,storing which of the three elements is picked with max value
+ * Purpose:     Calculate  the maximum Similarity-Score H(i,j)
  */
 void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos) {
 
@@ -367,6 +282,7 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
     }
 
 }  /* End of similarityScore */
+
 
 /*--------------------------------------------------------------------
  * Function:    matchMissmatchScore
