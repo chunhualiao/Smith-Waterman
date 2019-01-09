@@ -50,6 +50,8 @@
  * Functions Prototypes
  */
 void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos);
+// without omp critical: how to conditionalize it?
+void similarityScore2(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 int matchMissmatchScore(long long int i, long long int j);
 void backtrack(int* P, long long int maxPos);
 void printMatrix(int* matrix);
@@ -191,24 +193,24 @@ int main(int argc, char* argv[]) {
 #pragma omp master	    
       {
         thread_count = omp_get_num_threads();
-        printf ("Parallel outer + ompfor-master inner, Using %d out of max %d threads...", thread_count, omp_get_max_threads());
+        printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
       }
     }
 
     //Gets Initial time
     double initialTime = omp_get_wtime();
 
-  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
+//  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
       for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
       {
         long long int nEle, si, sj;
         nEle = nElement(i);
         calcFirstDiagElement(i, &si, &sj);
-        // #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) if (nEle>=CUTOFF)
+
         if (nEle>=CUTOFF)
         {
-#pragma omp for private(j) 
+ #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
           {  // going upwards : anti-diagnol direction
             long long int ai = si - j ; // going up vertically
@@ -216,18 +218,17 @@ int main(int argc, char* argv[]) {
             similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
           }
         }
-        else // single thread version using master thread only
-        { 
-#pragma omp master
+        else 
+        { // serial version, totally avoid parallel region creation.
           for (j = 0; j < nEle; ++j) 
           {  // going upwards : anti-diagnol direction
             long long int ai = si - j ; // going up vertically
             long long int aj = sj + j;  //  going right in horizontal
-            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
+            similarityScore2(ai, aj, H, P, &maxPos); // a specialized version without a critical section used inside
           }
         }
-      }
-    }
+      } // for end nDiag
+    } // end omp parallel
 
   double finalTime = omp_get_wtime();
   printf("\nElapsed time for scoring matrix computation: %f\n", finalTime - initialTime);
@@ -398,8 +399,66 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
         #pragma omp critical
         *maxPos = index;
     }
-
 }  /* End of similarityScore */
+
+void similarityScore2(long long int i, long long int j, int* H, int* P, long long int* maxPos) {
+
+    int up, left, diag;
+
+    //Stores index of element
+    long long int index = m * i + j;
+
+    //Get element above
+    up = H[index - m] + gapScore;
+
+    //Get element on the left
+    left = H[index - 1] + gapScore;
+
+    //Get element on the diagonal
+    diag = H[index - m - 1] + matchMissmatchScore(i, j);
+
+    //Calculates the maximum
+    int max = NONE;
+    int pred = NONE;
+    /* === Matrix ===
+     *      a[0] ... a[n]
+     * b[0]
+     * ...
+     * b[n]
+     *
+     * generate 'a' from 'b', if '←' insert e '↑' remove
+     * a=GAATTCA
+     * b=GACTT-A
+     *
+     * generate 'b' from 'a', if '←' insert e '↑' remove
+     * b=GACTT-A
+     * a=GAATTCA
+    */
+
+    if (diag > max) { //same letter ↖
+        max = diag;
+        pred = DIAGONAL;
+    }
+
+    if (up > max) { //remove letter ↑
+        max = up;
+        pred = UP;
+    }
+
+    if (left > max) { //insert letter ←
+        max = left;
+        pred = LEFT;
+    }
+    //Inserts the value in the similarity and predecessor matrixes
+    H[index] = max;
+    P[index] = pred;
+
+    //Updates maximum score to be used as seed on backtrack
+    if (max > H[*maxPos]) {
+        *maxPos = index;
+    }
+}  /* End of similarityScore2 */
+
 
 /*--------------------------------------------------------------------
  * Function:    matchMissmatchScore

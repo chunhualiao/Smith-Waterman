@@ -1,0 +1,4 @@
+# a script to change CUTOFF value and compile/run the omp version
+./tuneCutoff.sh &> output.log
+# collect data 
+grep "Elapsed time for scoring matrix computation" output.log | cut -f 7 -d ' '| awk -v line=1 '{if (line%3==0) print $0 ; else printf "%s ",$0; line++ }'

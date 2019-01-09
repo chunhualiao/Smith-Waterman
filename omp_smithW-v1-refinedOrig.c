@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
 //#ifdef DEBUG
   if (useBuiltInData)
     printf ("Using built-in data for testing ..\n");
-  printf("Problem size: Matrix[%lld][%lld], FACTOR=%d CUTOFF=%d\n", n, m, FACTOR, CUTOFF);
+  printf("Problem size: Matrix[%lld][%lld]%d\n", n, m);
 //#endif
 
     //Allocates a and b
@@ -120,29 +120,7 @@ int main(int argc, char* argv[]) {
 
     if (useBuiltInData)
     {
-      //Uncomment this to test the sequence available at 
-      //http://vlab.amrita.edu/?sub=3&brch=274&sim=1433&cnt=1
-      // OBS: m=11 n=7
-      // a[0] =   'C';
-      // a[1] =   'G';
-      // a[2] =   'T';
-      // a[3] =   'G';
-      // a[4] =   'A';
-      // a[5] =   'A';
-      // a[6] =   'T';
-      // a[7] =   'T';
-      // a[8] =   'C';
-      // a[9] =   'A';
-      // a[10] =  'T';
-
-      // b[0] =   'G';
-      // b[1] =   'A';
-      // b[2] =   'C';
-      // b[3] =   'T';
-      // b[4] =   'T';
-      // b[5] =   'A';
-      // b[6] =   'C';
-      // https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm#Example
+     // https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm#Example
       // Using the wiki example to verify the results
       b[0] =   'G';
       b[1] =   'G';
@@ -191,7 +169,7 @@ int main(int argc, char* argv[]) {
 #pragma omp master	    
       {
         thread_count = omp_get_num_threads();
-        printf ("Parallel outer + ompfor-master inner, Using %d out of max %d threads...", thread_count, omp_get_max_threads());
+        printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
       }
     }
 
@@ -205,28 +183,14 @@ int main(int argc, char* argv[]) {
         long long int nEle, si, sj;
         nEle = nElement(i);
         calcFirstDiagElement(i, &si, &sj);
-        // #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) if (nEle>=CUTOFF)
-        if (nEle>=CUTOFF)
-        {
-#pragma omp for private(j) 
+        #pragma omp for private(j) 
           for (j = 0; j < nEle; ++j) 
           {  // going upwards : anti-diagnol direction
             long long int ai = si - j ; // going up vertically
             long long int aj = sj + j;  //  going right in horizontal
             similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
           }
-        }
-        else // single thread version using master thread only
-        { 
-#pragma omp master
-          for (j = 0; j < nEle; ++j) 
-          {  // going upwards : anti-diagnol direction
-            long long int ai = si - j ; // going up vertically
-            long long int aj = sj + j;  //  going right in horizontal
-            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
-          }
-        }
-      }
+     }
     }
 
   double finalTime = omp_get_wtime();
