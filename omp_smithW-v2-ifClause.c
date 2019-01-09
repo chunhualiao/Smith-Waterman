@@ -191,7 +191,7 @@ int main(int argc, char* argv[]) {
 #pragma omp master	    
       {
         thread_count = omp_get_num_threads();
-        printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
+        printf ("if-clause() Using %d out of max %d threads...", thread_count, omp_get_max_threads());
       }
     }
 
