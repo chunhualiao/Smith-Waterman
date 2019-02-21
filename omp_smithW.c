@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 
     if (useBuiltInData)
     {
-      //Uncomment this to test the sequence available at 
+      //Uncomment this to test the sequence available at
       //http://vlab.amrita.edu/?sub=3&brch=274&sim=1433&cnt=1
       // OBS: m=11 n=7
       // a[0] =   'C';
@@ -177,7 +177,7 @@ int main(int argc, char* argv[]) {
 
     // The way to generate all wavefront is to go through the top edge elements
     // starting from the left top of the matrix, go to the bottom top -> down, then left->right
-    // total top edge element count =  dim1_size + dim2_size -1 
+    // total top edge element count =  dim1_size + dim2_size -1
     //Because now we have zeros ((m-1) + (n-1) - 1)
     long long int nDiag = m + n - 3;
 
@@ -186,9 +186,9 @@ int main(int argc, char* argv[]) {
     printf("Number of wavefront lines and their first element positions:\n");
 #endif
 
-#pragma omp parallel 
+#pragma omp parallel
     {
-#pragma omp master	    
+#pragma omp master
       {
         thread_count = omp_get_num_threads();
         printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
@@ -207,7 +207,7 @@ int main(int argc, char* argv[]) {
         calcFirstDiagElement(i, &si, &sj);
 
  #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) if (nEle>=CUTOFF)
-          for (j = 0; j < nEle; ++j) 
+          for (j = 0; j < nEle; ++j)
           {  // going upwards : anti-diagnol direction
             long long int ai = si - j ; // going up vertically
             long long int aj = sj + j;  //  going right in horizontal
@@ -286,7 +286,7 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
         *sj = 1; // start from the j==1 since j==0 is the padding
     } else {  // now we sweep horizontally at the bottom of the matrix
         *si = n - 1;  // i is fixed
-        *sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
+        *sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1
     }
 }
 
@@ -321,7 +321,7 @@ Then we have the first elements like
 (3,1)
 ..
 (6,1) (6,2)
- 
+
  */
 /*--------------------------------------------------------------------
  * Function:    SimilarityScore
@@ -431,7 +431,7 @@ void printMatrix(int* matrix) {
     }
     printf("\n-\t");
     for (i = 0; i < n; i++) { //Lines
-        for (j = 0; j < m; j++) {  
+        for (j = 0; j < m; j++) {
         	if (j==0 && i>0) printf("%c\t", b[i-1]);
             printf("%d\t", matrix[m * i + j]);
         }
