@@ -200,7 +200,7 @@ int main(int argc, char* argv[]) {
 
 //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
-      for (i = 1; i <= 2/*nDiag*/; ++i) // start from 1 since 0 is the boundary padding
+      for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
       {
         long long int nEle, si, sj;
         nEle = nElement(i);
@@ -219,13 +219,13 @@ int main(int argc, char* argv[]) {
   double finalTime = omp_get_wtime();
   printf("\nElapsed time for scoring matrix computation: %f\n", finalTime - initialTime);
 
-#ifdef DEBUG
-    printf("\nSimilarity Matrix:\n");
-    printMatrix(H);
+  initialTime = omp_get_wtime();
+  backtrack(P, maxPos);
+  finalTime = omp_get_wtime();
 
-    printf("\nPredecessor Matrix:\n");
-    printPredecessorMatrix(P);
-#endif
+  //Gets backtrack time
+  finalTime = omp_get_wtime();
+  printf("Elapsed time for backtracking: %f\n", finalTime - initialTime);
 
     if (useBuiltInData)
     {
@@ -233,11 +233,13 @@ int main(int argc, char* argv[]) {
       assert (H[n*m-1]==7);
     }
 
-  initialTime = omp_get_wtime();
-  backtrack(P, maxPos);
-  finalTime = omp_get_wtime();
+#ifdef DEBUG
+    printf("\nSimilarity Matrix:\n");
+    printMatrix(H);
 
-  printf("Elapsed time for backtracking: %f\n", finalTime - initialTime);
+    printf("\nPredecessor Matrix:\n");
+    printPredecessorMatrix(P);
+#endif
 
     //Frees similarity matrixes
     free(H);
