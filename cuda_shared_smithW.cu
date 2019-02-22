@@ -2,8 +2,8 @@
  * Smith–Waterman algorithm
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
- * Compilation: nvcc -std=c++11 -O3 -DNDEBUG=1 cuda_smithW.cu -o cuda_smithW
- *              nvcc -std=c++11 -O0 -DDEBUG -g -G cuda_smithW.cu -o dbg_cuda_smithW
+ * Compilation: nvcc -std=c++11 -O3 -DNDEBUG=1 cuda_shared_smithW.cu -o cuda_sm_smithW
+ *              nvcc -std=c++11 -O0 -DDEBUG -g -G cuda_shared_smithW.cu -o dbg_cuda_smithW
  * Execution:   ./cuda_smithW <number_of_col> <number_of_rows>
  *********************************************************************************/
 
@@ -86,6 +86,52 @@ char *a, *b;
 /* End of global variables */
 
 
+
+void check_cuda_success(bool cond)
+{
+  if (cond) return;
+
+  std::cerr << "CUDA error" << std::endl;
+  exit(0);
+}
+
+
+template <class T>
+T* shared_alloc_only(size_t numelems)
+{
+  void*       ptr /* = NULL*/;
+  cudaError_t err = cudaMalloc(&ptr, numelems * sizeof(T));
+  check_cuda_success(err == cudaSuccess);
+
+  return reinterpret_cast<T*>(ptr);
+}
+
+template <class T>
+T* shared_alloc_transfer(T* src, size_t numelems = 1)
+{
+  T*          dst = shared_alloc_only<T>(numelems);
+  cudaError_t err = cudaMemcpy(dst, src, numelems * sizeof(T), cudaMemcpyHostToDevice);
+  check_cuda_success(err == cudaSuccess);
+
+  return dst;
+}
+
+void shared_free(void* p)
+{
+  cudaError_t err = cudaFree(p);
+  check_cuda_success(err == cudaSuccess);
+}
+
+template <class T>
+void shared_to_host_free(T* dst, T* src, size_t numelems = 1)
+{
+  cudaError_t err = cudaMemcpy(dst, src, numelems * sizeof(T), cudaMemcpyDeviceToHost);
+  check_cuda_success(err == cudaSuccess);
+
+  shared_free(src);
+}
+
+
 /*--------------------------------------------------------------------
  * Function:    matchMissmatchScore
  * Purpose:     Similarity function on the alphabet for match/missmatch
@@ -125,8 +171,9 @@ void similarityScore_kernel( long long si,
     long long int i = si - loopj;
     long long int j = sj + loopj;
 
-    assert(i > 0 && i <= 9);  // bounds test for matchMissmatchScore_cuda
-    assert(j > 0 && j <= 10); // bounds test for matchMissmatchScore_cuda
+    // bounds test for matchMissmatchScore_cuda
+    assert(i > 0); // was: assert(i > 0 && i <= n); -- n currently not passed in
+    assert(j > 0 && j <= cols);
 
     // Stores index of element
     maxpos_t index = cols * i + j;
@@ -194,49 +241,14 @@ void similarityScore_kernel( long long si,
       while (assumed != current && max > H[current])
       {
         assumed = current;
+
+        // \note consider atomicCAS_system for multi GPU systems
         current = atomicCAS(maxPos, assumed, index);
       }
     }
 }  /* End of similarityScore_kernel */
 
-/// malloc replacement
-template<class T>
-static
-T* unified_alloc(size_t numelems)
-{
-  void*       ptr /* = NULL*/;
-  cudaError_t err = cudaMallocManaged(&ptr, numelems * sizeof(T), cudaMemAttachGlobal);
 
-  assert(err == cudaSuccess);
-  return reinterpret_cast<T*>(ptr);
-}
-
-/// calloc replacement
-// \note depending on the OS, the memset may be superfluous.
-template<class T>
-static
-T* unified_alloc_zero(size_t numelems)
-{
-  T*          ptr = unified_alloc<T>(numelems);
-  cudaError_t err = cudaMemset(ptr, 0, numelems*sizeof(T));
-
-  assert(err == cudaSuccess);
-  return ptr;
-}
-
-void unified_free(void* ptr)
-{
-  cudaError_t err = cudaFree(ptr);
-
-  assert(err == cudaSuccess);
-}
-
-// Start position for backtrack
-// \note
-//   1) moved out from main function so it can be set in managed space
-//   2) made unsigned to fit with CUDA prototype
-static __managed__
-maxpos_t maxPos = 0;
 
 /*--------------------------------------------------------------------
  * Function:    main
@@ -245,7 +257,8 @@ int main(int argc, char* argv[])
 {
   typedef std::chrono::time_point<std::chrono::system_clock> time_point;
 
-  bool useBuiltInData = true;
+  bool     useBuiltInData = true;
+  maxpos_t maxPos = 0;
 
   if (argc==3)
   {
@@ -261,24 +274,24 @@ int main(int argc, char* argv[])
   printf("Problem size: Matrix[%lld][%lld], FACTOR=%d CUTOFF=%d\n", n, m, FACTOR, CUTOFF);
 
   // Allocates a and b
-  //~ a = malloc(m * sizeof(char));
-  //~ b = malloc(n * sizeof(char));
-  a = unified_alloc<char>(m);
-  b = unified_alloc<char>(n);
+  a = (char*)malloc((m+1) * sizeof(char));
+  b = (char*)malloc((n+1) * sizeof(char));
+  //~ a = unified_alloc<char>(m);
+  //~ b = unified_alloc<char>(n);
 
   std::cerr << "a,b allocated: " << m << "/" << n << std::endl;
 
   // Because now we have zeros
-  m++; // \note \pp really needed???
-  n++; // \note \pp really needed???
+  m++;
+  n++;
 
   // Allocates similarity matrix H
-  //~ int* H = calloc(m * n, sizeof(int));
-  int* H = unified_alloc_zero<int>(m * n);
+  int* H = (int*)calloc(m * n, sizeof(int));
+  //~ int* H = unified_alloc_zero<int>(m * n);
 
   //Allocates predecessor matrix P
-  //~ int* P = calloc(m * n, sizeof(int));
-  int* P = unified_alloc_zero<int>(m * n);
+  int* P = (int*)calloc(m * n, sizeof(int));
+  //~ int* P = unified_alloc_zero<int>(m * n);
 
   std::cerr << "H,P allocated: " << m*n << std::endl;
 
@@ -340,6 +353,18 @@ int main(int argc, char* argv[])
   // Because now we have zeros ((m-1) + (n-1) - 1)
   long long int nDiag = m + n - 3;
 
+  // \todo \pp
+  //   gpuA and gpuB could be allocated in constant memory (if small enough)
+  char*       gpuA       = shared_alloc_transfer(a, m);
+  char*       gpuB       = shared_alloc_transfer(b, n);
+  int*        gpuH       = shared_alloc_transfer(H, m*n);
+
+  // \todo \pp
+  //   not sure, why P needs to be transferred, since it is only written
+  //   w/o transfer, we observe incorrect results on Volta
+  int*        gpuP       = shared_alloc_transfer(P, m*n);
+  maxpos_t*   gpuMaxPos  = shared_alloc_transfer(&maxPos);
+
   for (int i = 1; i <= nDiag; ++i)
   {
       long long nEle = nElement(i);
@@ -352,8 +377,8 @@ int main(int argc, char* argv[])
         // CUDA, here we go
 
         // \note
-        //   * MAKE SURE THAT a,b,H,P are ACCESSIBLE from GPU.
-        //     This prototype allocates a,b,H,P in shared memory space, thus
+        //   * MAKE SURE THAT a,b,H,P,maxPos are ACCESSIBLE from GPU.
+        //     This prototype allocates a,b,H,P in unified memory space, thus
         //     we just copy the pointers. If the allocation policy changes,
         //     memory referenced by a,b,H,P has to be transferred to the GPU,
         //     and memory referenced by H and P has to be transferred back.
@@ -366,27 +391,20 @@ int main(int argc, char* argv[])
         //~ const long long ITER_SPACE = ceil(nEle/THREADS_PER_BLOCK);
         const long long ITER_SPACE = (nEle+THREADS_PER_BLOCK-1)/THREADS_PER_BLOCK;
 
-        // data transfers :)
-        const char* gpuA = a; // only once
-        const char* gpuB = b; // only once
-        int*        gpuH = H; // only if previous computation was not on GPU
-        int*        gpuP = P; // only if previous computation was not on GPU
-
         // comp. of ai and aj moved into CUDA kernel
         similarityScore_kernel
             <<<ITER_SPACE, THREADS_PER_BLOCK>>>
-            (si, sj, nEle, gpuH, gpuP, &maxPos, gpuA, gpuB, m);
-
-        // \todo sync needed?
-        //   - not needed when control is not returned to host
-        //   - may not be needed at all depending on device capability
-        cudaDeviceSynchronize();
-
-        // data transfers :)
-        H = gpuH;
-        P = gpuP;
+            (si, sj, nEle, gpuH, gpuP, gpuMaxPos, gpuA, gpuB, m);
       }
   }
+
+  // data transfer
+  //   P,H,maxPos
+  shared_to_host_free(P,       gpuP, m*n);
+  shared_to_host_free(H,       gpuH, m*n);
+  shared_to_host_free(&maxPos, gpuMaxPos);
+  shared_free(gpuA);
+  shared_free(gpuB);
 
   time_point     endtime = std::chrono::system_clock::now();
 
@@ -411,12 +429,12 @@ int main(int argc, char* argv[])
   printf("\nElapsed time: %d ms\n\n", elapsed);
 
   // Frees similarity matrixes
-  unified_free(H);
-  unified_free(P);
+  free(H);
+  free(P);
 
   //Frees input arrays
-  unified_free(a);
-  unified_free(b);
+  free(a);
+  free(b);
 
   return 0;
 }  /* End of main */
