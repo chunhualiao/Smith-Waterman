@@ -2,8 +2,7 @@
  * Smith–Waterman algorithm
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
- * Compilation: nvcc -std=c++11 -O3 -DNDEBUG=1 cuda_shared_smithW.cu -o cuda_sm_smithW
- *              nvcc -std=c++11 -O0 -DDEBUG -g -G cuda_shared_smithW.cu -o dbg_cuda_smithW
+ * Compilation: nvcc -std=c++11 -O3 cuda_shared_instrumented_smithW.cu -o instr_cuda_smithW
  * Execution:   ./cuda_smithW <number_of_col> <number_of_rows>
  *********************************************************************************/
 
@@ -16,6 +15,7 @@
 #include <cassert>
 #include <chrono>
 #include <iostream>
+#include <algorithm>
 
 #include "parameters.h"
 
@@ -87,6 +87,9 @@ char *a, *b;
 
 
 
+//
+// Cuda Convenience Wrappers //
+
 void check_cuda_success(bool cond)
 {
   if (cond) return;
@@ -116,18 +119,6 @@ T* shared_alloc_transfer(T* src, size_t numelems = 1)
   return dst;
 }
 
-template <class T>
-T* shared_alloc_zero(T* src, size_t numelems = 1)
-{
-  T* ptr = shared_alloc_only<T>(numelems);
-
-  cudaError_t err = cudaMemset(ptr, 0, numelems*sizeof(T));
-  check_cuda_success(err == cudaSuccess);
-
-  return ptr;
-}
-
-
 void shared_free(void* p)
 {
   cudaError_t err = cudaFree(p);
@@ -144,13 +135,75 @@ void shared_to_host_free(T* dst, T* src, size_t numelems = 1)
 }
 
 
+/// malloc replacement
+template<class T>
+static
+T* unified_alloc(size_t numelems)
+{
+  void*       ptr /* = NULL*/;
+  cudaError_t err = cudaMallocManaged(&ptr, numelems * sizeof(T), cudaMemAttachGlobal);
+
+  check_cuda_success(err == cudaSuccess);
+  return reinterpret_cast<T*>(ptr);
+}
+
+/// calloc replacement
+// \note depending on the OS, the memset may be superfluous.
+template<class T>
+static
+T* unified_alloc_zero(size_t numelems)
+{
+  T*          ptr = unified_alloc<T>(numelems);
+  cudaError_t err = cudaMemset(ptr, 0, numelems*sizeof(T));
+
+  check_cuda_success(err == cudaSuccess);
+  return ptr;
+}
+
+static inline
+void unified_free(void* ptr)
+{
+  cudaError_t err = cudaFree(ptr);
+
+  check_cuda_success(err == cudaSuccess);
+}
+
+static const char rdfirst = 1 << 0;
+static const char rdafter = 1 << 1;
+static const char wraccss = 1 << 2;
+
+__device__
+void rec_gpu_write(char* shadow, size_t idx)
+{
+  shadow[idx] |= wraccss;
+}
+
+__device__
+void rec_gpu_read(char* shadow, size_t idx)
+{
+  bool beforewrite = (shadow[idx] & wraccss) == 0;
+  char readflag    = beforewrite ? rdfirst : rdafter;
+
+  shadow[idx] |= readflag;
+}
+
+// End Cuda Convenience Wrappers //
+
 /*--------------------------------------------------------------------
  * Function:    matchMissmatchScore
  * Purpose:     Similarity function on the alphabet for match/missmatch
  */
 __device__
-int matchMissmatchScore_cuda(long long i, long long j, const char* seqa, const char* seqb)
+int matchMissmatchScore_cuda( long long i,
+                              long long j,
+                              const char* seqa,
+                              const char* seqb,
+                              char* xA,
+                              char* xB
+                             )
 {
+    rec_gpu_read(xA, j-1);
+    rec_gpu_read(xB, i-1);
     if (seqa[j - 1] == seqb[i - 1])
         return MATCH_SCORE;
 
@@ -171,7 +224,11 @@ void similarityScore_kernel( long long si,
                              maxpos_t* maxPos,
                              const char* seqa,
                              const char* seqb,
-                             long long cols
+                             long long cols,
+                             char *xA,
+                             char *xB,
+                             char *xH,
+                             char *xP
                            )
 {
     // compute the second loop index j
@@ -192,15 +249,18 @@ void similarityScore_kernel( long long si,
 
     assert(index >= cols);
     // Get element above
+    rec_gpu_read(xH, index - cols);
     int up = H[index - cols] + GAP_SCORE;
 
     assert(index > 0);
     // Get element on the left
+    rec_gpu_read(xH, index - 1);
     int left = H[index - 1] + GAP_SCORE;
 
     assert(index > cols);
     // Get element on the diagonal
-    int diag = H[index - cols - 1] + matchMissmatchScore_cuda(i, j, seqa, seqb);
+    rec_gpu_read(xH, index - cols);
+    int diag = H[index - cols - 1] + matchMissmatchScore_cuda(i, j, seqa, seqb, xA, xB);
 
     // Calculates the maximum
     int max  = NONE;
@@ -239,7 +299,9 @@ void similarityScore_kernel( long long si,
     }
 
     //Inserts the value in the similarity and predecessor matrixes
+    rec_gpu_write(xH, index);
     H[index] = max;
+    rec_gpu_write(xP, index);
     P[index] = pred;
 
     // Updates maximum score to be used as seed on backtrack
@@ -249,6 +311,7 @@ void similarityScore_kernel( long long si,
       //   thus the update to set the maximum is made nonblocking.
       maxpos_t current = *maxPos;
       maxpos_t assumed = current+1;
+      rec_gpu_read(xH, current);
 
       while (assumed != current && max > H[current])
       {
@@ -256,11 +319,39 @@ void similarityScore_kernel( long long si,
 
         // \note consider atomicCAS_system for multi GPU systems
         current = atomicCAS(maxPos, assumed, index);
+        rec_gpu_read(xH, current);
       }
     }
 }  /* End of similarityScore_kernel */
 
 
+struct gpu_data_stats
+{
+  gpu_data_stats()
+  : cnt_read_first(0), cnt_read_after(0), cnt_write(0)
+  {}
+
+  void operator()(const char access)
+  {
+    if (access & rdfirst) ++cnt_read_first;
+    if (access & rdafter) ++cnt_read_after;
+    if (access & wraccss) ++cnt_write;
+  }
+
+  size_t cnt_read_first;
+  size_t cnt_read_after;
+  size_t cnt_write;
+};
+
+void analyze_gpu_access(std::string id, const char* acc, size_t len)
+{
+  gpu_data_stats stats = std::for_each(acc, acc+len, gpu_data_stats());
+
+  std::cerr << "*** GPU Access Analysis for " << id << std::endl
+            << "    read initial data: " << (stats.cnt_read_first*100 / len) << std::endl
+            << "    read written data: " << (stats.cnt_read_after*100 / len) << std::endl
+            << "         written data: " << (stats.cnt_write*100 / len) << std::endl;
+}
 
 /*--------------------------------------------------------------------
  * Function:    main
@@ -288,6 +379,10 @@ int main(int argc, char* argv[])
   // Allocates a and b
   a = (char*)malloc((m+1) * sizeof(char));
   b = (char*)malloc((n+1) * sizeof(char));
+
+  char* xA = unified_alloc_zero<char>(m+1);
+  char* xB = unified_alloc_zero<char>(n+1);
+
   //~ a = unified_alloc<char>(m);
   //~ b = unified_alloc<char>(n);
 
@@ -296,6 +391,16 @@ int main(int argc, char* argv[])
   // Because now we have zeros
   m++;
   n++;
+
+  // Allocates similarity matrix H
+  int*  H = (int*)calloc(m * n, sizeof(int));
+  char* xH = unified_alloc_zero<char>(m*n);
+
+  //Allocates predecessor matrix P
+  int*  P = (int*)calloc(m * n, sizeof(int));
+  char* xP = unified_alloc_zero<char>(m*n);
+
+  std::cerr << "H,P allocated: " << m*n << std::endl;
 
   if (useBuiltInData)
   {
@@ -352,12 +457,6 @@ int main(int argc, char* argv[])
 
   time_point     starttime = std::chrono::system_clock::now();
 
-  // Allocates similarity matrix H
-  int* H = (int*)malloc(m * n * sizeof(int));
-
-  //Allocates predecessor matrix P
-  int* P = (int*)malloc(m * n * sizeof(int));
-
   // Because now we have zeros ((m-1) + (n-1) - 1)
   long long int nDiag = m + n - 3;
 
@@ -365,13 +464,13 @@ int main(int argc, char* argv[])
   //   gpuA and gpuB could be allocated in constant memory (if small enough)
   char*       gpuA       = shared_alloc_transfer(a, m);
   char*       gpuB       = shared_alloc_transfer(b, n);
-  int*        gpuH       = shared_alloc_zero(H, m*n);
+  int*        gpuH       = shared_alloc_transfer(H, m*n);
 
   // \todo \pp
   //   not sure, why P needs to be transferred, since it is only written
   //   w/o transfer, we observe incorrect results on Volta
-  int*        gpuP       = shared_alloc_zero(P, m*n);
-  maxpos_t*   gpuMaxPos  = shared_alloc_zero(&maxPos);
+  int*        gpuP       = shared_alloc_transfer(P, m*n);
+  maxpos_t*   gpuMaxPos  = shared_alloc_transfer(&maxPos);
 
   for (int i = 1; i <= nDiag; ++i)
   {
@@ -402,7 +501,13 @@ int main(int argc, char* argv[])
         // comp. of ai and aj moved into CUDA kernel
         similarityScore_kernel
             <<<ITER_SPACE, THREADS_PER_BLOCK>>>
-            (si, sj, nEle, gpuH, gpuP, gpuMaxPos, gpuA, gpuB, m);
+            (si, sj, nEle, gpuH, gpuP, gpuMaxPos, gpuA, gpuB, m, xA, xB, xH, xP);
+
+        cudaDeviceSynchronize();
+        analyze_gpu_access("a", xA, m);
+        analyze_gpu_access("b", xB, n);
+        analyze_gpu_access("H", xH, n*m);
+        analyze_gpu_access("P", xP, n*m);
       }
   }
 
@@ -437,11 +542,15 @@ int main(int argc, char* argv[])
   printf("\nElapsed time: %d ms\n\n", elapsed);
 
   // Frees similarity matrixes
+  unified_free(xH);
   free(H);
+  unified_free(xP);
   free(P);
 
   //Frees input arrays
+  unified_free(xA);
   free(a);
+  unified_free(xB);
   free(b);
 
   return 0;

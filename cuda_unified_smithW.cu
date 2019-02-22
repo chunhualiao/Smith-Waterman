@@ -285,16 +285,6 @@ int main(int argc, char* argv[])
   m++; // \note \pp really needed???
   n++; // \note \pp really needed???
 
-  // Allocates similarity matrix H
-  //~ int* H = calloc(m * n, sizeof(int));
-  int* H = unified_alloc_zero<int>(m * n);
-
-  //Allocates predecessor matrix P
-  //~ int* P = calloc(m * n, sizeof(int));
-  int* P = unified_alloc_zero<int>(m * n);
-
-  std::cerr << "H,P allocated: " << m*n << std::endl;
-
   if (useBuiltInData)
   {
     //Uncomment this to test the sequence available at
@@ -349,6 +339,14 @@ int main(int argc, char* argv[])
   }
 
   time_point     starttime = std::chrono::system_clock::now();
+
+  // Allocates similarity matrix H
+  //~ int* H = calloc(m * n, sizeof(int));
+  int* H = unified_alloc_zero<int>(m * n);
+
+  //Allocates predecessor matrix P
+  //~ int* P = calloc(m * n, sizeof(int));
+  int* P = unified_alloc_zero<int>(m * n);
 
   // Because now we have zeros ((m-1) + (n-1) - 1)
   long long int nDiag = m + n - 3;
