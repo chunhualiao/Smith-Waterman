@@ -247,7 +247,7 @@ void unified_free(void* ptr)
 // Start position for backtrack
 // \note
 //   1) moved out from main function so it can be set in managed space
-//   2) made unsigned to fit with CUDA prototype
+//   2) made unsigned to fit with CUDA atomicCAS prototype
 static __managed__
 maxpos_t maxPos = 0;
 
