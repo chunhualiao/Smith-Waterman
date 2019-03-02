@@ -14,6 +14,9 @@ omp_smithW_debug.out: parameters.h omp_smithW.c
 omp_smithW_O3.out: parameters.h omp_smithW.c	
 	$(CC) -O3 omp_smithW.c -o $@ -fopenmp 
 
+omp_smithW-v5-target.out: omp_smithW-v5-target.c parameters.h
+	xlc-gpu  -qsmp -qoffload -o $@ $<
+
 #verify the results
 check: omp_smithW_O3.out
 	./$< 
