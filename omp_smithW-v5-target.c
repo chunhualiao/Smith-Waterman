@@ -110,7 +110,10 @@ int main(int argc, char* argv[]) {
 
     //Allocates a and b
     a = (char*) malloc(m * sizeof(char));
+//    printf ("debug: a's address=%p\n", a);
+
     b = (char*) malloc(n * sizeof(char));
+//    printf ("debug: b's address=%p\n", b);
 
     //Because now we have zeros
     m++;
@@ -119,10 +122,12 @@ int main(int argc, char* argv[]) {
     //Allocates similarity matrix H
     int *H;
     H = (int *) calloc(m * n, sizeof(int));
+//    printf ("debug: H's address=%p\n", H);
 
     //Allocates predecessor matrix P
     int *P;
     P = (int *)calloc(m * n, sizeof(int));
+//    printf ("debug: P's address=%p\n", P);
 
 
     if (useBuiltInData)
@@ -198,14 +203,16 @@ int main(int argc, char* argv[]) {
 #pragma omp master	    
       {
         thread_count = omp_get_num_threads();
-        printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
+        printf ("Using %d out of max %d threads...\n", thread_count, omp_get_max_threads());
       }
     }
 
     //Gets Initial time
     double initialTime = omp_get_wtime();
 
-    int asz= m*n*sizeof(int);
+    // mistake: element count, not byte size!!
+    // int asz= m*n*sizeof(int);
+    int asz= m*n;
 //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
       for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
