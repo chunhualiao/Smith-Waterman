@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Smith��Waterman algorithm
+ * Smith–Waterman algorithm
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
  *
@@ -16,6 +16,7 @@
 #include <omp.h>
 #include <time.h>
 #include <assert.h>
+#include <stdbool.h> // C99 does not support the boolean data type
 
 #include "parameters.h"
 
@@ -49,8 +50,25 @@
 /*--------------------------------------------------------------------
  * Functions Prototypes
  */
+#pragma omp declare target
 void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos);
+
+//Defines size of strings to be compared
+long long int m = 8 ; //Columns - Size of string a
+long long int n = 9;  //Lines - Size of string b
+int gapScore = -2;
 int matchMissmatchScore(long long int i, long long int j);
+
+//Defines scores
+int matchScore = 3;
+int missmatchScore = -3;
+
+//Strings over the Alphabet Sigma
+char *a, *b;
+#pragma omp end declare target
+
+// without omp critical: how to conditionalize it?
+void similarityScore2(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 void backtrack(int* P, long long int maxPos);
 void printMatrix(int* matrix);
 void printPredecessorMatrix(int* matrix);
@@ -66,18 +84,7 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  */
 bool useBuiltInData=true;
 
-//Defines size of strings to be compared
-long long int m = 8 ; //Columns - Size of string a
-long long int n = 9;  //Lines - Size of string b
 // the generated scoring matrix's size is m++ and n++ later to have the first row/column as 0s.
-
-//Defines scores
-int matchScore = 3;
-int missmatchScore = -3;
-int gapScore = -2;
-
-//Strings over the Alphabet Sigma
-char *a, *b;
 
 /* End of global variables */
 
@@ -98,12 +105,15 @@ int main(int argc, char* argv[]) {
 //#ifdef DEBUG
   if (useBuiltInData)
     printf ("Using built-in data for testing ..\n");
-  printf("Problem size: Matrix[%lld][%lld]%d\n", n, m);
+  printf("Problem size: Matrix[%lld][%lld], FACTOR=%d CUTOFF=%d\n", n, m, FACTOR, CUTOFF);
 //#endif
 
     //Allocates a and b
     a = (char*) malloc(m * sizeof(char));
+//    printf ("debug: a's address=%p\n", a);
+
     b = (char*) malloc(n * sizeof(char));
+//    printf ("debug: b's address=%p\n", b);
 
     //Because now we have zeros
     m++;
@@ -112,15 +122,39 @@ int main(int argc, char* argv[]) {
     //Allocates similarity matrix H
     int *H;
     H = (int *) calloc(m * n, sizeof(int));
+//    printf ("debug: H's address=%p\n", H);
 
     //Allocates predecessor matrix P
     int *P;
     P = (int *)calloc(m * n, sizeof(int));
+//    printf ("debug: P's address=%p\n", P);
 
 
     if (useBuiltInData)
     {
-     // https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm#Example
+      //Uncomment this to test the sequence available at 
+      //http://vlab.amrita.edu/?sub=3&brch=274&sim=1433&cnt=1
+      // OBS: m=11 n=7
+      // a[0] =   'C';
+      // a[1] =   'G';
+      // a[2] =   'T';
+      // a[3] =   'G';
+      // a[4] =   'A';
+      // a[5] =   'A';
+      // a[6] =   'T';
+      // a[7] =   'T';
+      // a[8] =   'C';
+      // a[9] =   'A';
+      // a[10] =  'T';
+
+      // b[0] =   'G';
+      // b[1] =   'A';
+      // b[2] =   'C';
+      // b[3] =   'T';
+      // b[4] =   'T';
+      // b[5] =   'A';
+      // b[6] =   'C';
+      // https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm#Example
       // Using the wiki example to verify the results
       b[0] =   'G';
       b[1] =   'G';
@@ -169,29 +203,48 @@ int main(int argc, char* argv[]) {
 #pragma omp master	    
       {
         thread_count = omp_get_num_threads();
-        printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
+        printf ("Using %d out of max %d threads...\n", thread_count, omp_get_max_threads());
       }
     }
 
     //Gets Initial time
     double initialTime = omp_get_wtime();
 
-  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
+    // mistake: element count, not byte size!!
+    // int asz= m*n*sizeof(int);
+    int asz= m*n;
+//  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
       for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
       {
         long long int nEle, si, sj;
         nEle = nElement(i);
         calcFirstDiagElement(i, &si, &sj);
-        #pragma omp for private(j) 
+
+//        if (nEle>=CUTOFF)
+        {
+#pragma omp target map (to:nEle, si,sj, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], a[0:m], b[0:n], maxPos)
+#pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
           {  // going upwards : anti-diagnol direction
             long long int ai = si - j ; // going up vertically
             long long int aj = sj + j;  //  going right in horizontal
             similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
           }
-     }
-    }
+        }
+#if 0	
+        else 
+        { // serial version, totally avoid parallel region creation.
+          for (j = 0; j < nEle; ++j) 
+          {  // going upwards : anti-diagnol direction
+            long long int ai = si - j ; // going up vertically
+            long long int aj = sj + j;  //  going right in horizontal
+            similarityScore2(ai, aj, H, P, &maxPos); // a specialized version without a critical section used inside
+          }
+        }
+#endif	
+      } // for end nDiag
+    } // end omp parallel
 
   double finalTime = omp_get_wtime();
   printf("\nElapsed time for scoring matrix computation: %f\n", finalTime - initialTime);
@@ -247,7 +300,7 @@ long long int nElement(long long int i) {
     else {
         //Number of elements in the diagonal is decreasing
         long int min = min(m, n);
-        return 2 * min - i + abs(m - n) - 2;
+        return 2 * min - i + llabs(m - n) - 2;
     }
 }
 
@@ -305,6 +358,7 @@ Then we have the first elements like
  * Purpose:     Calculate  value of scoring matrix element H(i,j) : the maximum Similarity-Score H(i,j)
  *             int *P; the predecessor array,storing which of the three elements is picked with max value
  */
+#pragma omp declare target
 void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos) {
 
     int up, left, diag;
@@ -362,7 +416,6 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
         #pragma omp critical
         *maxPos = index;
     }
-
 }  /* End of similarityScore */
 
 /*--------------------------------------------------------------------
@@ -375,6 +428,68 @@ int matchMissmatchScore(long long int i, long long int j) {
     else
         return missmatchScore;
 }  /* End of matchMissmatchScore */
+
+
+#pragma omp end declare target
+
+void similarityScore2(long long int i, long long int j, int* H, int* P, long long int* maxPos) {
+
+    int up, left, diag;
+
+    //Stores index of element
+    long long int index = m * i + j;
+
+    //Get element above
+    up = H[index - m] + gapScore;
+
+    //Get element on the left
+    left = H[index - 1] + gapScore;
+
+    //Get element on the diagonal
+    diag = H[index - m - 1] + matchMissmatchScore(i, j);
+
+    //Calculates the maximum
+    int max = NONE;
+    int pred = NONE;
+    /* === Matrix ===
+     *      a[0] ... a[n]
+     * b[0]
+     * ...
+     * b[n]
+     *
+     * generate 'a' from 'b', if '←' insert e '↑' remove
+     * a=GAATTCA
+     * b=GACTT-A
+     *
+     * generate 'b' from 'a', if '←' insert e '↑' remove
+     * b=GACTT-A
+     * a=GAATTCA
+    */
+
+    if (diag > max) { //same letter ↖
+        max = diag;
+        pred = DIAGONAL;
+    }
+
+    if (up > max) { //remove letter ↑
+        max = up;
+        pred = UP;
+    }
+
+    if (left > max) { //insert letter ←
+        max = left;
+        pred = LEFT;
+    }
+    //Inserts the value in the similarity and predecessor matrixes
+    H[index] = max;
+    P[index] = pred;
+
+    //Updates maximum score to be used as seed on backtrack
+    if (max > H[*maxPos]) {
+        *maxPos = index;
+    }
+}  /* End of similarityScore2 */
+
 
 /*--------------------------------------------------------------------
  * Function:    backtrack
