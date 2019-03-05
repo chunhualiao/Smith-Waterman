@@ -4,7 +4,7 @@ MSIZE=25600
 # using C++ compiler to be more restrictive 	
 #CC=g++-8
 CC=g++
-all: omp_smithW-v5-target.out
+all: omp_smithW-v6-target-inlined.out
 #all: omp_smithW_debug.out omp_smithW_O3.out
 clean:
 	rm -rf *.out
@@ -15,9 +15,10 @@ omp_smithW_debug.out: parameters.h omp_smithW.c
 omp_smithW_O3.out: parameters.h omp_smithW.c	
 	$(CC) -O3 omp_smithW.c -o $@ -fopenmp 
 
-omp_smithW-v5-target.out: omp_smithW-v5-target.c parameters.h
-	clang-gpu -g -o $@ $<
-#	xlc-gpu -g -qsmp -qoffload -o $@ $<
+omp_smithW-v6-target-inlined.out: omp_smithW-v6-target-inlined.c parameters.h
+	xlc-gpu -g -qsmp -qoffload -o $@ $<
+# not working: parsing error for clang-gpu	
+#	clang-gpu -g -o $@ $<
 
 #verify the results
 check: omp_smithW_O3.out

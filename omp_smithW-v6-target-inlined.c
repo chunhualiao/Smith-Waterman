@@ -248,7 +248,61 @@ int main(int argc, char* argv[]) {
           {  // going upwards : anti-diagnol direction
             long long int ai = si - j ; // going up vertically
             long long int aj = sj + j;  //  going right in horizontal
-            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
+///------------inlined ------------------------------------------
+//            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
+	    {
+	      int up, left, diag;
+
+	      //Stores index of element
+	      long long int index = m * ai + aj;
+
+	      //Get element above
+	      up = H[index - m] + gapScore;
+
+	      //Get element on the left
+	      left = H[index - 1] + gapScore;
+
+	      //Get element on the diagonal
+	      int t_mms;
+
+	      if (a[aj - 1] == b[ai - 1])
+		t_mms = matchScore;
+	      else
+		t_mms = missmatchScore;
+
+	      diag = H[index - m - 1] + t_mms; // matchMissmatchScore(i, j);
+
+	      // degug here
+	      // return;
+	      //Calculates the maximum
+	      int max = NONE;
+	      int pred = NONE;
+	      if (diag > max) { //same letter ↖
+		max = diag;
+		pred = DIAGONAL;
+	      }
+
+	      if (up > max) { //remove letter ↑
+		max = up;
+		pred = UP;
+	      }
+
+	      if (left > max) { //insert letter ←
+		max = left;
+		pred = LEFT;
+	      }
+	      //Inserts the value in the similarity and predecessor matrixes
+	      H[index] = max;
+	      P[index] = pred;
+
+	      //Updates maximum score to be used as seed on backtrack
+	      if (max > H[maxPos]) {
+#pragma omp critical
+		maxPos = index;
+	      }
+
+	    }
+// ---------------------------------------------------------------
           }
         }
 #if 0	
@@ -392,7 +446,14 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
     left = H[index - 1] + gapScore;
 
     //Get element on the diagonal
-    diag = H[index - m - 1] + matchMissmatchScore(i, j);
+    int t_mms;
+    
+    if (a[j - 1] == b[i - 1])
+        t_mms = matchScore;
+    else
+        t_mms = missmatchScore;
+
+    diag = H[index - m - 1] + t_mms; // matchMissmatchScore(i, j);
 
 // degug here
 // return;
