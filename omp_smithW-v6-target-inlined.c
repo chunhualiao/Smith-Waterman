@@ -69,13 +69,11 @@ double omp_get_wtime()
  * Functions Prototypes
  */
 #pragma omp declare target
-void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 
 //Defines size of strings to be compared
 long long int m = 8 ; //Columns - Size of string a
 long long int n = 9;  //Lines - Size of string b
 int gapScore = -2;
-int matchMissmatchScore(long long int i, long long int j);
 
 //Defines scores
 int matchScore = 3;
@@ -83,7 +81,11 @@ int missmatchScore = -3;
 
 //Strings over the Alphabet Sigma
 char *a, *b;
+
+int matchMissmatchScore(long long int i, long long int j);
+void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 #pragma omp end declare target
+
 
 // without omp critical: how to conditionalize it?
 void similarityScore2(long long int i, long long int j, int* H, int* P, long long int* maxPos);
@@ -272,7 +274,7 @@ int main(int argc, char* argv[]) {
 //        if (nEle>=CUTOFF)
         {
 // choice 1: map data before the inner loop
-#pragma omp target map (to:a[0:m], b[0:n], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+//#pragma omp target map (to:a[0:m], b[0:n], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
 #pragma omp parallel for default(none) private(j) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
 	  {  // going upwards : anti-diagnol direction
