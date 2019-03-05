@@ -7,7 +7,7 @@ CC=g++
 all: omp_smithW-v6-target-inlined.out
 #all: omp_smithW_debug.out omp_smithW_O3.out
 clean:
-	rm -rf *.out
+	rm -rf *.out *.core
 
 omp_smithW_debug.out: parameters.h omp_smithW.c	
 	$(CC) omp_smithW.c -o $@ -fopenmp -DDEBUG	

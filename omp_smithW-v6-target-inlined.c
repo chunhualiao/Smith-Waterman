@@ -232,17 +232,47 @@ int main(int argc, char* argv[]) {
     // mistake: element count, not byte size!!
     // int asz= m*n*sizeof(int);
     int asz= m*n;
+// choice 2: map data before the outer loop
+#pragma omp target default(none) map (to:a[0:m], b[0:n], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
 //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
       for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
       {
         long long int nEle, si, sj;
-        nEle = nElement(i);
-        calcFirstDiagElement(i, &si, &sj);
+       //  nEle = nElement(i);
+	//---------------inlined ------------
+	if (i < m && i < n) { // smaller than both directions
+	  //Number of elements in the diagonal is increasing
+	  nEle = i;
+	}
+	else if (i < max(m, n)) { // smaller than only one direction
+	  //Number of elements in the diagonal is stable
+	  long int min = min(m, n);  // the longer direction has the edge elements, the number is the smaller direction's size
+	  nEle = min - 1;
+	}
+	else {
+	  //Number of elements in the diagonal is decreasing
+	  long int min = min(m, n);
+	  nEle = 2 * min - i + llabs(m - n) - 2;
+	}
+
+        //calcFirstDiagElement(i, &si, &sj);
+	//------------inlined---------------------
+	// Calculate the first element of diagonal
+	if (i < n) { // smaller than row count
+	  si = i;
+	  sj = 1; // start from the j==1 since j==0 is the padding
+	} else {  // now we sweep horizontally at the bottom of the matrix
+	  si = n - 1;  // i is fixed
+	  sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
+	}
+
+        //--------------------------------------
 
 //        if (nEle>=CUTOFF)
         {
-#pragma omp target map (to:a[0:m], b[0:n], nEle, si,sj, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
+// choice 1: map data before the inner loop
+//#pragma omp target map (to:a[0:m], b[0:n], nEle, si,sj, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
 #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
           {  // going upwards : anti-diagnol direction
