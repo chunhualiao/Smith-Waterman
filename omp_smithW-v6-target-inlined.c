@@ -233,7 +233,7 @@ int main(int argc, char* argv[]) {
     // int asz= m*n*sizeof(int);
     int asz= m*n;
 // choice 2: map data before the outer loop
-#pragma omp target default(none) map (to:a[0:m], b[0:n], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp target map (to:a[0:m], b[0:n], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
 //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
       for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
@@ -273,7 +273,7 @@ int main(int argc, char* argv[]) {
         {
 // choice 1: map data before the inner loop
 //#pragma omp target map (to:a[0:m], b[0:n], nEle, si,sj, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
-#pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos)
+#pragma omp parallel for default(none) private(j) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
           {  // going upwards : anti-diagnol direction
             long long int ai = si - j ; // going up vertically
