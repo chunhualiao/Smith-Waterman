@@ -223,7 +223,7 @@ int main(int argc, char* argv[]) {
 
 //        if (nEle>=CUTOFF)
         {
-#pragma omp target map (to:nEle, si,sj, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], a[0:m], b[0:n], maxPos)
+#pragma omp target map (to:a[0:m], b[0:n], nEle, si,sj, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
 #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
           {  // going upwards : anti-diagnol direction
@@ -375,6 +375,8 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
     //Get element on the diagonal
     diag = H[index - m - 1] + matchMissmatchScore(i, j);
 
+// degug here
+// return;
     //Calculates the maximum
     int max = NONE;
     int pred = NONE;
@@ -392,7 +394,6 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
      * b=GACTT-A
      * a=GAATTCA
     */
-
     if (diag > max) { //same letter ↖
         max = diag;
         pred = DIAGONAL;
