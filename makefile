@@ -16,7 +16,7 @@ omp_smithW_O3.out: parameters.h omp_smithW.c
 	$(CC) -O3 omp_smithW.c -o $@ -fopenmp 
 
 omp_smithW-v6-target-inlined.out: omp_smithW-v6-target-inlined.c parameters.h
-	xlc-gpu -g -qsmp -qoffload -o $@ $<
+	xlc-gpu -DDEBUG -g -qsmp -qoffload -o $@ $<
 # not working: parsing error for clang-gpu	
 #	clang-gpu -g -o $@ $<
 
