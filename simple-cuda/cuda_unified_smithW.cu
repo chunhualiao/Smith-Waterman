@@ -2,8 +2,8 @@
  * Smith–Waterman algorithm
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
- * Compilation: nvcc -std=c++11 -O3 -DNDEBUG=1 cuda_smithW.cu -o cuda_smithW
- *              nvcc -std=c++11 -O0 -DDEBUG -g -G cuda_smithW.cu -o dbg_cuda_smithW
+ * Compilation: nvcc -std=c++11 -O3 -DNDEBUG=1 cuda_unified_smithW.cu -o cuda_um_smithW
+ *              nvcc -std=c++11 -O0 -DDEBUG -g -G cuda_unified_smithW.cu -o dbg_cuda_smithW
  * Execution:   ./cuda_smithW <number_of_col> <number_of_rows>
  *********************************************************************************/
 
@@ -125,8 +125,9 @@ void similarityScore_kernel( long long si,
     long long int i = si - loopj;
     long long int j = sj + loopj;
 
-    assert(i > 0 && i <= 9);  // bounds test for matchMissmatchScore_cuda
-    assert(j > 0 && j <= 10); // bounds test for matchMissmatchScore_cuda
+    // bounds test for matchMissmatchScore_cuda
+    assert(i > 0); // was: assert(i > 0 && i <= n); -- n currently not passed in
+    assert(j > 0 && j <= cols);
 
     // Stores index of element
     maxpos_t index = cols * i + j;
@@ -194,10 +195,21 @@ void similarityScore_kernel( long long si,
       while (assumed != current && max > H[current])
       {
         assumed = current;
+
+        // \note consider atomicCAS_system for multi GPU systems
         current = atomicCAS(maxPos, assumed, index);
       }
     }
 }  /* End of similarityScore_kernel */
+
+
+void check_cuda_success(bool cond)
+{
+  if (cond) return;
+
+  std::cerr << "CUDA error" << std::endl;
+  exit(0);
+}
 
 /// malloc replacement
 template<class T>
@@ -207,7 +219,7 @@ T* unified_alloc(size_t numelems)
   void*       ptr /* = NULL*/;
   cudaError_t err = cudaMallocManaged(&ptr, numelems * sizeof(T), cudaMemAttachGlobal);
 
-  assert(err == cudaSuccess);
+  check_cuda_success(err == cudaSuccess);
   return reinterpret_cast<T*>(ptr);
 }
 
@@ -220,21 +232,22 @@ T* unified_alloc_zero(size_t numelems)
   T*          ptr = unified_alloc<T>(numelems);
   cudaError_t err = cudaMemset(ptr, 0, numelems*sizeof(T));
 
-  assert(err == cudaSuccess);
+  check_cuda_success(err == cudaSuccess);
   return ptr;
 }
 
+static
 void unified_free(void* ptr)
 {
   cudaError_t err = cudaFree(ptr);
 
-  assert(err == cudaSuccess);
+  check_cuda_success(err == cudaSuccess);
 }
 
 // Start position for backtrack
 // \note
 //   1) moved out from main function so it can be set in managed space
-//   2) made unsigned to fit with CUDA prototype
+//   2) made unsigned to fit with CUDA atomicCAS prototype
 static __managed__
 maxpos_t maxPos = 0;
 
@@ -263,24 +276,14 @@ int main(int argc, char* argv[])
   // Allocates a and b
   //~ a = malloc(m * sizeof(char));
   //~ b = malloc(n * sizeof(char));
-  a = unified_alloc<char>(m);
-  b = unified_alloc<char>(n);
+  a = unified_alloc<char>(m+1);
+  b = unified_alloc<char>(n+1);
 
   std::cerr << "a,b allocated: " << m << "/" << n << std::endl;
 
   // Because now we have zeros
   m++; // \note \pp really needed???
   n++; // \note \pp really needed???
-
-  // Allocates similarity matrix H
-  //~ int* H = calloc(m * n, sizeof(int));
-  int* H = unified_alloc_zero<int>(m * n);
-
-  //Allocates predecessor matrix P
-  //~ int* P = calloc(m * n, sizeof(int));
-  int* P = unified_alloc_zero<int>(m * n);
-
-  std::cerr << "H,P allocated: " << m*n << std::endl;
 
   if (useBuiltInData)
   {
@@ -337,6 +340,14 @@ int main(int argc, char* argv[])
 
   time_point     starttime = std::chrono::system_clock::now();
 
+  // Allocates similarity matrix H
+  //~ int* H = calloc(m * n, sizeof(int));
+  int* H = unified_alloc_zero<int>(m * n);
+
+  //Allocates predecessor matrix P
+  //~ int* P = calloc(m * n, sizeof(int));
+  int* P = unified_alloc_zero<int>(m * n);
+
   // Because now we have zeros ((m-1) + (n-1) - 1)
   long long int nDiag = m + n - 3;
 
@@ -353,7 +364,7 @@ int main(int argc, char* argv[])
 
         // \note
         //   * MAKE SURE THAT a,b,H,P are ACCESSIBLE from GPU.
-        //     This prototype allocates a,b,H,P in shared memory space, thus
+        //     This prototype allocates a,b,H,P in unified memory space, thus
         //     we just copy the pointers. If the allocation policy changes,
         //     memory referenced by a,b,H,P has to be transferred to the GPU,
         //     and memory referenced by H and P has to be transferred back.
@@ -380,13 +391,14 @@ int main(int argc, char* argv[])
         // \todo sync needed?
         //   - not needed when control is not returned to host
         //   - may not be needed at all depending on device capability
-        cudaDeviceSynchronize();
 
         // data transfers :)
         H = gpuH;
         P = gpuP;
       }
   }
+
+  cudaDeviceSynchronize();
 
   time_point     endtime = std::chrono::system_clock::now();
 
