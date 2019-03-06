@@ -104,6 +104,9 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  */
 bool useBuiltInData=true;
 
+int MEDIUM=10240;
+int LARGE=20480; // max 46340 for GPU of 16GB Device memory
+
 // the generated scoring matrix's size is m++ and n++ later to have the first row/column as 0s.
 
 /* End of global variables */
@@ -124,8 +127,11 @@ int main(int argc, char* argv[]) {
 
 //#ifdef DEBUG
   if (useBuiltInData)
+  {
+    printf ("Usage: %s m n\n", argv[0]);
     printf ("Using built-in data for testing ..\n");
-  printf("Problem size: Matrix[%lld][%lld], FACTOR=%d CUTOFF=%d\n", n, m, FACTOR, CUTOFF);
+  }
+  printf("Problem size: Matrix[%lld][%lld], Medium=%d Large=%d\n", n, m, MEDIUM, LARGE);
 //#endif
 
     //Allocates a and b
@@ -269,10 +275,33 @@ int main(int argc, char* argv[]) {
 	  sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
 	}
 
+
+	// serial version: 0 to < medium: small data set
+        if (nEle< MEDIUM)
+	{
+          for (j = 0; j < nEle; ++j) 
+          {  // going upwards : anti-diagnol direction
+            long long int ai = si - j ; // going up vertically
+            long long int aj = sj + j;  //  going right in horizontal
+            similarityScore2(ai, aj, H, P, &maxPos); // a specialized version without a critical section used inside
+          }
+	}
+	else if (nEle<LARGE) // omp cpu version: medium to large: medium data set
+	{
+
+   #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) 
+	  for (j = 0; j < nEle; ++j)
+	  {  // going upwards : anti-diagnol direction
+	    long long int ai = si - j ; // going up vertically
+	    long long int aj = sj + j;  //  going right in horizontal
+	    similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
+	  }
+	}
+	else // omp gpu version: large data set
         //--------------------------------------
         {
 // choice 1: map data before the inner loop
-#pragma omp target device(0) map (to:a[0:m], b[0:n], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp target map (to:a[0:m], b[0:n], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
 #pragma omp parallel for default(none) private(j) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
 	  {  // going upwards : anti-diagnol direction
