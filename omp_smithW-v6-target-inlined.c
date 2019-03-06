@@ -69,13 +69,11 @@ double omp_get_wtime()
  * Functions Prototypes
  */
 #pragma omp declare target
-void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 
 //Defines size of strings to be compared
 long long int m = 8 ; //Columns - Size of string a
 long long int n = 9;  //Lines - Size of string b
 int gapScore = -2;
-int matchMissmatchScore(long long int i, long long int j);
 
 //Defines scores
 int matchScore = 3;
@@ -83,7 +81,11 @@ int missmatchScore = -3;
 
 //Strings over the Alphabet Sigma
 char *a, *b;
+
+int matchMissmatchScore(long long int i, long long int j);
+void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 #pragma omp end declare target
+
 
 // without omp critical: how to conditionalize it?
 void similarityScore2(long long int i, long long int j, int* H, int* P, long long int* maxPos);
@@ -212,7 +214,7 @@ int main(int argc, char* argv[]) {
     long long int nDiag = m + n - 3;
 
 #ifdef DEBUG
-    printf("nDiag=%d\n", nDiag);
+    printf("nDiag=%lld\n", nDiag);
     printf("Number of wavefront lines and their first element positions:\n");
 #endif
 
@@ -232,36 +234,107 @@ int main(int argc, char* argv[]) {
     // mistake: element count, not byte size!!
     // int asz= m*n*sizeof(int);
     int asz= m*n;
+// choice 2: map data before the outer loop
+//#pragma omp target map (to:a[0:m], b[0:n], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
 //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
       for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
       {
         long long int nEle, si, sj;
-        nEle = nElement(i);
-        calcFirstDiagElement(i, &si, &sj);
+       //  nEle = nElement(i);
+	//---------------inlined ------------
+	if (i < m && i < n) { // smaller than both directions
+	  //Number of elements in the diagonal is increasing
+	  nEle = i;
+	}
+	else if (i < max(m, n)) { // smaller than only one direction
+	  //Number of elements in the diagonal is stable
+	  long int min = min(m, n);  // the longer direction has the edge elements, the number is the smaller direction's size
+	  nEle = min - 1;
+	}
+	else {
+	  //Number of elements in the diagonal is decreasing
+	  long int min = min(m, n);
+	  nEle = 2 * min - i + llabs(m - n) - 2;
+	}
 
-//        if (nEle>=CUTOFF)
+        //calcFirstDiagElement(i, &si, &sj);
+	//------------inlined---------------------
+	// Calculate the first element of diagonal
+	if (i < n) { // smaller than row count
+	  si = i;
+	  sj = 1; // start from the j==1 since j==0 is the padding
+	} else {  // now we sweep horizontally at the bottom of the matrix
+	  si = n - 1;  // i is fixed
+	  sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
+	}
+
+        //--------------------------------------
         {
-#pragma omp target map (to:a[0:m], b[0:n], nEle, si,sj, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
-#pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos)
+// choice 1: map data before the inner loop
+#pragma omp target device(0) map (to:a[0:m], b[0:n], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp parallel for default(none) private(j) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
-          {  // going upwards : anti-diagnol direction
-            long long int ai = si - j ; // going up vertically
-            long long int aj = sj + j;  //  going right in horizontal
-            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
-          }
+	  {  // going upwards : anti-diagnol direction
+	    long long int ai = si - j ; // going up vertically
+	    long long int aj = sj + j;  //  going right in horizontal
+	    ///------------inlined ------------------------------------------
+	    //            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
+	    {
+	      int up, left, diag;
+
+	      //Stores index of element
+	      long long int index = m * ai + aj;
+
+	      //Get element above
+	      up = H[index - m] + gapScore;
+
+	      //Get element on the left
+	      left = H[index - 1] + gapScore;
+
+	      //Get element on the diagonal
+	      int t_mms;
+
+	      if (a[aj - 1] == b[ai - 1])
+		t_mms = matchScore;
+	      else
+		t_mms = missmatchScore;
+
+	      diag = H[index - m - 1] + t_mms; // matchMissmatchScore(i, j);
+
+	      // degug here
+	      // return;
+	      //Calculates the maximum
+	      int max = NONE;
+	      int pred = NONE;
+	      if (diag > max) { //same letter ↖
+		max = diag;
+		pred = DIAGONAL;
+	      }
+
+	      if (up > max) { //remove letter ↑
+		max = up;
+		pred = UP;
+	      }
+
+	      if (left > max) { //insert letter ←
+		max = left;
+		pred = LEFT;
+	      }
+	      //Inserts the value in the similarity and predecessor matrixes
+	      H[index] = max;
+	      P[index] = pred;
+
+	      //Updates maximum score to be used as seed on backtrack
+	      if (max > H[maxPos]) {
+#pragma omp critical
+		maxPos = index;
+	      }
+
+	    }
+	    // ---------------------------------------------------------------
+	  }
         }
-#if 0	
-        else 
-        { // serial version, totally avoid parallel region creation.
-          for (j = 0; j < nEle; ++j) 
-          {  // going upwards : anti-diagnol direction
-            long long int ai = si - j ; // going up vertically
-            long long int aj = sj + j;  //  going right in horizontal
-            similarityScore2(ai, aj, H, P, &maxPos); // a specialized version without a critical section used inside
-          }
-        }
-#endif	
       } // for end nDiag
     } // end omp parallel
 
@@ -276,12 +349,6 @@ int main(int argc, char* argv[]) {
   finalTime = omp_get_wtime();
   printf("Elapsed time for backtracking: %f\n", finalTime - initialTime);
 
-    if (useBuiltInData)
-    {
-      printf ("Verifying results using the builtinIn data: %s\n", (H[n*m-1]==7)?"true":"false");
-      assert (H[n*m-1]==7);
-    }
-
 #ifdef DEBUG
     printf("\nSimilarity Matrix:\n");
     printMatrix(H);
@@ -289,6 +356,12 @@ int main(int argc, char* argv[]) {
     printf("\nPredecessor Matrix:\n");
     printPredecessorMatrix(P);
 #endif
+
+    if (useBuiltInData)
+    {
+      printf ("Verifying results using the builtinIn data: %s\n", (H[n*m-1]==7)?"true":"false");
+      assert (H[n*m-1]==7);
+    }
 
     //Frees similarity matrixes
     free(H);
@@ -392,7 +465,14 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
     left = H[index - 1] + gapScore;
 
     //Get element on the diagonal
-    diag = H[index - m - 1] + matchMissmatchScore(i, j);
+    int t_mms;
+    
+    if (a[j - 1] == b[i - 1])
+        t_mms = matchScore;
+    else
+        t_mms = missmatchScore;
+
+    diag = H[index - m - 1] + t_mms; // matchMissmatchScore(i, j);
 
 // degug here
 // return;
