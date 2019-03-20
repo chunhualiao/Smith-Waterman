@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Smith��Waterman algorithm
+ * Smith€“Waterman algorithm
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
  *
@@ -16,8 +16,6 @@
 #include <omp.h>
 #include <time.h>
 #include <assert.h>
-
-#include "parameters.h"
 
 /*--------------------------------------------------------------------
  * Text Tweaks
@@ -42,6 +40,26 @@
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 #define max(a,b) ((a) > (b) ? a : b)
 
+
+#ifndef _OPENMP
+
+#include <sys/time.h>
+
+double time_stamp()
+{
+ struct timeval t;
+ double time;
+ gettimeofday(&t, NULL);
+ time = t.tv_sec + 1.0e-6*t.tv_usec;
+ return time;
+}
+
+double omp_get_wtime()
+{
+  return time_stamp();
+}
+
+#endif
 // #define DEBUG
 /* End of Helpers */
 
@@ -164,6 +182,7 @@ int main(int argc, char* argv[]) {
     printf("Number of wavefront lines and their first element positions:\n");
 #endif
 
+#ifdef _OPENMP
 #pragma omp parallel 
     {
 #pragma omp master	    
@@ -171,8 +190,9 @@ int main(int argc, char* argv[]) {
         thread_count = omp_get_num_threads();
         printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
       }
-    }
-
+    }  
+  
+#endif
     //Gets Initial time
     double initialTime = omp_get_wtime();
 
@@ -330,26 +350,26 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
      * ...
      * b[n]
      *
-     * generate 'a' from 'b', if '←' insert e '↑' remove
+     * generate 'a' from 'b', if 'â†' insert e 'â†‘' remove
      * a=GAATTCA
      * b=GACTT-A
      *
-     * generate 'b' from 'a', if '←' insert e '↑' remove
+     * generate 'b' from 'a', if 'â†' insert e 'â†‘' remove
      * b=GACTT-A
      * a=GAATTCA
     */
 
-    if (diag > max) { //same letter ↖
+    if (diag > max) { //same letter â†–
         max = diag;
         pred = DIAGONAL;
     }
 
-    if (up > max) { //remove letter ↑
+    if (up > max) { //remove letter â†‘
         max = up;
         pred = UP;
     }
 
-    if (left > max) { //insert letter ←
+    if (left > max) { //insert letter â†
         max = left;
         pred = LEFT;
     }
@@ -436,21 +456,21 @@ void printPredecessorMatrix(int* matrix) {
             if (matrix[index] < 0) {
                 printf(BOLDRED);
                 if (matrix[index] == -UP)
-                    printf("↑ ");
+                    printf("â†‘ ");
                 else if (matrix[index] == -LEFT)
-                    printf("← ");
+                    printf("â† ");
                 else if (matrix[index] == -DIAGONAL)
-                    printf("↖ ");
+                    printf("â†– ");
                 else
                     printf("- ");
                 printf(RESET);
             } else {
                 if (matrix[index] == UP)
-                    printf("↑ ");
+                    printf("â†‘ ");
                 else if (matrix[index] == LEFT)
-                    printf("← ");
+                    printf("â† ");
                 else if (matrix[index] == DIAGONAL)
-                    printf("↖ ");
+                    printf("â†– ");
                 else
                     printf("- ");
             }
