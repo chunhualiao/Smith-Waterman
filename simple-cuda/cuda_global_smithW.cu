@@ -2,7 +2,7 @@
  * Smith–Waterman algorithm
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
- * Compilation: nvcc -std=c++11 -O3 -DNDEBUG=1 cuda_shared_smithW.cu -o cuda_sm_smithW
+ * Compilation: nvcc -std=c++11 -O3 -DNDEBUG=1 cuda_global_smithW.cu -o cuda_gm_smithW
  *              nvcc -std=c++11 -O0 -DDEBUG -g -G cuda_shared_smithW.cu -o dbg_cuda_smithW
  * Execution:   ./cuda_smithW <number_of_col> <number_of_rows>
  *********************************************************************************/
@@ -54,7 +54,7 @@ typedef unsigned long long maxpos_t;
 /*--------------------------------------------------------------------
  * Functions Prototypes
  */
-void backtrack(int* P, maxpos_t maxPos);
+int backtrack(int* P, maxpos_t maxPos);
 void printMatrix(int* matrix);
 void printPredecessorMatrix(int* matrix);
 void generate(void);
@@ -98,6 +98,16 @@ void check_cuda_success(bool cond)
 
 template <class T>
 T* shared_alloc_only(size_t numelems)
+{
+  void*       ptr /* = NULL*/;
+  cudaError_t err = cudaMalloc(&ptr, numelems * sizeof(T));
+  check_cuda_success(err == cudaSuccess);
+
+  return reinterpret_cast<T*>(ptr);
+}
+
+template <class T>
+T* shared_alloc(T*, size_t numelems)
 {
   void*       ptr /* = NULL*/;
   cudaError_t err = cudaMalloc(&ptr, numelems * sizeof(T));
@@ -370,6 +380,7 @@ int main(int argc, char* argv[])
   // \todo \pp
   //   not sure, why P needs to be transferred, since it is only written
   //   w/o transfer, we observe incorrect results on Volta
+  //~ int*        gpuP       = shared_alloc(P, m*n);
   int*        gpuP       = shared_alloc_zero(P, m*n);
   maxpos_t*   gpuMaxPos  = shared_alloc_zero(&maxPos);
 
@@ -409,11 +420,16 @@ int main(int argc, char* argv[])
   // data transfer
   //   P,H,maxPos
   shared_to_host_free(P,       gpuP, m*n);
+#ifdef DEBUG
   shared_to_host_free(H,       gpuH, m*n);
+#else
+  shared_free(gpuH);
+#endif
   shared_to_host_free(&maxPos, gpuMaxPos);
   shared_free(gpuA);
   shared_free(gpuB);
 
+  int len = backtrack(P, maxPos);
   time_point     endtime = std::chrono::system_clock::now();
 
 #ifdef DEBUG
@@ -422,7 +438,7 @@ int main(int argc, char* argv[])
 
   printf("\nPredecessor Matrix:\n");
   printPredecessorMatrix(P);
-#endif
+#endif /* DEBUG */
 
   if (useBuiltInData)
   {
@@ -430,11 +446,10 @@ int main(int argc, char* argv[])
     assert (H[n*m-1]==7);
   }
 
-  backtrack(P, maxPos);
 
   int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endtime-starttime).count();
 
-  printf("\nElapsed time: %d ms\n\n", elapsed);
+  printf("\nElapsed time: %d ms    Path length: %d \n\n", elapsed, len);
 
   // Frees similarity matrixes
   free(H);
@@ -489,18 +504,23 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  * Function:    backtrack
  * Purpose:     Modify matrix to print, path change from value to PATH
  */
-void backtrack(int* P, maxpos_t maxPos) {
+int backtrack(int* P, maxpos_t maxPos) {
     //hold maxPos value
     long long int predPos = 0;
+    int        len = 0;
 
+#ifdef DEBUG
     std::cerr << "maxpos = " << maxPos << std::endl;
+#endif
 
     //backtrack from maxPos to startPos = 0
     do {
+#ifdef DEBUG
         std::cerr << "P[" << maxPos << "] = "
                   << std::flush
                   << P[maxPos]
                   << std::endl;
+#endif
 
         switch (P[maxPos])
         {
@@ -520,9 +540,14 @@ void backtrack(int* P, maxpos_t maxPos) {
             assert(false);
         }
 
+#ifdef DEBUG
         P[maxPos] *= PATH;
+#endif
         maxPos = predPos;
+        ++len;
     } while (P[maxPos] != NONE);
+
+    return len;
 }  /* End of backtrack */
 
 /*--------------------------------------------------------------------

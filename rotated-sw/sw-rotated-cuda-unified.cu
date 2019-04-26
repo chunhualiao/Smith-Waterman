@@ -299,6 +299,7 @@ void smithWaterman( const char* a,
     //   copying back could be entirely avoided at the expense that
     //   the data representation becomes twice is big (though this
     //   could possibly be remedied by using a clever data layout).
+    if (0)
     {
       // results from this iteration are in M_1
       // -> strided copies back to H and P

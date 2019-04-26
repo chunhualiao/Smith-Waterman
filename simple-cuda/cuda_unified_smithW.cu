@@ -54,7 +54,7 @@ typedef unsigned long long maxpos_t;
 /*--------------------------------------------------------------------
  * Functions Prototypes
  */
-void backtrack(int* P, maxpos_t maxPos);
+int backtrack(int* P, maxpos_t maxPos);
 void printMatrix(int* matrix);
 void printPredecessorMatrix(int* matrix);
 void generate(void);
@@ -220,6 +220,9 @@ T* unified_alloc(size_t numelems)
   cudaError_t err = cudaMallocManaged(&ptr, numelems * sizeof(T), cudaMemAttachGlobal);
 
   check_cuda_success(err == cudaSuccess);
+
+  err = cudaMemAdvise(ptr, numelems * sizeof(T), cudaMemAdviseSetPreferredLocation, 0);
+  check_cuda_success(err == cudaSuccess);
   return reinterpret_cast<T*>(ptr);
 }
 
@@ -340,13 +343,19 @@ int main(int argc, char* argv[])
 
   time_point     starttime = std::chrono::system_clock::now();
 
+  // setting cudaMemAdviseSetReadMostly is mostly ineffective
+  //   (no runtime performance difference on pascal)
+  //~ cudaMemAdvise(a, sizeof(char)*m, cudaMemAdviseSetReadMostly, 0);
+  //~ cudaMemAdvise(b, sizeof(char)*n, cudaMemAdviseSetReadMostly, 0);
+
   // Allocates similarity matrix H
   //~ int* H = calloc(m * n, sizeof(int));
   int* H = unified_alloc_zero<int>(m * n);
 
-  //Allocates predecessor matrix P
+  // Allocates predecessor matrix P
   //~ int* P = calloc(m * n, sizeof(int));
-  int* P = unified_alloc_zero<int>(m * n);
+  //~ int* P = unified_alloc_zero<int>(m * n);
+  int* P = unified_alloc<int>(m * n);
 
   // Because now we have zeros ((m-1) + (n-1) - 1)
   long long int nDiag = m + n - 3;
@@ -400,6 +409,7 @@ int main(int argc, char* argv[])
 
   cudaDeviceSynchronize();
 
+  int len = backtrack(P, maxPos);
   time_point     endtime = std::chrono::system_clock::now();
 
 #ifdef DEBUG
@@ -416,11 +426,10 @@ int main(int argc, char* argv[])
     assert (H[n*m-1]==7);
   }
 
-  backtrack(P, maxPos);
 
   int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endtime-starttime).count();
 
-  printf("\nElapsed time: %d ms\n\n", elapsed);
+  printf("\nElapsed time: %d ms    Path length: %d \n\n", elapsed, len);
 
   // Frees similarity matrixes
   unified_free(H);
@@ -475,19 +484,23 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  * Function:    backtrack
  * Purpose:     Modify matrix to print, path change from value to PATH
  */
-void backtrack(int* P, maxpos_t maxPos) {
+int backtrack(int* P, maxpos_t maxPos) {
     //hold maxPos value
     long long int predPos = 0;
+    int           len = 0;
 
+#ifdef DEBUG
     std::cerr << "maxpos = " << maxPos << std::endl;
+#endif
 
     //backtrack from maxPos to startPos = 0
     do {
+#ifdef DEBUG
         std::cerr << "P[" << maxPos << "] = "
                   << std::flush
                   << P[maxPos]
                   << std::endl;
-
+#endif
         switch (P[maxPos])
         {
           case DIAGONAL:
@@ -506,9 +519,13 @@ void backtrack(int* P, maxpos_t maxPos) {
             assert(false);
         }
 
+#ifdef DEBUG
         P[maxPos] *= PATH;
+#endif
         maxPos = predPos;
+        ++len;
     } while (P[maxPos] != NONE);
+    return len;
 }  /* End of backtrack */
 
 /*--------------------------------------------------------------------
