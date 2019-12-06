@@ -1,6 +1,6 @@
 
 /// \brief
-/// This implements the Smith-Waterman algorithm based on a 45 degree 
+/// This implements the Smith-Waterman algorithm based on a 45 degree
 /// rotated dynamic programming matrix. The benefit of the
 /// rotation is:
 ///   - each diagonal can be represented by contiguous memory
@@ -8,10 +8,10 @@
 ///     --> reduces resident memory use in the core algorithm
 ///     --> enables the algorithm to run more efficiently on large
 ///         inputs.
-///   
+///
 /// The disadvantages of the rotation is:
 ///   - if the original output matrix needs to be maintained, copying
-///     back may lead to costly page faults, outweighing the benefits of 
+///     back may lead to costly page faults, outweighing the benefits of
 ///     the rotation.
 ///     see @todo_1 for details.
 ///
@@ -93,19 +93,19 @@ void similarityScore_kernel( index_t iterspace_lb,
                            )
 {
   const index_t loop_j = blockIdx.x * blockDim.x + threadIdx.x;
-  
+
   if (loop_j >= iterspace_ub - iterspace_lb) return;
-   
+
   const index_t ai   = (iterspace_ub - loop_j) - 1;
-  const index_t bi   = i - ai;  
-  const index_t j    = iterspace_lb + loop_j;    
-  
+  const index_t bi   = i - ai;
+  const index_t j    = iterspace_lb + loop_j;
+
   assert(!DEBUG_MODE || (M_1[j] >= 0 && M_1[j-1] >= 0 && M_2[j-1] >= 0));
-  
+
   const index_t up   = M_1[j]   + GAP_SCORE;
   const index_t lft  = M_1[j-1] + GAP_SCORE;
   const index_t diag = M_2[j-1] + matchMissmatchScore(a, b, ai-1, bi-1);
-  
+
   score_t       max  = NONE;
   link_t        pred = NOLINK;
 
@@ -130,21 +130,21 @@ void similarityScore_kernel( index_t iterspace_lb,
   assert(!DEBUG_MODE || (M_0[j] < 0));
   M_0[j] = max;
   P_0[j] = pred;
-  
+
   // Updates maximum score to be used as seed on backtrack
-  {   
+  {
     // \note \pp
     //   locks seem to be a NOGO in CUDA warps,
     //   thus the update to set the maximum is made nonblocking.
     const score_t* assumed = nullptr;
     const score_t* current = *maxpos;
-  
+
     while ((current != assumed) && max > *current)
     {
       // \note consider atomicCAS_system for multi GPU systems
-      assumed = current;      
-      current = (const score_t*) atomicCAS( (unsigned long long int*) maxpos, 
-                                            (unsigned long long int) assumed, 
+      assumed = current;
+      current = (const score_t*) atomicCAS( (unsigned long long int*) maxpos,
+                                            (unsigned long long int) assumed,
                                             (unsigned long long int) (M_0 + j)
                                           );
     }
@@ -215,7 +215,7 @@ void smithWaterman( const char* a,
                   )
 {
   // Size is important for pointer CAS in CUDA Kernel
-  static_assert( sizeof(maxloc) == sizeof(unsigned long long int), 
+  static_assert( sizeof(maxloc) == sizeof(unsigned long long int),
                  "pointer/int size mismatch (req. for CUDA atomicCAS)!"
                );
 
@@ -227,7 +227,7 @@ void smithWaterman( const char* a,
   link_t*               pred_1     = unified_alloc<link_t>(MAXITER);
   score_t* const        maxscr     = unified_alloc<score_t>(1);
   const score_t** const maxpos     = unified_alloc<const score_t*>(1);
-  
+
   // wavefront representation _time
   score_t*       M_2 = wavefronts;
   score_t*       M_1 = wavefronts + MAXITER;
@@ -248,17 +248,17 @@ void smithWaterman( const char* a,
   {
     const index_t  lb       = (i<=h) ? (M_0[0] = NONE, 1) : i - h;
     const index_t  ub       = (i<=w) ? (M_0[i] = NONE, i) : w + 1;
-    
+
     *maxpos = maxscr;
-    
+
     assert((ub - lb >= 0) && (ub - lb <= h));
-    
+
     const index_t THREADS_PER_BLOCK = 1024;
     const index_t ITER_SPACE = (ub-lb+THREADS_PER_BLOCK-1)/THREADS_PER_BLOCK;
-    
+
     similarityScore_kernel
       <<<ITER_SPACE, THREADS_PER_BLOCK>>>
-      (lb, ub, i, M_0, pred_0, M_1, M_2, a, b, maxpos);      
+      (lb, ub, i, M_0, pred_0, M_1, M_2, a, b, maxpos);
 
     // rotate wavefront vectors
     rotate3(M_0, M_1, M_2);
@@ -303,32 +303,31 @@ void smithWaterman( const char* a,
     {
       // results from this iteration are in M_1
       // -> strided copies back to H and P
-      index_t       ofs  = diagonalBasePoint(i, w) + w + 1;      
-      cudaError_t   errH = cudaMemcpy2D( H+ofs, 
-                                         w*sizeof(*H), 
-                                         M_1 + lb, 
-                                         sizeof(*M_1), 
-                                         sizeof(*M_1), 
-                                         ub-lb, 
+      index_t       ofs  = diagonalBasePoint(i, w) + w + 1;
+      cudaError_t   errH = cudaMemcpy2D( H+ofs,
+                                         w*sizeof(*H),
+                                         M_1 + lb,
+                                         sizeof(*M_1),
+                                         sizeof(*M_1),
+                                         ub-lb,
                                          cudaMemcpyDefault
-                                       );      
+                                       );
       check_cuda_success(errH);
-      
-      cudaError_t errP  = cudaMemcpy2D( P+ofs, 
-                                        w*sizeof(*P), 
-                                        pred_1 + lb, 
-                                        sizeof(*pred_1), 
-                                        sizeof(*pred_1), 
-                                        ub-lb, 
+
+      cudaError_t errP  = cudaMemcpy2D( P+ofs,
+                                        w*sizeof(*P),
+                                        pred_1 + lb,
+                                        sizeof(*pred_1),
+                                        sizeof(*pred_1),
+                                        ub-lb,
                                         cudaMemcpyDefault
-                                      );      
+                                      );
       check_cuda_success(errP);
     }
-    
 
     {
       const score_t* maxx = *maxpos;
-            
+
       // update maxscore, if maxpos points to an improved location
       if (maxx != maxscr)
       {
@@ -613,7 +612,7 @@ int main(int argc, char* argv[])
 
   //Frees input arrays
   //~ free(a);
-  //~ free(b);  
+  //~ free(b);
   unified_free(a);
   unified_free(b);
 

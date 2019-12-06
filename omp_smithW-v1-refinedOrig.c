@@ -1,10 +1,10 @@
 /*********************************************************************************
- * Smith��Waterman algorithm
+ * Smith€“Waterman algorithm
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
  *
- * Compilation: gcc omp_smithW.c -o omp_smithW -fopenmp -DDEBUG // debugging mode
- *              gcc omp_smithW.c -O3 -o omp_smithW -fopenmp // production run
+ * Compilation: g++ omp_smithW.c -o omp_smithW -fopenmp -DDEBUG // debugging mode
+ *              g++ omp_smithW.c -O3 -DNDEBUG=1 -o omp_smithW -fopenmp // production run
  * Execution:	./omp_smithW <number_of_col> <number_of_rows>
  *
  * Updated by C. Liao, Jan 2nd, 2019
@@ -16,8 +16,7 @@
 #include <omp.h>
 #include <time.h>
 #include <assert.h>
-
-#include "parameters.h"
+#include <chrono>
 
 /*--------------------------------------------------------------------
  * Text Tweaks
@@ -42,6 +41,26 @@
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 #define max(a,b) ((a) > (b) ? a : b)
 
+
+#ifndef _OPENMP
+
+#include <sys/time.h>
+
+double time_stamp()
+{
+ struct timeval t;
+ double time;
+ gettimeofday(&t, NULL);
+ time = t.tv_sec + 1.0e-6*t.tv_usec;
+ return time;
+}
+
+double omp_get_wtime()
+{
+  return time_stamp();
+}
+
+#endif
 // #define DEBUG
 /* End of Helpers */
 
@@ -51,7 +70,7 @@
  */
 void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 int matchMissmatchScore(long long int i, long long int j);
-void backtrack(int* P, long long int maxPos);
+int backtrack(int* P, long long int maxPos);
 void printMatrix(int* matrix);
 void printPredecessorMatrix(int* matrix);
 void generate(void);
@@ -85,6 +104,8 @@ char *a, *b;
  * Function:    main
  */
 int main(int argc, char* argv[]) {
+  typedef std::chrono::time_point<std::chrono::system_clock> time_point;
+
   // thread_count is no longer used
   int thread_count;
 
@@ -164,6 +185,7 @@ int main(int argc, char* argv[]) {
     printf("Number of wavefront lines and their first element positions:\n");
 #endif
 
+#ifdef _OPENMP
 #pragma omp parallel 
     {
 #pragma omp master	    
@@ -171,10 +193,12 @@ int main(int argc, char* argv[]) {
         thread_count = omp_get_num_threads();
         printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
       }
-    }
-
+    }  
+  
+#endif
     //Gets Initial time
-    double initialTime = omp_get_wtime();
+    // double initialTime = omp_get_wtime();
+    time_point     starttime = std::chrono::system_clock::now();
 
   #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
@@ -193,16 +217,11 @@ int main(int argc, char* argv[]) {
      }
     }
 
-  double finalTime = omp_get_wtime();
-  printf("\nElapsed time for scoring matrix computation: %f\n", finalTime - initialTime);
+  int len = backtrack(P, maxPos);
+  time_point     endtime = std::chrono::system_clock::now();
+  int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endtime-starttime).count();
 
-  initialTime = omp_get_wtime();
-  backtrack(P, maxPos);
-  finalTime = omp_get_wtime();
-
-  //Gets backtrack time
-  finalTime = omp_get_wtime();
-  printf("Elapsed time for backtracking: %f\n", finalTime - initialTime);
+  printf("\nElapsed time: %d ms    Path length: %d \n\n", elapsed, len);
 
     if (useBuiltInData)
     {
@@ -219,12 +238,12 @@ int main(int argc, char* argv[]) {
 #endif
 
     //Frees similarity matrixes
-    free(H);
-    free(P);
+  //  free(H);
+  //  free(P);
 
     //Frees input arrays
-    free(a);
-    free(b);
+  //  free(a);
+  //  free(b);
 
     return 0;
 }  /* End of main */
@@ -330,26 +349,26 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
      * ...
      * b[n]
      *
-     * generate 'a' from 'b', if '←' insert e '↑' remove
+     * generate 'a' from 'b', if 'â†' insert e 'â†‘' remove
      * a=GAATTCA
      * b=GACTT-A
      *
-     * generate 'b' from 'a', if '←' insert e '↑' remove
+     * generate 'b' from 'a', if 'â†' insert e 'â†‘' remove
      * b=GACTT-A
      * a=GAATTCA
     */
 
-    if (diag > max) { //same letter ↖
+    if (diag > max) { //same letter â†–
         max = diag;
         pred = DIAGONAL;
     }
 
-    if (up > max) { //remove letter ↑
+    if (up > max) { //remove letter â†‘
         max = up;
         pred = UP;
     }
 
-    if (left > max) { //insert letter ←
+    if (left > max) { //insert letter â†
         max = left;
         pred = LEFT;
     }
@@ -380,21 +399,30 @@ int matchMissmatchScore(long long int i, long long int j) {
  * Function:    backtrack
  * Purpose:     Modify matrix to print, path change from value to PATH
  */
-void backtrack(int* P, long long int maxPos) {
+int backtrack(int* P, long long int maxPos) {
     //hold maxPos value
     long long int predPos;
+    int           len = 0;
 
     //backtrack from maxPos to startPos = 0
     do {
-        if (P[maxPos] == DIAGONAL)
-            predPos = maxPos - m - 1;
-        else if (P[maxPos] == UP)
-            predPos = maxPos - m;
-        else if (P[maxPos] == LEFT)
-            predPos = maxPos - 1;
+        switch (P[maxPos]) {
+          case DIAGONAL: predPos = maxPos - m - 1;
+                         break;
+          case UP:       predPos = maxPos - m;
+                         break;
+          case LEFT:     predPos = maxPos - 1;
+                         break;
+          default:;
+        }
+
+#ifdef DEBUG
         P[maxPos] *= PATH;
+#endif
         maxPos = predPos;
+        ++len;
     } while (P[maxPos] != NONE);
+    return len;
 }  /* End of backtrack */
 
 /*--------------------------------------------------------------------
@@ -436,21 +464,21 @@ void printPredecessorMatrix(int* matrix) {
             if (matrix[index] < 0) {
                 printf(BOLDRED);
                 if (matrix[index] == -UP)
-                    printf("↑ ");
+                    printf("â†‘ ");
                 else if (matrix[index] == -LEFT)
-                    printf("← ");
+                    printf("â† ");
                 else if (matrix[index] == -DIAGONAL)
-                    printf("↖ ");
+                    printf("â†– ");
                 else
                     printf("- ");
                 printf(RESET);
             } else {
                 if (matrix[index] == UP)
-                    printf("↑ ");
+                    printf("â†‘ ");
                 else if (matrix[index] == LEFT)
-                    printf("← ");
+                    printf("â† ");
                 else if (matrix[index] == DIAGONAL)
-                    printf("↖ ");
+                    printf("â†– ");
                 else
                     printf("- ");
             }

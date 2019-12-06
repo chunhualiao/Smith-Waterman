@@ -386,24 +386,14 @@ int main(int argc, char* argv[])
         //~ const long long ITER_SPACE = ceil(nEle/THREADS_PER_BLOCK);
         const long long ITER_SPACE = (nEle+THREADS_PER_BLOCK-1)/THREADS_PER_BLOCK;
 
-        // data transfers :)
-        const char* gpuA = a; // only once
-        const char* gpuB = b; // only once
-        int*        gpuH = H; // only if previous computation was not on GPU
-        int*        gpuP = P; // only if previous computation was not on GPU
-
         // comp. of ai and aj moved into CUDA kernel
         similarityScore_kernel
             <<<ITER_SPACE, THREADS_PER_BLOCK>>>
-            (si, sj, nEle, gpuH, gpuP, &maxPos, gpuA, gpuB, m);
+            (si, sj, nEle, H, P, &maxPos, a, b, m);
 
         // \todo sync needed?
         //   - not needed when control is not returned to host
         //   - may not be needed at all depending on device capability
-
-        // data transfers :)
-        H = gpuH;
-        P = gpuP;
       }
   }
 
