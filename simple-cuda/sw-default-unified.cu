@@ -2,8 +2,8 @@
  * Smith–Waterman algorithm
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
- * Compilation: nvcc -std=c++11 -O3 -DNDEBUG=1 cuda_global_smithW.cu -o cuda_gm_smithW
- *              nvcc -std=c++11 -O0 -DDEBUG -g -G cuda_shared_smithW.cu -o dbg_cuda_smithW
+ * Compilation: nvcc -std=c++11 -O3 -DNDEBUG=1 cuda_unified_smithW.cu -o cuda_um_smithW
+ *              nvcc -std=c++11 -O0 -DDEBUG -g -G cuda_unified_smithW.cu -o dbg_cuda_smithW
  * Execution:   ./cuda_smithW <number_of_col> <number_of_rows>
  *********************************************************************************/
 
@@ -17,7 +17,12 @@
 #include <chrono>
 #include <iostream>
 
-#include "parameters.h"
+#ifndef NDEBUG
+static constexpr bool DEBUG_MODE = true;
+#else
+static constexpr bool DEBUG_MODE = false;
+#endif /* NDEBUG */
+
 
 /*--------------------------------------------------------------------
  * Text Tweaks
@@ -31,9 +36,6 @@
  */
 #define PATH -1
 #define NONE 0
-#define UP 1
-#define LEFT 2
-#define DIAGONAL 3
 /* End of constants */
 
 /*--------------------------------------------------------------------
@@ -50,13 +52,23 @@
 // \todo maybe rename it to index_t and change all long longs to index_t
 typedef unsigned long long maxpos_t;
 
+/// defines type for indices into arrays and matrices
+///    (needs to be a signed type)
+typedef long long int index_t;
+
+/// defines data type for scoring
+typedef int           score_t;
+
+/// defines data type for linking paths
+enum link_t { UNDEF = -1, NOLINK = 0, UP = 1, LEFT = 2, DIAGONAL = 3 };
+
 
 /*--------------------------------------------------------------------
  * Functions Prototypes
  */
-int backtrack(int* P, maxpos_t maxPos);
-void printMatrix(int* matrix);
-void printPredecessorMatrix(int* matrix);
+int backtrack(link_t* P, maxpos_t maxPos);
+void printMatrix(score_t* matrix);
+void printPredecessorMatrix(link_t* matrix);
 void generate(void);
 long long int nElement(long long int i);
 
@@ -69,16 +81,16 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  * Global Variables
  */
 // Defines size of strings to be compared
-long long int m = 8; // Columns - Size of string a
-long long int n = 9; // Rows    - Size of string b
+index_t m = 8; // Columns - Size of string a
+index_t n = 9; // Rows    - Size of string b
 
 // Defines scores
-static const int       MATCH_SCORE     =  3; //  5 in omp_smithW_orig
-static const int       MISSMATCH_SCORE = -3; // -3
-static const int       GAP_SCORE       = -2; // -4
+static const score_t MATCH_SCORE     =  3; //  5 in omp_smithW_orig
+static const score_t MISSMATCH_SCORE = -3; // -3
+static const score_t GAP_SCORE       = -2; // -4
 
 // GPU THREADS PER BLOCK
-static const long long THREADS_PER_BLOCK = 1024;
+static constexpr int THREADS_PER_BLOCK = 1024;
 
 // Strings over the Alphabet Sigma
 char *a, *b;
@@ -86,80 +98,13 @@ char *a, *b;
 /* End of global variables */
 
 
-
-void check_cuda_success(bool cond)
-{
-  if (cond) return;
-
-  std::cerr << "CUDA error" << std::endl;
-  exit(0);
-}
-
-
-template <class T>
-T* shared_alloc_only(size_t numelems)
-{
-  void*       ptr /* = NULL*/;
-  cudaError_t err = cudaMalloc(&ptr, numelems * sizeof(T));
-  check_cuda_success(err == cudaSuccess);
-
-  return reinterpret_cast<T*>(ptr);
-}
-
-template <class T>
-T* shared_alloc(T*, size_t numelems)
-{
-  void*       ptr /* = NULL*/;
-  cudaError_t err = cudaMalloc(&ptr, numelems * sizeof(T));
-  check_cuda_success(err == cudaSuccess);
-
-  return reinterpret_cast<T*>(ptr);
-}
-
-template <class T>
-T* shared_alloc_transfer(T* src, size_t numelems = 1)
-{
-  T*          dst = shared_alloc_only<T>(numelems);
-  cudaError_t err = cudaMemcpy(dst, src, numelems * sizeof(T), cudaMemcpyHostToDevice);
-  check_cuda_success(err == cudaSuccess);
-
-  return dst;
-}
-
-template <class T>
-T* shared_alloc_zero(T* src, size_t numelems = 1)
-{
-  T* ptr = shared_alloc_only<T>(numelems);
-
-  cudaError_t err = cudaMemset(ptr, 0, numelems*sizeof(T));
-  check_cuda_success(err == cudaSuccess);
-
-  return ptr;
-}
-
-
-void shared_free(void* p)
-{
-  cudaError_t err = cudaFree(p);
-  check_cuda_success(err == cudaSuccess);
-}
-
-template <class T>
-void shared_to_host_free(T* dst, T* src, size_t numelems = 1)
-{
-  cudaError_t err = cudaMemcpy(dst, src, numelems * sizeof(T), cudaMemcpyDeviceToHost);
-  check_cuda_success(err == cudaSuccess);
-
-  shared_free(src);
-}
-
-
 /*--------------------------------------------------------------------
  * Function:    matchMissmatchScore
  * Purpose:     Similarity function on the alphabet for match/missmatch
  */
 __device__
-int matchMissmatchScore_cuda(long long i, long long j, const char* seqa, const char* seqb)
+score_t 
+matchMissmatchScore_cuda(index_t i, index_t j, const char* seqa, const char* seqb)
 {
     if (seqa[j - 1] == seqb[i - 1])
         return MATCH_SCORE;
@@ -173,25 +118,25 @@ int matchMissmatchScore_cuda(long long i, long long j, const char* seqa, const c
  * Purpose:     Calculate  the maximum Similarity-Score H(i,j)
  */
 __global__
-void similarityScore_kernel( long long si,
-                             long long sj,
-                             long long j_upper_bound,
-                             int* H,
-                             int* P,
+void similarityScore_kernel( index_t si,
+                             index_t sj,
+                             index_t j_upper_bound,
+                             score_t* H,
+                             link_t* P,
                              maxpos_t* maxPos,
                              const char* seqa,
                              const char* seqb,
-                             long long cols
+                             index_t cols
                            )
 {
     // compute the second loop index j
-    const long long loopj = blockIdx.x * blockDim.x + threadIdx.x;
+    const index_t loopj = blockIdx.x * blockDim.x + threadIdx.x;
 
     if (loopj >= j_upper_bound) return;
 
     // compute original i and j
-    long long int i = si - loopj;
-    long long int j = sj + loopj;
+    index_t i = si - loopj;
+    index_t j = sj + loopj;
 
     // bounds test for matchMissmatchScore_cuda
     assert(i > 0); // was: assert(i > 0 && i <= n); -- n currently not passed in
@@ -202,19 +147,19 @@ void similarityScore_kernel( long long si,
 
     assert(index >= cols);
     // Get element above
-    int up = H[index - cols] + GAP_SCORE;
+    score_t up = H[index - cols] + GAP_SCORE;
 
     assert(index > 0);
     // Get element on the left
-    int left = H[index - 1] + GAP_SCORE;
+    score_t left = H[index - 1] + GAP_SCORE;
 
     assert(index > cols);
     // Get element on the diagonal
-    int diag = H[index - cols - 1] + matchMissmatchScore_cuda(i, j, seqa, seqb);
+    score_t diag = H[index - cols - 1] + matchMissmatchScore_cuda(i, j, seqa, seqb);
 
     // Calculates the maximum
-    int max  = NONE;
-    int pred = NONE;
+    score_t max  = NONE;
+    link_t  pred = NOLINK;
     /* === Matrix ===
      *      a[0] ... a[n]
      * b[0]
@@ -271,6 +216,56 @@ void similarityScore_kernel( long long si,
 }  /* End of similarityScore_kernel */
 
 
+static inline
+void check_cuda_success(cudaError_t err)
+{
+  if (err == cudaSuccess) return;
+
+  std::cerr << "CUDA error: " << cudaGetErrorString(err) << std::endl;
+  exit(0);
+}
+
+/// malloc replacement
+template<class T>
+static
+T* unified_alloc(size_t numelems)
+{
+  void*       ptr /* = NULL*/;
+  cudaError_t err = cudaMallocManaged(&ptr, numelems * sizeof(T), cudaMemAttachGlobal);
+  check_cuda_success(err);
+  
+  //~ err = cudaMemAdvise(ptr, numelems * sizeof(T), cudaMemAdviseSetPreferredLocation, 0);
+  //~ check_cuda_success(err);
+  return reinterpret_cast<T*>(ptr);
+}
+
+/// calloc replacement
+// \note depending on the OS, the memset may be superfluous.
+template<class T>
+static
+T* unified_alloc_zero(size_t numelems)
+{
+  T*          ptr = unified_alloc<T>(numelems);
+  cudaError_t err = cudaMemsetAsync(ptr, 0, numelems*sizeof(T), 0);
+
+  check_cuda_success(err);
+  return ptr;
+}
+
+static
+void unified_free(void* ptr)
+{
+  cudaError_t err = cudaFree(ptr);
+
+  check_cuda_success(err);
+}
+
+// Start position for backtrack
+// \note
+//   1) moved out from main function so it can be set in managed space
+//   2) made unsigned to fit with CUDA atomicCAS prototype
+static __managed__
+maxpos_t maxPos = 0;
 
 /*--------------------------------------------------------------------
  * Function:    main
@@ -279,8 +274,7 @@ int main(int argc, char* argv[])
 {
   typedef std::chrono::time_point<std::chrono::system_clock> time_point;
 
-  bool     useBuiltInData = true;
-  maxpos_t maxPos = 0;
+  bool useBuiltInData = true;
 
   if (argc==3)
   {
@@ -293,19 +287,18 @@ int main(int argc, char* argv[])
   if (useBuiltInData)
     printf ("Using built-in data for testing ..\n");
 
-  printf("Problem size: Matrix[%lld][%lld], FACTOR=%d CUTOFF=%d\n", n, m, FACTOR, CUTOFF);
-
+  
   // Allocates a and b
-  a = (char*)malloc((m+1) * sizeof(char));
-  b = (char*)malloc((n+1) * sizeof(char));
-  //~ a = unified_alloc<char>(m);
-  //~ b = unified_alloc<char>(n);
+  //~ a = malloc(m * sizeof(char));
+  //~ b = malloc(n * sizeof(char));
+  a = unified_alloc<char>(m+1);
+  b = unified_alloc<char>(n+1);
 
   std::cerr << "a,b allocated: " << m << "/" << n << std::endl;
 
   // Because now we have zeros
-  m++;
-  n++;
+  m++; // \note \pp really needed???
+  n++; // \note \pp really needed???
 
   if (useBuiltInData)
   {
@@ -362,27 +355,22 @@ int main(int argc, char* argv[])
 
   time_point     starttime = std::chrono::system_clock::now();
 
-  // Allocates similarity matrix H
-  int* H = (int*)malloc(m * n * sizeof(int));
+  // setting cudaMemAdviseSetReadMostly is mostly ineffective
+  //   (no runtime performance difference on pascal)
+  //~ cudaMemAdvise(a, sizeof(char)*m, cudaMemAdviseSetReadMostly, 0);
+  //~ cudaMemAdvise(b, sizeof(char)*n, cudaMemAdviseSetReadMostly, 0);
 
-  //Allocates predecessor matrix P
-  int* P = (int*)malloc(m * n * sizeof(int));
+  // Allocates similarity matrix H
+  //~ int* H = calloc(m * n, sizeof(int));
+  score_t* H = unified_alloc_zero<score_t>(m * n);
+
+  // Allocates predecessor matrix P
+  //~ int* P = calloc(m * n, sizeof(int));
+  //~ int* P = unified_alloc_zero<int>(m * n);
+  link_t* P = unified_alloc<link_t>(m * n);
 
   // Because now we have zeros ((m-1) + (n-1) - 1)
   long long int nDiag = m + n - 3;
-
-  // \todo \pp
-  //   gpuA and gpuB could be allocated in constant memory (if small enough)
-  char*       gpuA       = shared_alloc_transfer(a, m);
-  char*       gpuB       = shared_alloc_transfer(b, n);
-  int*        gpuH       = shared_alloc_zero(H, m*n);
-
-  // \todo \pp
-  //   not sure, why P needs to be transferred, since it is only written
-  //   w/o transfer, we observe incorrect results on Volta
-  //~ int*        gpuP       = shared_alloc(P, m*n);
-  int*        gpuP       = shared_alloc_zero(P, m*n);
-  maxpos_t*   gpuMaxPos  = shared_alloc_zero(&maxPos);
 
   for (int i = 1; i <= nDiag; ++i)
   {
@@ -396,7 +384,7 @@ int main(int argc, char* argv[])
         // CUDA, here we go
 
         // \note
-        //   * MAKE SURE THAT a,b,H,P,maxPos are ACCESSIBLE from GPU.
+        //   * MAKE SURE THAT a,b,H,P are ACCESSIBLE from GPU.
         //     This prototype allocates a,b,H,P in unified memory space, thus
         //     we just copy the pointers. If the allocation policy changes,
         //     memory referenced by a,b,H,P has to be transferred to the GPU,
@@ -412,52 +400,55 @@ int main(int argc, char* argv[])
 
         // comp. of ai and aj moved into CUDA kernel
         similarityScore_kernel
-            <<<ITER_SPACE, THREADS_PER_BLOCK>>>
-            (si, sj, nEle, gpuH, gpuP, gpuMaxPos, gpuA, gpuB, m);
+            <<<ITER_SPACE, THREADS_PER_BLOCK, 0, 0>>>
+            (si, sj, nEle, H, P, &maxPos, a, b, m);
+
+        // \todo sync needed?
+        //   - not needed when control is not returned to host
+        //   - may not be needed at all depending on device capability
       }
   }
 
-  // data transfer
-  //   P,H,maxPos
-  shared_to_host_free(P,       gpuP, m*n);
-#ifdef DEBUG
-  shared_to_host_free(H,       gpuH, m*n);
-#else
-  shared_free(gpuH);
-#endif
-  shared_to_host_free(&maxPos, gpuMaxPos);
-  shared_free(gpuA);
-  shared_free(gpuB);
+  check_cuda_success( cudaStreamSynchronize(0) );
 
-  int len = backtrack(P, maxPos);
   time_point     endtime = std::chrono::system_clock::now();
+  int len = backtrack(P, maxPos);
+  // time_point     endtime = std::chrono::system_clock::now();
 
-#ifdef DEBUG
-  printf("\nSimilarity Matrix:\n");
-  printMatrix(H);
-
-  printf("\nPredecessor Matrix:\n");
-  printPredecessorMatrix(P);
-#endif /* DEBUG */
-
-  if (useBuiltInData)
+  if (DEBUG_MODE)
   {
-    printf ("Verifying results using the builtinIn data: %s\n", (H[n*m-1]==7)?"true":"false");
-    assert (H[n*m-1]==7);
+    printf("\nSimilarity Matrix:\n");
+    printMatrix(H);
+  
+    printf("\nPredecessor Matrix:\n");
+    printPredecessorMatrix(P);
   }
 
+  if (useBuiltInData)
+  { 
+    const bool correct = H[maxPos] == 13;
+       
+    std::cerr << "Max(builtin data): " << H[maxPos] << " == 13? " << correct
+              << " " << maxPos 
+              << std::endl;
+    
+    if (!correct) throw std::logic_error("Invalid result"); 
+  }
 
   int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endtime-starttime).count();
 
-  printf("\nElapsed time: %d ms    Path length: %d \n\n", elapsed, len);
+  std::cout << "\nElapsed time: " << elapsed << " ms"
+            << "\nPath length: " << len 
+            << "\nScore: " << H[maxPos] 
+            << std::endl;
 
   // Frees similarity matrixes
-  free(H);
-  free(P);
+  unified_free(H);
+  unified_free(P);
 
   //Frees input arrays
-  free(a);
-  free(b);
+  unified_free(a);
+  unified_free(b);
 
   return 0;
 }  /* End of main */
@@ -504,10 +495,10 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  * Function:    backtrack
  * Purpose:     Modify matrix to print, path change from value to PATH
  */
-int backtrack(int* P, maxpos_t maxPos) {
+int backtrack(link_t* P, maxpos_t maxPos) {
     //hold maxPos value
     long long int predPos = 0;
-    int        len = 0;
+    int           len = 0;
 
 #ifdef DEBUG
     std::cerr << "maxpos = " << maxPos << std::endl;
@@ -521,7 +512,6 @@ int backtrack(int* P, maxpos_t maxPos) {
                   << P[maxPos]
                   << std::endl;
 #endif
-
         switch (P[maxPos])
         {
           case DIAGONAL:
@@ -546,7 +536,6 @@ int backtrack(int* P, maxpos_t maxPos) {
         maxPos = predPos;
         ++len;
     } while (P[maxPos] != NONE);
-
     return len;
 }  /* End of backtrack */
 
@@ -575,7 +564,7 @@ void printMatrix(int* matrix) {
  * Function:    printPredecessorMatrix
  * Purpose:     Print predecessor matrix
  */
-void printPredecessorMatrix(int* matrix) {
+void printPredecessorMatrix(link_t* matrix) {
     long long int i, j, index;
     printf("    ");
     for (j = 0; j < m-1; j++) {

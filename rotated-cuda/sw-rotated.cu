@@ -31,8 +31,6 @@
 #include <cassert>
 #include <iomanip>
 
-#include "parameters.h"
-
 #ifndef NDEBUG
 static constexpr bool DEBUG_MODE = true;
 #else
@@ -86,8 +84,8 @@ T* unified_alloc(size_t numelems)
   cudaError_t err = cudaMallocManaged(&ptr, numelems * sizeof(T));
   check_cuda_success(err);
 
-  err = cudaMemAdvise(ptr, numelems * sizeof(T), cudaMemAdviseSetPreferredLocation, 0);
-  check_cuda_success(err);
+  //~ err = cudaMemAdvise(ptr, numelems * sizeof(T), cudaMemAdviseSetPreferredLocation, 0);
+  //~ check_cuda_success(err);
 
   return reinterpret_cast<T*>(ptr);
 }
@@ -503,8 +501,8 @@ int main(int argc, char* argv[])
   if (useBuiltInData)
     std::cout << ("Using built-in data for testing ..\n");
 
-  std::cout << "Problem size: Matrix[" << n << "][" << m << "], FACTOR=" << FACTOR<< " CUTOFF=" << CUTOFF
-            << std::endl;
+  //~ std::cout << "Problem size: Matrix[" << n << "][" << m << "], FACTOR=" << FACTOR<< " CUTOFF=" << CUTOFF
+            //~ << std::endl;
 
   // Allocates a and b
   // \pp \note m (instead of m+1), b/c end marker is not needed
@@ -574,12 +572,9 @@ int main(int argc, char* argv[])
     generate(a, b, alen, blen);
   }
   
-  //~ alen = 6;
-  //~ blen = 6;
-
   time_point     starttime = std::chrono::system_clock::now();
 
-  std::pair<score_t*, link_t*> res = smithWaterman(b, a, blen, alen);
+  std::pair<score_t*, link_t*> res = smithWaterman(a, b, alen, blen);
 
   time_point     endtime = std::chrono::system_clock::now();
   int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endtime-starttime).count();
@@ -591,7 +586,7 @@ int main(int argc, char* argv[])
 
   if (DEBUG_MODE)
   {
-    printMatrix(res.first, b, a, blen, alen);
+    printMatrix(res.first, a, b, alen, blen);
     // res.first = static_cast<score_t*>(calloc((alen+1)*(blen+1), sizeof(score_t)));
 
     //~ printf("\nPredecessor Matrix:\n");
