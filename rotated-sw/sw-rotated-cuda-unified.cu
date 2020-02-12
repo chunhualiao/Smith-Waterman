@@ -297,7 +297,7 @@ void smithWaterman( const char* a,
     //   The H,P representations are artifacts from the standard
     //   algorithm. By moving towards a 45 degree rotated base version
     //   copying back could be entirely avoided at the expense that
-    //   the data representation becomes twice is big (though this
+    //   the data representation becomes twice as big (though this
     //   could possibly be remedied by using a clever data layout).
     if (0)
     {

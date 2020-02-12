@@ -399,8 +399,9 @@ int main(int argc, char* argv[])
 
   cudaDeviceSynchronize();
 
-  int len = backtrack(P, maxPos);
   time_point     endtime = std::chrono::system_clock::now();
+  int len = backtrack(P, maxPos);
+  // time_point     endtime = std::chrono::system_clock::now();
 
 #ifdef DEBUG
   printf("\nSimilarity Matrix:\n");
