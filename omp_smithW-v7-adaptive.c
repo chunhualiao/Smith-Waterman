@@ -154,7 +154,11 @@ int main(int argc, char* argv[]) {
     int *P;
     P = (int *)calloc(m * n, sizeof(int));
 //    printf ("debug: P's address=%p\n", P);
-
+   unsigned long long sz = (m+n +2*m*n)*sizeof(int)/1024/1024; 
+   if (sz>=1024)
+      printf("Total memory footprint is:%llu GB\n", sz/1024) ;
+   else
+      printf("Total memory footprint is:%llu MB\n", sz) ;
 
     if (useBuiltInData)
     {
