@@ -18,6 +18,8 @@ omp_smithW_O3.out: parameters.h omp_smithW.c
 omp_smithW-v7-adaptive.out: omp_smithW-v7-adaptive.c parameters.h
 	xlc-gpu -g -qsmp -qoffload -o $@ $<
 
+hasGPU.out: hasGPU.c
+	xlc-gpu -g -qsmp -qoffload -o $@ $<
 omp_smithW-v6-target-inlined.out: omp_smithW-v6-target-inlined.c parameters.h
 	xlc-gpu -g -qsmp -qoffload -o $@ $<
 # not working: parsing error for clang-gpu	

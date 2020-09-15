@@ -19,16 +19,17 @@ omp_smithW_O3.out: parameters.h omp_smithW.c
 
 omp_smithW-v7-adaptive.out: omp_smithW-v7-adaptive.c parameters.h
 	$(CC) $(FLAGS) -g  -o $@ $<
-
+hasGPU.out: hasGPU.c
+	$(CC) $(FLAGS) -o $@ $<
 omp_smithW-v6-target-inlined.out: omp_smithW-v6-target-inlined.c parameters.h
-	xlc-gpu -g -qsmp -qoffload -o $@ $<
+	$(CC) $(FLAGS) -o $@ $<
 # not working: parsing error for clang-gpu	
 #	clang-gpu -g -o $@ $<
 #	xlc-gpu -DDEBUG -g -qsmp -qoffload -o $@ $<
 
 #verify the results
-check: omp_smithW_O3.out
-	./$< 
+check: omp_smithW-v7-adaptive.out
+	./$< $(MSIZE) $(MSIZE) 
 
 # this is the version I am interested in
 check2: omp_smithW_O3.out
