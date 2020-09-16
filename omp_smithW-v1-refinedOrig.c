@@ -16,6 +16,7 @@
 #include <omp.h>
 #include <time.h>
 #include <assert.h>
+#include <stdbool.h> // C99 does not support the boolean data type
 
 /*--------------------------------------------------------------------
  * Text Tweaks
@@ -116,7 +117,7 @@ int main(int argc, char* argv[]) {
 //#ifdef DEBUG
   if (useBuiltInData)
     printf ("Using built-in data for testing ..\n");
-  printf("Problem size: Matrix[%lld][%lld]%d\n", n, m);
+  printf("Problem size: Matrix[%lld][%lld]\n", n, m);
 //#endif
 
     //Allocates a and b
@@ -135,6 +136,11 @@ int main(int argc, char* argv[]) {
     int *P;
     P = (int *)calloc(m * n, sizeof(int));
 
+    unsigned long long sz = (m+n +2*m*n)*sizeof(int)/1024/1024; 
+    if (sz>=1024)
+      printf("Total memory footprint is:%llu GB\n", sz/1024) ;
+    else
+      printf("Total memory footprint is:%llu MB\n", sz) ;
 
     if (useBuiltInData)
     {
@@ -267,7 +273,7 @@ long long int nElement(long long int i) {
     else {
         //Number of elements in the diagonal is decreasing
         long int min = min(m, n);
-        return 2 * min - i + abs(m - n) - 2;
+        return 2 * min - i + llabs(m - n) - 2;
     }
 }
 

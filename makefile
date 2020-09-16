@@ -9,7 +9,9 @@ all: omp_smithW-v6-target-inlined.out omp_smithW-v7-adaptive.out
 clean:
 	rm -rf *.out *.core
 
-C_SOURCE_FILES =  omp_smithW-v5-target.c \
+C_SOURCE_FILES = \
+	omp_smithW-v1-refinedOrig.c \
+	omp_smithW-v5-target.c \
 	omp_smithW-v6.2-target-inlined.c 
 
 %.out: %.c
@@ -39,6 +41,9 @@ check: omp_smithW_O3.out
 	./$< 
 
 # this is the version I am interested in
+checkv1: omp_smithW-v1-refinedOrig.out
+	./$< #$(MSIZE) $(MSIZE)
+
 check2: omp_smithW_O3.out
 	./$< $(MSIZE) $(MSIZE)
  
