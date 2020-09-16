@@ -147,6 +147,11 @@ int main(int argc, char* argv[]) {
     P = (int *)calloc(m * n, sizeof(int));
 //    printf ("debug: P's address=%p\n", P);
 
+    unsigned long long sz = (m+n +2*m*n)*sizeof(int)/1024/1024; 
+    if (sz>=1024)
+      printf("Total memory footprint is:%llu GB\n", sz/1024) ;
+    else
+      printf("Total memory footprint is:%llu MB\n", sz) ;
 
     if (useBuiltInData)
     {
@@ -225,6 +230,22 @@ int main(int argc, char* argv[]) {
         printf ("Using %d out of max %d threads...\n", thread_count, omp_get_max_threads());
       }
     }
+    // detect GPU support 
+    int runningOnGPU = 0;
+
+    printf ("The number of target devices =%d\n", omp_get_num_devices());
+    /* Test if GPU is available using OpenMP4.5 */
+#pragma omp target map(from:runningOnGPU)
+    {
+      // This function returns true if currently running on the host device, false otherwise.
+      if (!omp_is_initial_device())
+	runningOnGPU = 1;
+    }
+    /* If still running on CPU, GPU must not be available */
+    if (runningOnGPU == 1)
+      printf("### Able to use the GPU! ### \n");
+    else
+      printf("### Unable to use the GPU, using CPU! ###\n");
 #endif
     //Gets Initial time
     double initialTime = omp_get_wtime();
