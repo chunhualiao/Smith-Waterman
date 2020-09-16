@@ -11,11 +11,15 @@ clean:
 
 C_SOURCE_FILES = \
 	omp_smithW-v1-refinedOrig.c \
+	omp_smithW-v2-ifClause.c \
+	omp_smithW-v3-master-ompfor.c \
+	omp_smithW-v4-parallel-serial.c \
 	omp_smithW-v5-target.c \
 	omp_smithW-v6.2-target-inlined.c 
 
 %.out: %.c
 	xlc-gpu -g -qsmp -qoffload -o $@ $<
+
 omp_smithW_debug.out: parameters.h omp_smithW.c	
 	$(CC) omp_smithW.c -o $@ -fopenmp -DDEBUG	
 
@@ -44,6 +48,13 @@ check: omp_smithW_O3.out
 checkv1: omp_smithW-v1-refinedOrig.out
 	./$< #$(MSIZE) $(MSIZE)
 
+checkv2: omp_smithW-v2-ifClause.out
+	./$< #$(MSIZE) $(MSIZE)
+
+checkv3: omp_smithW-v3-master-ompfor.out
+	./$< #$(MSIZE) $(MSIZE)
+checkv4: omp_smithW-v4-parallel-serial.out
+	./$< #$(MSIZE) $(MSIZE)
 check2: omp_smithW_O3.out
 	./$< $(MSIZE) $(MSIZE)
  

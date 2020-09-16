@@ -16,6 +16,7 @@
 #include <omp.h>
 #include <time.h>
 #include <assert.h>
+#include <stdbool.h> // C99 does not support the boolean data type
 
 #include "parameters.h"
 
@@ -270,7 +271,7 @@ long long int nElement(long long int i) {
     else {
         //Number of elements in the diagonal is decreasing
         long int min = min(m, n);
-        return 2 * min - i + abs(m - n) - 2;
+        return 2 * min - i + llabs(m - n) - 2;
     }
 }
 
