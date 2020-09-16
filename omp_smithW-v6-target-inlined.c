@@ -294,7 +294,7 @@ int main(int argc, char* argv[]) {
         //--------------------------------------
         {
 // choice 1: map data before the inner loop
-#pragma omp target device(0) map (to:a[0:m], b[0:n], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp target map (to:a[0:m], b[0:n], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
 #pragma omp parallel for default(none) private(j) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
 	  {  // going upwards : anti-diagnol direction
