@@ -263,8 +263,8 @@ int main(int argc, char* argv[]) {
 
 //        if (nEle>=CUTOFF)
         {
-#pragma omp target map (to:a[0:m], b[0:n], nEle, si,sj, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
-#pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos)
+#pragma omp target map (to:a[0:m], b[0:n], nEle, si,sj, m, n, gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp parallel for default(none) private(j) shared (nEle, si, sj, H, P, maxPos)
           for (j = 0; j < nEle; ++j) 
           {  // going upwards : anti-diagnol direction
             long long int ai = si - j ; // going up vertically

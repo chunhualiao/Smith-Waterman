@@ -18,7 +18,8 @@ C_SOURCE_FILES = \
 	omp_smithW-v6.2-target-inlined.c 
 
 %.out: %.c
-	xlc-gpu -g -qsmp -qoffload -o $@ $<
+	clang-gpu -g -o $@ $<
+#	xlc-gpu -g -qsmp -qoffload -o $@ $<
 
 omp_smithW_debug.out: parameters.h omp_smithW.c	
 	$(CC) omp_smithW.c -o $@ -fopenmp -DDEBUG	
