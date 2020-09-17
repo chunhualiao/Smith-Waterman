@@ -18,8 +18,10 @@ C_SOURCE_FILES = \
 
 %.out: %.c
 	clang -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -o $@ $<
+#	xlc-gpu -o $@ $<
+#	gcc -fopenmp -foffload="-lm" -lm -o $@ $<
 #	clang-gpu -g -o $@ $<
-#	xlc-gpu -g -qsmp -qoffload -o $@ $<
+#	xlc -g -qsmp -qoffload -o $@ $<
 
 CC=g++
 omp_smithW_debug.out: parameters.h omp_smithW.c	
@@ -38,6 +40,8 @@ omp_smithW_O3.out: parameters.h omp_smithW.c
 check: omp_smithW_O3.out
 	./$< 
 
+checkgpu: hasGPU.out
+	./$< 
 # this is the version I am interested in
 checkv1: omp_smithW-v1-refinedOrig.out
 	./$< #$(MSIZE) $(MSIZE)
