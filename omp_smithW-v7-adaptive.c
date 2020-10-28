@@ -386,8 +386,8 @@ int main(int argc, char* argv[]) {
 	      P[index] = pred;
 
 	      //Updates maximum score to be used as seed on backtrack
+            #pragma omp critical
 	      if (max > H[maxPos]) {
-#pragma omp critical
 		maxPos = index;
 	      }
 
@@ -572,8 +572,8 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
     P[index] = pred;
 
     //Updates maximum score to be used as seed on backtrack
+    #pragma omp critical
     if (max > H[*maxPos]) {
-        #pragma omp critical
         *maxPos = index;
     }
 }  /* End of similarityScore */
