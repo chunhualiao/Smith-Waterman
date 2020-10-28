@@ -154,7 +154,11 @@ int main(int argc, char* argv[]) {
     int *P;
     P = (int *)calloc(m * n, sizeof(int));
 //    printf ("debug: P's address=%p\n", P);
-
+   unsigned long long sz = (m+n +2*m*n)*sizeof(int)/1024/1024; 
+   if (sz>=1024)
+      printf("Total memory footprint is:%llu GB\n", sz/1024) ;
+   else
+      printf("Total memory footprint is:%llu MB\n", sz) ;
 
     if (useBuiltInData)
     {
@@ -233,6 +237,25 @@ int main(int argc, char* argv[]) {
         printf ("Using %d out of max %d threads...\n", thread_count, omp_get_max_threads());
       }
     }
+
+     // detect GPU support 
+    int runningOnGPU = 0;
+
+    printf ("The number of target devices =%d\n", omp_get_num_devices());
+    /* Test if GPU is available using OpenMP4.5 */
+#pragma omp target map(from:runningOnGPU)
+    {
+      // This function returns true if currently running on the host device, false otherwise.
+      if (!omp_is_initial_device())
+	runningOnGPU = 1;
+    }
+    /* If still running on CPU, GPU must not be available */
+    if (runningOnGPU == 1)
+      printf("### Able to use the GPU! ### \n");
+    else
+      printf("### Unable to use the GPU, using CPU! ###\n");
+
+
 #endif
     //Gets Initial time
     double initialTime = omp_get_wtime();
@@ -247,6 +270,8 @@ int main(int argc, char* argv[]) {
       for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
       {
         long long int nEle, si, sj;
+	// report at most 5 times for each diagonal line
+	long long interval = nDiag/5; 
        //  nEle = nElement(i);
 	//---------------inlined ------------
 	if (i < m && i < n) { // smaller than both directions
@@ -279,6 +304,8 @@ int main(int argc, char* argv[]) {
 	// serial version: 0 to < medium: small data set
         if (nEle< MEDIUM)
 	{
+	  if (i%interval==0)
+	    printf ("Serial version is activated since the diagonal element count %lld is less than MEDIUM %d\n", nEle, MEDIUM);
           for (j = 0; j < nEle; ++j) 
           {  // going upwards : anti-diagnol direction
             long long int ai = si - j ; // going up vertically
@@ -289,6 +316,8 @@ int main(int argc, char* argv[]) {
 	else if (nEle<LARGE) // omp cpu version: medium to large: medium data set
 	{
 
+	  if (i%interval==0)
+	    printf ("OpenMP CPU version is activated since the diagonal element count %lld is less than LARGE %d\n", nEle, LARGE);
    #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) 
 	  for (j = 0; j < nEle; ++j)
 	  {  // going upwards : anti-diagnol direction
@@ -300,6 +329,8 @@ int main(int argc, char* argv[]) {
 	else // omp gpu version: large data set
         //--------------------------------------
         {
+	  if (i%interval==0)
+	    printf ("OpenMP GPU version is activated since the diagonal element count %lld >= LARGE %d\n", nEle, LARGE);
 // choice 1: map data before the inner loop
 #pragma omp target map (to:a[0:m], b[0:n], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
 #pragma omp parallel for default(none) private(j) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)

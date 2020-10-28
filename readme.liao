@@ -2,3 +2,61 @@
 ./tuneCutoff.sh &> output.log
 # collect data 
 grep "Elapsed time for scoring matrix computation" output.log | cut -f 7 -d ' '| awk -v line=1 '{if (line%3==0) print $0 ; else printf "%s ",$0; line++ }'
+
+
+v5 , v6 and v7 still have problems with IBM XL and Clang compilers
+
+[@lassen2:./Smith-Waterman]make checkv5
+./omp_smithW-v5-target.out # 25600 25600
+Using built-in data for testing ..
+Problem size: Matrix[9][8], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+1587-175 The underlying GPU runtime reported the following error "an illegal memory access was encountered". 
+1587-163 Error encountered while attempting to execute on the target device 0.  The program will stop.
+make: *** [makefile:60: checkv5] Error 163
+
+make checkv5
+clang -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -o omp_smithW-v5-target.out omp_smithW-v5-target.c
+./omp_smithW-v5-target.out # 25600 25600
+Using built-in data for testing ..
+Problem size: Matrix[9][8], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+#Libomptarget fatal error 1: failure of target construct while offloading is mandatory
+#make: *** [makefile:60: checkv5] Error 1
+#
+
+[@lassen2:./Smith-Waterman]make checkv6
+xlc-gpu -o omp_smithW-v6-target-inlined.out omp_smithW-v6-target-inlined.c
+./omp_smithW-v6-target-inlined.out #25600 25600
+Using built-in data for testing ..
+Problem size: Matrix[9][8], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+#
+#Elapsed time for scoring matrix computation: 0.004505
+#Elapsed time for backtracking: 0.000001
+#Verifying results using the builtinIn data: false
+#omp_smithW-v6-target-inlined.out: omp_smithW-v6-target-inlined.c:385: int main(int, char **): Assertion `H[n*m-1]==7' failed.
+#make: *** [makefile:63: checkv6] Aborted
+#
+make checkv6
+clang -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -o omp_smithW-v6-target-inlined.out omp_smithW-v6-target-inlined.c
+./omp_smithW-v6-target-inlined.out #25600 25600
+Using built-in data for testing ..
+Problem size: Matrix[9][8], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+#Libomptarget fatal error 1: failure of target construct while offloading is mandatory
+#make: *** [makefile:63: checkv6] Error 1
+#
+
