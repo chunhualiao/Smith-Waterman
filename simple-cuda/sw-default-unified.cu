@@ -17,7 +17,12 @@
 #include <chrono>
 #include <iostream>
 
-#include "parameters.h"
+#ifndef NDEBUG
+static constexpr bool DEBUG_MODE = true;
+#else
+static constexpr bool DEBUG_MODE = false;
+#endif /* NDEBUG */
+
 
 /*--------------------------------------------------------------------
  * Text Tweaks
@@ -31,9 +36,6 @@
  */
 #define PATH -1
 #define NONE 0
-#define UP 1
-#define LEFT 2
-#define DIAGONAL 3
 /* End of constants */
 
 /*--------------------------------------------------------------------
@@ -50,13 +52,23 @@
 // \todo maybe rename it to index_t and change all long longs to index_t
 typedef unsigned long long maxpos_t;
 
+/// defines type for indices into arrays and matrices
+///    (needs to be a signed type)
+typedef long long int index_t;
+
+/// defines data type for scoring
+typedef int           score_t;
+
+/// defines data type for linking paths
+enum link_t { UNDEF = -1, NOLINK = 0, UP = 1, LEFT = 2, DIAGONAL = 3 };
+
 
 /*--------------------------------------------------------------------
  * Functions Prototypes
  */
-void backtrack(int* P, maxpos_t maxPos);
-void printMatrix(int* matrix);
-void printPredecessorMatrix(int* matrix);
+int backtrack(link_t* P, maxpos_t maxPos);
+void printMatrix(score_t* matrix);
+void printPredecessorMatrix(link_t* matrix);
 void generate(void);
 long long int nElement(long long int i);
 
@@ -69,16 +81,16 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  * Global Variables
  */
 // Defines size of strings to be compared
-long long int m = 8; // Columns - Size of string a
-long long int n = 9; // Rows    - Size of string b
+index_t m = 8; // Columns - Size of string a
+index_t n = 9; // Rows    - Size of string b
 
 // Defines scores
-static const int       MATCH_SCORE     =  3; //  5 in omp_smithW_orig
-static const int       MISSMATCH_SCORE = -3; // -3
-static const int       GAP_SCORE       = -2; // -4
+static const score_t MATCH_SCORE     =  3; //  5 in omp_smithW_orig
+static const score_t MISSMATCH_SCORE = -3; // -3
+static const score_t GAP_SCORE       = -2; // -4
 
 // GPU THREADS PER BLOCK
-static const long long THREADS_PER_BLOCK = 1024;
+static constexpr int THREADS_PER_BLOCK = 1024;
 
 // Strings over the Alphabet Sigma
 char *a, *b;
@@ -91,7 +103,8 @@ char *a, *b;
  * Purpose:     Similarity function on the alphabet for match/missmatch
  */
 __device__
-int matchMissmatchScore_cuda(long long i, long long j, const char* seqa, const char* seqb)
+score_t 
+matchMissmatchScore_cuda(index_t i, index_t j, const char* seqa, const char* seqb)
 {
     if (seqa[j - 1] == seqb[i - 1])
         return MATCH_SCORE;
@@ -105,25 +118,25 @@ int matchMissmatchScore_cuda(long long i, long long j, const char* seqa, const c
  * Purpose:     Calculate  the maximum Similarity-Score H(i,j)
  */
 __global__
-void similarityScore_kernel( long long si,
-                             long long sj,
-                             long long j_upper_bound,
-                             int* H,
-                             int* P,
+void similarityScore_kernel( index_t si,
+                             index_t sj,
+                             index_t j_upper_bound,
+                             score_t* H,
+                             link_t* P,
                              maxpos_t* maxPos,
                              const char* seqa,
                              const char* seqb,
-                             long long cols
+                             index_t cols
                            )
 {
     // compute the second loop index j
-    const long long loopj = blockIdx.x * blockDim.x + threadIdx.x;
+    const index_t loopj = blockIdx.x * blockDim.x + threadIdx.x;
 
     if (loopj >= j_upper_bound) return;
 
     // compute original i and j
-    long long int i = si - loopj;
-    long long int j = sj + loopj;
+    index_t i = si - loopj;
+    index_t j = sj + loopj;
 
     // bounds test for matchMissmatchScore_cuda
     assert(i > 0); // was: assert(i > 0 && i <= n); -- n currently not passed in
@@ -134,19 +147,19 @@ void similarityScore_kernel( long long si,
 
     assert(index >= cols);
     // Get element above
-    int up = H[index - cols] + GAP_SCORE;
+    score_t up = H[index - cols] + GAP_SCORE;
 
     assert(index > 0);
     // Get element on the left
-    int left = H[index - 1] + GAP_SCORE;
+    score_t left = H[index - 1] + GAP_SCORE;
 
     assert(index > cols);
     // Get element on the diagonal
-    int diag = H[index - cols - 1] + matchMissmatchScore_cuda(i, j, seqa, seqb);
+    score_t diag = H[index - cols - 1] + matchMissmatchScore_cuda(i, j, seqa, seqb);
 
     // Calculates the maximum
-    int max  = NONE;
-    int pred = NONE;
+    score_t max  = NONE;
+    link_t  pred = NOLINK;
     /* === Matrix ===
      *      a[0] ... a[n]
      * b[0]
@@ -203,11 +216,12 @@ void similarityScore_kernel( long long si,
 }  /* End of similarityScore_kernel */
 
 
-void check_cuda_success(bool cond)
+static inline
+void check_cuda_success(cudaError_t err)
 {
-  if (cond) return;
+  if (err == cudaSuccess) return;
 
-  std::cerr << "CUDA error" << std::endl;
+  std::cerr << "CUDA error: " << cudaGetErrorString(err) << std::endl;
   exit(0);
 }
 
@@ -218,8 +232,10 @@ T* unified_alloc(size_t numelems)
 {
   void*       ptr /* = NULL*/;
   cudaError_t err = cudaMallocManaged(&ptr, numelems * sizeof(T), cudaMemAttachGlobal);
-
-  check_cuda_success(err == cudaSuccess);
+  check_cuda_success(err);
+  
+  //~ err = cudaMemAdvise(ptr, numelems * sizeof(T), cudaMemAdviseSetPreferredLocation, 0);
+  //~ check_cuda_success(err);
   return reinterpret_cast<T*>(ptr);
 }
 
@@ -230,9 +246,9 @@ static
 T* unified_alloc_zero(size_t numelems)
 {
   T*          ptr = unified_alloc<T>(numelems);
-  cudaError_t err = cudaMemset(ptr, 0, numelems*sizeof(T));
+  cudaError_t err = cudaMemsetAsync(ptr, 0, numelems*sizeof(T), 0);
 
-  check_cuda_success(err == cudaSuccess);
+  check_cuda_success(err);
   return ptr;
 }
 
@@ -241,7 +257,7 @@ void unified_free(void* ptr)
 {
   cudaError_t err = cudaFree(ptr);
 
-  check_cuda_success(err == cudaSuccess);
+  check_cuda_success(err);
 }
 
 // Start position for backtrack
@@ -271,8 +287,7 @@ int main(int argc, char* argv[])
   if (useBuiltInData)
     printf ("Using built-in data for testing ..\n");
 
-  printf("Problem size: Matrix[%lld][%lld], FACTOR=%d CUTOFF=%d\n", n, m, FACTOR, CUTOFF);
-
+  
   // Allocates a and b
   //~ a = malloc(m * sizeof(char));
   //~ b = malloc(n * sizeof(char));
@@ -340,13 +355,19 @@ int main(int argc, char* argv[])
 
   time_point     starttime = std::chrono::system_clock::now();
 
+  // setting cudaMemAdviseSetReadMostly is mostly ineffective
+  //   (no runtime performance difference on pascal)
+  //~ cudaMemAdvise(a, sizeof(char)*m, cudaMemAdviseSetReadMostly, 0);
+  //~ cudaMemAdvise(b, sizeof(char)*n, cudaMemAdviseSetReadMostly, 0);
+
   // Allocates similarity matrix H
   //~ int* H = calloc(m * n, sizeof(int));
-  int* H = unified_alloc_zero<int>(m * n);
+  score_t* H = unified_alloc_zero<score_t>(m * n);
 
-  //Allocates predecessor matrix P
+  // Allocates predecessor matrix P
   //~ int* P = calloc(m * n, sizeof(int));
-  int* P = unified_alloc_zero<int>(m * n);
+  //~ int* P = unified_alloc_zero<int>(m * n);
+  link_t* P = unified_alloc<link_t>(m * n);
 
   // Because now we have zeros ((m-1) + (n-1) - 1)
   long long int nDiag = m + n - 3;
@@ -377,50 +398,49 @@ int main(int argc, char* argv[])
         //~ const long long ITER_SPACE = ceil(nEle/THREADS_PER_BLOCK);
         const long long ITER_SPACE = (nEle+THREADS_PER_BLOCK-1)/THREADS_PER_BLOCK;
 
-        // data transfers :)
-        const char* gpuA = a; // only once
-        const char* gpuB = b; // only once
-        int*        gpuH = H; // only if previous computation was not on GPU
-        int*        gpuP = P; // only if previous computation was not on GPU
-
         // comp. of ai and aj moved into CUDA kernel
         similarityScore_kernel
-            <<<ITER_SPACE, THREADS_PER_BLOCK>>>
-            (si, sj, nEle, gpuH, gpuP, &maxPos, gpuA, gpuB, m);
+            <<<ITER_SPACE, THREADS_PER_BLOCK, 0, 0>>>
+            (si, sj, nEle, H, P, &maxPos, a, b, m);
 
         // \todo sync needed?
         //   - not needed when control is not returned to host
         //   - may not be needed at all depending on device capability
-
-        // data transfers :)
-        H = gpuH;
-        P = gpuP;
       }
   }
 
-  cudaDeviceSynchronize();
+  check_cuda_success( cudaStreamSynchronize(0) );
 
   time_point     endtime = std::chrono::system_clock::now();
+  int len = backtrack(P, maxPos);
+  // time_point     endtime = std::chrono::system_clock::now();
 
-#ifdef DEBUG
-  printf("\nSimilarity Matrix:\n");
-  printMatrix(H);
-
-  printf("\nPredecessor Matrix:\n");
-  printPredecessorMatrix(P);
-#endif
-
-  if (useBuiltInData)
+  if (DEBUG_MODE)
   {
-    printf ("Verifying results using the builtinIn data: %s\n", (H[n*m-1]==7)?"true":"false");
-    assert (H[n*m-1]==7);
+    printf("\nSimilarity Matrix:\n");
+    printMatrix(H);
+  
+    printf("\nPredecessor Matrix:\n");
+    printPredecessorMatrix(P);
   }
 
-  backtrack(P, maxPos);
+  if (useBuiltInData)
+  { 
+    const bool correct = H[maxPos] == 13;
+       
+    std::cerr << "Max(builtin data): " << H[maxPos] << " == 13? " << correct
+              << " " << maxPos 
+              << std::endl;
+    
+    if (!correct) throw std::logic_error("Invalid result"); 
+  }
 
   int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endtime-starttime).count();
 
-  printf("\nElapsed time: %d ms\n\n", elapsed);
+  std::cout << "\nElapsed time: " << elapsed << " ms"
+            << "\nPath length: " << len 
+            << "\nScore: " << H[maxPos] 
+            << std::endl;
 
   // Frees similarity matrixes
   unified_free(H);
@@ -475,19 +495,23 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  * Function:    backtrack
  * Purpose:     Modify matrix to print, path change from value to PATH
  */
-void backtrack(int* P, maxpos_t maxPos) {
+int backtrack(link_t* P, maxpos_t maxPos) {
     //hold maxPos value
     long long int predPos = 0;
+    int           len = 0;
 
+#ifdef DEBUG
     std::cerr << "maxpos = " << maxPos << std::endl;
+#endif
 
     //backtrack from maxPos to startPos = 0
     do {
+#ifdef DEBUG
         std::cerr << "P[" << maxPos << "] = "
                   << std::flush
                   << P[maxPos]
                   << std::endl;
-
+#endif
         switch (P[maxPos])
         {
           case DIAGONAL:
@@ -506,9 +530,13 @@ void backtrack(int* P, maxpos_t maxPos) {
             assert(false);
         }
 
+#ifdef DEBUG
         P[maxPos] *= PATH;
+#endif
         maxPos = predPos;
+        ++len;
     } while (P[maxPos] != NONE);
+    return len;
 }  /* End of backtrack */
 
 /*--------------------------------------------------------------------
@@ -536,7 +564,7 @@ void printMatrix(int* matrix) {
  * Function:    printPredecessorMatrix
  * Purpose:     Print predecessor matrix
  */
-void printPredecessorMatrix(int* matrix) {
+void printPredecessorMatrix(link_t* matrix) {
     long long int i, j, index;
     printf("    ");
     for (j = 0; j < m-1; j++) {

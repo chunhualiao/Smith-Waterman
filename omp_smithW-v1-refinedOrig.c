@@ -3,8 +3,8 @@
  * Purpose:     Local alignment of nucleotide or protein sequences
  * Authors:     Daniel Holanda, Hanoch Griner, Taynara Pinheiro
  *
- * Compilation: gcc omp_smithW.c -o omp_smithW -fopenmp -DDEBUG // debugging mode
- *              gcc omp_smithW.c -O3 -o omp_smithW -fopenmp // production run
+ * Compilation: g++ omp_smithW.c -o omp_smithW -fopenmp -DDEBUG // debugging mode
+ *              g++ omp_smithW.c -O3 -DNDEBUG=1 -o omp_smithW -fopenmp // production run
  * Execution:	./omp_smithW <number_of_col> <number_of_rows>
  *
  * Updated by C. Liao, Jan 2nd, 2019
@@ -16,6 +16,7 @@
 #include <omp.h>
 #include <time.h>
 #include <assert.h>
+#include <chrono>
 #include <stdbool.h> // C99 does not support the boolean data type
 
 /*--------------------------------------------------------------------
@@ -70,7 +71,7 @@ double omp_get_wtime()
  */
 void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 int matchMissmatchScore(long long int i, long long int j);
-void backtrack(int* P, long long int maxPos);
+int backtrack(int* P, long long int maxPos);
 void printMatrix(int* matrix);
 void printPredecessorMatrix(int* matrix);
 void generate(void);
@@ -104,6 +105,8 @@ char *a, *b;
  * Function:    main
  */
 int main(int argc, char* argv[]) {
+  typedef std::chrono::time_point<std::chrono::system_clock> time_point;
+
   // thread_count is no longer used
   int thread_count;
 
@@ -200,7 +203,8 @@ int main(int argc, char* argv[]) {
   
 #endif
     //Gets Initial time
-    double initialTime = omp_get_wtime();
+    // double initialTime = omp_get_wtime();
+    time_point     starttime = std::chrono::system_clock::now();
 
   #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
@@ -219,16 +223,11 @@ int main(int argc, char* argv[]) {
      }
     }
 
-  double finalTime = omp_get_wtime();
-  printf("\nElapsed time for scoring matrix computation: %f\n", finalTime - initialTime);
+  int len = backtrack(P, maxPos);
+  time_point     endtime = std::chrono::system_clock::now();
+  int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endtime-starttime).count();
 
-  initialTime = omp_get_wtime();
-  backtrack(P, maxPos);
-  finalTime = omp_get_wtime();
-
-  //Gets backtrack time
-  finalTime = omp_get_wtime();
-  printf("Elapsed time for backtracking: %f\n", finalTime - initialTime);
+  printf("\nElapsed time: %d ms    Path length: %d \n\n", elapsed, len);
 
     if (useBuiltInData)
     {
@@ -245,12 +244,12 @@ int main(int argc, char* argv[]) {
 #endif
 
     //Frees similarity matrixes
-    free(H);
-    free(P);
+  //  free(H);
+  //  free(P);
 
     //Frees input arrays
-    free(a);
-    free(b);
+  //  free(a);
+  //  free(b);
 
     return 0;
 }  /* End of main */
@@ -406,21 +405,30 @@ int matchMissmatchScore(long long int i, long long int j) {
  * Function:    backtrack
  * Purpose:     Modify matrix to print, path change from value to PATH
  */
-void backtrack(int* P, long long int maxPos) {
+int backtrack(int* P, long long int maxPos) {
     //hold maxPos value
     long long int predPos;
+    int           len = 0;
 
     //backtrack from maxPos to startPos = 0
     do {
-        if (P[maxPos] == DIAGONAL)
-            predPos = maxPos - m - 1;
-        else if (P[maxPos] == UP)
-            predPos = maxPos - m;
-        else if (P[maxPos] == LEFT)
-            predPos = maxPos - 1;
+        switch (P[maxPos]) {
+          case DIAGONAL: predPos = maxPos - m - 1;
+                         break;
+          case UP:       predPos = maxPos - m;
+                         break;
+          case LEFT:     predPos = maxPos - 1;
+                         break;
+          default:;
+        }
+
+#ifdef DEBUG
         P[maxPos] *= PATH;
+#endif
         maxPos = predPos;
+        ++len;
     } while (P[maxPos] != NONE);
+    return len;
 }  /* End of backtrack */
 
 /*--------------------------------------------------------------------
