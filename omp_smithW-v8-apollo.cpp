@@ -273,35 +273,35 @@ int main(int argc, char* argv[]) {
       for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
       {
         long long int nEle, si, sj;
-	// report at most 5 times for each diagonal line
-	long long interval = nDiag/5; 
-       //  nEle = nElement(i);
-	//---------------inlined ------------
-	if (i < m && i < n) { // smaller than both directions
-	  //Number of elements in the diagonal is increasing
-	  nEle = i;
-	}
-	else if (i < max(m, n)) { // smaller than only one direction
-	  //Number of elements in the diagonal is stable
-	  long int min = min(m, n);  // the longer direction has the edge elements, the number is the smaller direction's size
-	  nEle = min - 1;
-	}
-	else {
-	  //Number of elements in the diagonal is decreasing
-	  long int min = min(m, n);
-	  nEle = 2 * min - i + llabs(m - n) - 2;
-	}
+        // report at most 5 times for each diagonal line
+        long long interval = nDiag/5; 
+        //  nEle = nElement(i);
+        //---------------inlined ------------
+        if (i < m && i < n) { // smaller than both directions
+          //Number of elements in the diagonal is increasing
+          nEle = i;
+        }
+        else if (i < max(m, n)) { // smaller than only one direction
+          //Number of elements in the diagonal is stable
+          long int min = min(m, n);  // the longer direction has the edge elements, the number is the smaller direction's size
+          nEle = min - 1;
+        }
+        else {
+          //Number of elements in the diagonal is decreasing
+          long int min = min(m, n);
+          nEle = 2 * min - i + llabs(m - n) - 2;
+        }
 
         //calcFirstDiagElement(i, &si, &sj);
-	//------------inlined---------------------
-	// Calculate the first element of diagonal
-	if (i < n) { // smaller than row count
-	  si = i;
-	  sj = 1; // start from the j==1 since j==0 is the padding
-	} else {  // now we sweep horizontally at the bottom of the matrix
-	  si = n - 1;  // i is fixed
-	  sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
-	}
+        //------------inlined---------------------
+        // Calculate the first element of diagonal
+        if (i < n) { // smaller than row count
+          si = i;
+          sj = 1; // start from the j==1 since j==0 is the padding
+        } else {  // now we sweep horizontally at the bottom of the matrix
+          si = n - 1;  // i is fixed
+          sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
+        }
 
         // Create Apollo region if needed
         Apollo::Region *region = Apollo::instance()->getRegion(
@@ -316,7 +316,6 @@ int main(int argc, char* argv[]) {
         // Get the policy to execute from Apollo
         int policy = region->getPolicyIndex();
 
-   
         switch (policy)
         {
           case 0: 
@@ -419,6 +418,8 @@ int main(int argc, char* argv[]) {
           default: assert ("Invalid policy\n");
         } // end switch-case
 
+        // End region execution
+        region->end();
       } // for end nDiag
     } // end omp parallel
 

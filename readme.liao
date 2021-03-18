@@ -1,3 +1,11 @@
+# v8 apollo@lassen
+source ~/set.clang.offload 
+make clean
+make -f makefile-lassen-apollo
+APOLLO_TRACE_CSV_FOLDER_SUFFIX="-sw-v8" APOLLO_CROSS_EXECUTION=1 ./omp_smithW-v8-apollo.out 2048 2048
+
+#
+#
 # a script to change CUTOFF value and compile/run the omp version
 ./tuneCutoff.sh &> output.log
 # collect data 

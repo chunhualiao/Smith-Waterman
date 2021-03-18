@@ -1,0 +1,3 @@
+export APOLLO_HOME=/g/g17/liao6/workspace-wsa/parco-ldrd/apollo/install-lassen
+export PATH=/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/bin:$PATH
+export LD_LIBRARY_PATH=/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/lib:$LD_LIBRARY_PATH
