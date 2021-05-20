@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
     m++;
     n++;
 
-    //Allocates similarity matrix H
+    //Allocates similarity matrix H, linearized 2-D
     int *H;
     H = (int *) calloc(m * n, sizeof(int));
 
@@ -231,16 +231,18 @@ int main(int argc, char* argv[]) {
 
     if (useBuiltInData)
     {
-      printf ("Verifying results using the builtinIn data: %s\n", (H[n*m-1]==7)?"true":"false");
+      printf ("Verifying results using the builtinIn data: %s, maxPos=%d \n", (H[n*m-1]==7)?"true":"false", maxPos);
       assert (H[n*m-1]==7);
+      assert (maxPos==69);
+      assert (H[maxPos]==13);
     }
 
 #ifdef DEBUG
     printf("\nSimilarity Matrix:\n");
     printMatrix(H);
 
-    printf("\nPredecessor Matrix:\n");
-    printPredecessorMatrix(P);
+//    printf("\nPredecessor Matrix:\n");
+//    printPredecessorMatrix(P);
 #endif
 
     //Frees similarity matrixes
