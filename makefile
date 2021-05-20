@@ -3,9 +3,9 @@ MSIZE=25600
 
 # using C++ compiler to be more restrictive 	
 #CC=g++-8
-# CC=clang # default compiler: still illegal memory access bug
-CC=/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/bin/clang++
-FLAGS=-O3 -g -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -DDEBUG
+CC=clang # default compiler: still illegal memory access bug
+#CC=/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/bin/clang++
+#FLAGS=-O3 -g -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -DDEBUG
 
 all: omp_smithW-v6-target-inlined.out omp_smithW-v7-adaptive.out omp_smithW-v6.2-target-inlined.out
 v1:omp_smithW-v1-refinedOrig.out

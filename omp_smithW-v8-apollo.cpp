@@ -89,7 +89,6 @@ int matchMissmatchScore(long long int i, long long int j);
 void similarityScore(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 #pragma omp end declare target
 
-
 // without omp critical: how to conditionalize it?
 void similarityScore2(long long int i, long long int j, int* H, int* P, long long int* maxPos);
 void backtrack(int* P, long long int maxPos);
@@ -267,7 +266,7 @@ int main(int argc, char* argv[]) {
     // int asz= m*n*sizeof(int);
     int asz= m*n;
 // choice 2: map data before the outer loop
-//#pragma omp target map (to:a[0:m], b[0:n], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
+//#pragma omp target map (to:a[0:m-1], b[0:n-1], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
 //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
       for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
@@ -350,7 +349,7 @@ int main(int argc, char* argv[]) {
               //	  if (i%interval==0)
               //	    printf ("OpenMP GPU version is activated since the diagonal element count %lld >= LARGE %d\n", nEle, LARGE);
               // choice 1: map data before the inner loop
-#pragma omp target map (to:a[0:m], b[0:n], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp target map (to:a[0:m-1], b[0:n-1], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
 #pragma omp parallel for default(none) private(j) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
               for (j = 0; j < nEle; ++j) 
               {  // going upwards : anti-diagnol direction
@@ -446,6 +445,9 @@ int main(int argc, char* argv[]) {
     {
       printf ("Verifying results using the builtinIn data: %s\n", (H[n*m-1]==7)?"true":"false");
       assert (H[n*m-1]==7);
+      assert (maxPos==69);
+      assert (H[maxPos]==13);
+
     }
 
     //Frees similarity matrixes
