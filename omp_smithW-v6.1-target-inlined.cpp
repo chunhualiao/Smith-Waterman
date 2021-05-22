@@ -5,7 +5,7 @@
  *
  * Compilation: gcc omp_smithW.c -o omp_smithW -fopenmp -DDEBUG // debugging mode
  *              gcc omp_smithW.c -O3 -o omp_smithW -fopenmp // production run
- * Execution:	./omp_smithW <number_of_col> <number_of_rows>
+ * Execution:   ./omp_smithW <number_of_col> <number_of_rows>
  *
  * Updated by C. Liao, Jan 2nd, 2019
  *********************************************************************************/
@@ -18,7 +18,9 @@
 #include <assert.h>
 #include <stdbool.h> // C99 does not support the boolean data type
 
-#include "parameters.h"
+//#include "parameters.h"
+#define FACTOR 128 
+#define CUTOFF 1024
 
 /*--------------------------------------------------------------------
  * Text Tweaks
@@ -157,30 +159,6 @@ int main(int argc, char* argv[]) {
 
     if (useBuiltInData)
     {
-      //Uncomment this to test the sequence available at 
-      //http://vlab.amrita.edu/?sub=3&brch=274&sim=1433&cnt=1
-      // OBS: m=11 n=7
-      // a[0] =   'C';
-      // a[1] =   'G';
-      // a[2] =   'T';
-      // a[3] =   'G';
-      // a[4] =   'A';
-      // a[5] =   'A';
-      // a[6] =   'T';
-      // a[7] =   'T';
-      // a[8] =   'C';
-      // a[9] =   'A';
-      // a[10] =  'T';
-
-      // b[0] =   'G';
-      // b[1] =   'A';
-      // b[2] =   'C';
-      // b[3] =   'T';
-      // b[4] =   'T';
-      // b[5] =   'A';
-      // b[6] =   'C';
-      // https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm#Example
-      // Using the wiki example to verify the results
       b[0] =   'G';
       b[1] =   'G';
       b[2] =   'T';
@@ -224,7 +202,7 @@ int main(int argc, char* argv[]) {
 #ifdef _OPENMP
 #pragma omp parallel 
     {
-#pragma omp master	    
+#pragma omp master          
       {
         thread_count = omp_get_num_threads();
         printf ("Using %d out of max %d threads...\n", thread_count, omp_get_max_threads());
@@ -239,16 +217,13 @@ int main(int argc, char* argv[]) {
     {
       // This function returns true if currently running on the host device, false otherwise.
       if (!omp_is_initial_device())
-	runningOnGPU = 1;
+        runningOnGPU = 1;
     }
     /* If still running on CPU, GPU must not be available */
     if (runningOnGPU == 1)
       printf("### Able to use the GPU! ### \n");
     else
-    {
       printf("### Unable to use the GPU, using CPU! ###\n");
-      assert (false);
-    }
 
 #endif
     //Gets Initial time
@@ -258,105 +233,106 @@ int main(int argc, char* argv[]) {
     // int asz= m*n*sizeof(int);
     int asz= m*n;
 // choice 2: map data before the outer loop
-#pragma omp target map (to:a[0:m-1], b[0:n-1], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
+//#pragma omp target map (to:a[0:m-1], b[0:n-1], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
 //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
       for (int i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
       {
         long long int nEle, si, sj;
        //  nEle = nElement(i);
-	//---------------inlined ------------
-	if (i < m && i < n) { // smaller than both directions
-	  //Number of elements in the diagonal is increasing
-	  nEle = i;
-	}
-	else if (i < max(m, n)) { // smaller than only one direction
-	  //Number of elements in the diagonal is stable
-	  long int min = min(m, n);  // the longer direction has the edge elements, the number is the smaller direction's size
-	  nEle = min - 1;
-	}
-	else {
-	  //Number of elements in the diagonal is decreasing
-	  long int min = min(m, n);
-	  nEle = 2 * min - i + llabs(m - n) - 2;
-	}
+        //---------------inlined ------------
+        if (i < m && i < n) { // smaller than both directions
+          //Number of elements in the diagonal is increasing
+          nEle = i;
+        }
+        else if (i < max(m, n)) { // smaller than only one direction
+          //Number of elements in the diagonal is stable
+          long int min = min(m, n);  // the longer direction has the edge elements, the number is the smaller direction's size
+          nEle = min - 1;
+        }
+        else {
+          //Number of elements in the diagonal is decreasing
+          long int min = min(m, n);
+          nEle = 2 * min - i + llabs(m - n) - 2;
+        }
 
         //calcFirstDiagElement(i, &si, &sj);
-	//------------inlined---------------------
-	// Calculate the first element of diagonal
-	if (i < n) { // smaller than row count
-	  si = i;
-	  sj = 1; // start from the j==1 since j==0 is the padding
-	} else {  // now we sweep horizontally at the bottom of the matrix
-	  si = n - 1;  // i is fixed
-	  sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
-	}
+        //------------inlined---------------------
+        // Calculate the first element of diagonal
+        if (i < n) { // smaller than row count
+          si = i;
+          sj = 1; // start from the j==1 since j==0 is the padding
+        } else {  // now we sweep horizontally at the bottom of the matrix
+          si = n - 1;  // i is fixed
+          sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
+        }
 
         //--------------------------------------
         {
 // choice 1: map data before the inner loop
-//#pragma omp target device(0) map (to:a[0:m-1], b[0:n-1], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+//pragma omp target device(0) map (to:a[0:m-1], b[0:n-1], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp target  map (to:a[0:m-1], b[0:n-1], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
 #pragma omp parallel for default(none) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
           for (int j = 0; j < nEle; ++j) 
-	  {  // going upwards : anti-diagnol direction
-	    long long int ai = si - j ; // going up vertically
-	    long long int aj = sj + j;  //  going right in horizontal
-	    ///------------inlined ------------------------------------------
-	    //            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
-	    {
-	      int up, left, diag;
+          {  // going upwards : anti-diagnol direction
+            long long int ai = si - j ; // going up vertically
+            long long int aj = sj + j;  //  going right in horizontal
+            ///------------inlined ------------------------------------------
+            //            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
+            {
+              int up, left, diag;
 
-	      //Stores index of element
-	      long long int index = m * ai + aj;
+              //Stores index of element
+              long long int index = m * ai + aj;
 
-	      //Get element above
-	      up = H[index - m] + gapScore;
+              //Get element above
+              up = H[index - m] + gapScore;
 
-	      //Get element on the left
-	      left = H[index - 1] + gapScore;
+              //Get element on the left
+              left = H[index - 1] + gapScore;
 
-	      //Get element on the diagonal
-	      int t_mms;
+              //Get element on the diagonal
+              int t_mms;
 
-	      if (a[aj - 1] == b[ai - 1])
-		t_mms = matchScore;
-	      else
-		t_mms = missmatchScore;
+              if (a[aj - 1] == b[ai - 1])
+                t_mms = matchScore;
+              else
+                t_mms = missmatchScore;
 
-	      diag = H[index - m - 1] + t_mms; // matchMissmatchScore(i, j);
+              diag = H[index - m - 1] + t_mms; // matchMissmatchScore(i, j);
 
-	      // degug here
-	      // return;
-	      //Calculates the maximum
-	      int max = NONE;
-	      int pred = NONE;
-	      if (diag > max) { //same letter ↖
-		max = diag;
-		pred = DIAGONAL;
-	      }
+              // degug here
+              // return;
+              //Calculates the maximum
+              int max = NONE;
+              int pred = NONE;
+              if (diag > max) { //same letter ↖
+                max = diag;
+                pred = DIAGONAL;
+              }
 
-	      if (up > max) { //remove letter ↑
-		max = up;
-		pred = UP;
-	      }
+              if (up > max) { //remove letter ↑
+                max = up;
+                pred = UP;
+              }
 
-	      if (left > max) { //insert letter ←
-		max = left;
-		pred = LEFT;
-	      }
-	      //Inserts the value in the similarity and predecessor matrixes
-	      H[index] = max;
-	      P[index] = pred;
-
-	      //Updates maximum score to be used as seed on backtrack
+              if (left > max) { //insert letter ←
+                max = left;
+                pred = LEFT;
+              }
+              //Inserts the value in the similarity and predecessor matrixes
+              H[index] = max;
+              P[index] = pred;
+#if 0
+              //Updates maximum score to be used as seed on backtrack
             #pragma omp critical
-	      if (max > H[maxPos]) {
-		maxPos = index;
-	      }
-
-	    }
-	    // ---------------------------------------------------------------
-	  }
+              if (max > H[maxPos]) {
+                maxPos = index;
+              }
+#endif
+            }
+            // ---------------------------------------------------------------
+          }
         }
       } // for end nDiag
     } // end omp parallel
@@ -441,11 +417,9 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  // understanding the calculation by an example
  n =6 // row
  m =2  // col
-
  padded scoring matrix
  n=7
  m=3
-
    0 1 2
  -------
  0 x x x
@@ -455,11 +429,9 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  4 x x x
  5 x x x
  6 x x x
-
  We should peel off top row and left column since they are the padding
  the remaining 6x2 sub matrix is what is interesting for us
  Now find the number of wavefront lines and their first element's position in the scoring matrix
-
 total diagnol frontwave = (n-1) + (m-1) -1 // submatrix row+column -1
 We use the left most element in each wavefront line as its first element.
 Then we have the first elements like
@@ -645,12 +617,12 @@ void printMatrix(int* matrix) {
     long long int i, j;
     printf("-\t-\t");
     for (j = 0; j < m-1; j++) {
-    	printf("%c\t", a[j]);
+        printf("%c\t", a[j]);
     }
     printf("\n-\t");
     for (i = 0; i < n; i++) { //Lines
         for (j = 0; j < m; j++) {  
-        	if (j==0 && i>0) printf("%c\t", b[i-1]);
+                if (j==0 && i>0) printf("%c\t", b[i-1]);
             printf("%d\t", matrix[m * i + j]);
         }
         printf("\n");
@@ -666,12 +638,12 @@ void printPredecessorMatrix(int* matrix) {
     long long int i, j, index;
     printf("    ");
     for (j = 0; j < m-1; j++) {
-    	printf("%c ", a[j]);
+        printf("%c ", a[j]);
     }
     printf("\n  ");
     for (i = 0; i < n; i++) { //Lines
         for (j = 0; j < m; j++) {
-        	if (j==0 && i>0) printf("%c ", b[i-1]);
+                if (j==0 && i>0) printf("%c ", b[i-1]);
             index = m * i + j;
             if (matrix[index] < 0) {
                 printf(BOLDRED);

@@ -16,7 +16,6 @@
 #include <omp.h>
 #include <time.h>
 #include <assert.h>
-#include <chrono>
 #include <stdbool.h> // C99 does not support the boolean data type
 
 /*--------------------------------------------------------------------
@@ -41,7 +40,6 @@
 */
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 #define max(a,b) ((a) > (b) ? a : b)
-
 
 #ifndef _OPENMP
 
@@ -105,9 +103,7 @@ char *a, *b;
  * Function:    main
  */
 int main(int argc, char* argv[]) {
-  typedef std::chrono::time_point<std::chrono::system_clock> time_point;
-
-  // thread_count is no longer used
+  double start, end;
   int thread_count;
 
   if (argc==3)
@@ -117,143 +113,150 @@ int main(int argc, char* argv[]) {
     useBuiltInData = false;
   }
 
-//#ifdef DEBUG
+  //#ifdef DEBUG
   if (useBuiltInData)
     printf ("Using built-in data for testing ..\n");
   printf("Problem size: Matrix[%lld][%lld]\n", n, m);
-//#endif
+  //#endif
 
-    //Allocates a and b
-    a = (char*) malloc(m * sizeof(char));
-    b = (char*) malloc(n * sizeof(char));
+  //Allocates a and b
+  a = (char*) malloc(m * sizeof(char));
+  b = (char*) malloc(n * sizeof(char));
 
-    //Because now we have zeros
-    m++;
-    n++;
+  //Because now we have zeros
+  m++;
+  n++;
 
-    //Allocates similarity matrix H, linearized 2-D
-    int *H;
-    H = (int *) calloc(m * n, sizeof(int));
+  //Allocates similarity matrix H, linearized 2-D
+  int *H;
+  H = (int *) calloc(m * n, sizeof(int));
 
-    //Allocates predecessor matrix P
-    int *P;
-    P = (int *)calloc(m * n, sizeof(int));
+  //Allocates predecessor matrix P
+  int *P;
+  P = (int *)calloc(m * n, sizeof(int));
 
-    unsigned long long sz = (m+n +2*m*n)*sizeof(int)/1024/1024; 
-    if (sz>=1024)
-      printf("Total memory footprint is:%llu GB\n", sz/1024) ;
-    else
-      printf("Total memory footprint is:%llu MB\n", sz) ;
+  unsigned long long sz = (m+n +2*m*n)*sizeof(int)/1024/1024; 
+  if (sz>=1024)
+    printf("Total memory footprint is:%llu GB\n", sz/1024) ;
+  else
+    printf("Total memory footprint is:%llu MB\n", sz) ;
 
-    if (useBuiltInData)
-    {
-     // https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm#Example
-      // Using the wiki example to verify the results
-      b[0] =   'G';
-      b[1] =   'G';
-      b[2] =   'T';
-      b[3] =   'T';
-      b[4] =   'G';
-      b[5] =   'A';
-      b[6] =   'C';
-      b[7] =   'T';
-      b[8] =   'A';
+  if (useBuiltInData)
+  {
+    // https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm#Example
+    // Using the wiki example to verify the results
+    b[0] =   'G';
+    b[1] =   'G';
+    b[2] =   'T';
+    b[3] =   'T';
+    b[4] =   'G';
+    b[5] =   'A';
+    b[6] =   'C';
+    b[7] =   'T';
+    b[8] =   'A';
 
-      a[0] =   'T';
-      a[1] =   'G';
-      a[2] =   'T';
-      a[3] =   'T';
-      a[4] =   'A';
-      a[5] =   'C';
-      a[6] =   'G';
-      a[7] =   'G';
-    }
-    else
-    {
-      //Gen random arrays a and b
-      generate();
-    }
+    a[0] =   'T';
+    a[1] =   'G';
+    a[2] =   'T';
+    a[3] =   'T';
+    a[4] =   'A';
+    a[5] =   'C';
+    a[6] =   'G';
+    a[7] =   'G';
+  }
+  else
+  {
+    //Gen random arrays a and b
+    generate();
+  }
 
-    //Start position for backtrack
-    long long int maxPos = 0;
-    //Calculates the similarity matrix
-    long long int i, j;
+  //Start position for backtrack
+  long long int maxPos = 0;
+  //Calculates the similarity matrix
+  long long int i, j;
 
 
-    // The way to generate all wavefront is to go through the top edge elements
-    // starting from the left top of the matrix, go to the bottom top -> down, then left->right
-    // total top edge element count =  dim1_size + dim2_size -1 
-    //Because now we have zeros ((m-1) + (n-1) - 1)
-    long long int nDiag = m + n - 3;
+  // The way to generate all wavefront is to go through the top edge elements
+  // starting from the left top of the matrix, go to the bottom top -> down, then left->right
+  // total top edge element count =  dim1_size + dim2_size -1 
+  //Because now we have zeros ((m-1) + (n-1) - 1)
+  long long int nDiag = m + n - 3;
 
 #ifdef DEBUG
-    printf("nDiag=%d\n", nDiag);
-    printf("Number of wavefront lines and their first element positions:\n");
+  printf("nDiag=%d\n", nDiag);
+  printf("Number of wavefront lines and their first element positions:\n");
 #endif
 
+#if SKIP_BACKTRACK  
+  printf("Skipping backtrack ...\n");
+#endif 
 #ifdef _OPENMP
 #pragma omp parallel 
-    {
+  {
 #pragma omp master	    
-      {
-        thread_count = omp_get_num_threads();
-        printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
-      }
-    }  
-  
+    {
+      thread_count = omp_get_num_threads();
+      printf ("Using %d out of max %d threads...", thread_count, omp_get_max_threads());
+    }
+  }  
 #endif
-    //Gets Initial time
-    // double initialTime = omp_get_wtime();
-    time_point     starttime = std::chrono::system_clock::now();
-
-  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
+  //Gets Initial time
+  // double initialTime = omp_get_wtime();
+  start = omp_get_wtime();
+#pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
+  {
+    for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
     {
-      for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
-      {
-        long long int nEle, si, sj;
-        nEle = nElement(i);
-        calcFirstDiagElement(i, &si, &sj);
-        #pragma omp for private(j) 
-          for (j = 0; j < nEle; ++j) 
-          {  // going upwards : anti-diagnol direction
-            long long int ai = si - j ; // going up vertically
-            long long int aj = sj + j;  //  going right in horizontal
-            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
-          }
-     }
+      long long int nEle, si, sj;
+      nEle = nElement(i);
+      calcFirstDiagElement(i, &si, &sj);
+#pragma omp for private(j) 
+      for (j = 0; j < nEle; ++j) 
+      {  // going upwards : anti-diagnol direction
+        long long int ai = si - j ; // going up vertically
+        long long int aj = sj + j;  //  going right in horizontal
+        similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
+      }
     }
+  }
 
+  end = omp_get_wtime();
+  printf("\nElapsed time for scoring matrix computation: %f\n", end - start);
+
+#if !SKIP_BACKTRACK  
   int len = backtrack(P, maxPos);
-  time_point     endtime = std::chrono::system_clock::now();
-  int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endtime-starttime).count();
+#endif
+  if (useBuiltInData)
+  {
+    printf ("Verifying results using the builtinIn data: %s, maxPos=%lld \n", (H[n*m-1]==7)?"true":"false", maxPos);
+    assert (H[n*m-1]==7);
 
-  printf("\nElapsed time: %d ms    Path length: %d \n\n", elapsed, len);
-
-    if (useBuiltInData)
-    {
-      printf ("Verifying results using the builtinIn data: %s, maxPos=%d \n", (H[n*m-1]==7)?"true":"false", maxPos);
-      assert (H[n*m-1]==7);
-      assert (maxPos==69);
-      assert (H[maxPos]==13);
-    }
+#if !SKIP_BACKTRACK  
+    assert (maxPos==69);
+    assert (H[maxPos]==13);
+#endif    
+  }
 
 #ifdef DEBUG
-    printf("\nSimilarity Matrix:\n");
-    printMatrix(H);
+  printf("\nSimilarity Matrix:\n");
+  printMatrix(H);
 
-//    printf("\nPredecessor Matrix:\n");
-//    printPredecessorMatrix(P);
+#if !SKIP_BACKTRACK  
+  printf("\nPredecessor Matrix:\n");
+  printPredecessorMatrix(P);
 #endif
 
-    //Frees similarity matrixes
-  //  free(H);
-  //  free(P);
+#endif
 
-    //Frees input arrays
-  //  free(a);
-  //  free(b);
+  //Frees similarity matrixes
+  free(H);
+  free(P);
 
-    return 0;
+  //Frees input arrays
+  free(a);
+  free(b);
+
+  return 0;
 }  /* End of main */
 
 /*--------------------------------------------------------------------
@@ -384,11 +387,13 @@ void similarityScore(long long int i, long long int j, int* H, int* P, long long
     H[index] = max;
     P[index] = pred;
 
+#if !SKIP_BACKTRACK    
     //Updates maximum score to be used as seed on backtrack
     #pragma omp critical
     if (max > H[*maxPos]) {
         *maxPos = index;
     }
+#endif
 
 }  /* End of similarityScore */
 
