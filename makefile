@@ -47,6 +47,8 @@ omp_smithW-v6.1-target-inlined.out: omp_smithW-v6.1-target-inlined.cpp parameter
 omp_smithW-v6.2-target-inlined.out: omp_smithW-v6.2-target-inlined.c parameters.h	
 	$(CC) $(BASE_FLAGS) -fopenmp $(OFFLOADING_FLAGS) $(LINK_FALGS) -o $@ $<
 
+omp_smithW-v6.3-target-inlined.out: omp_smithW-v6.3-target-inlined.cpp parameters.h	
+	$(CC) $(BASE_FLAGS) -fopenmp $(OFFLOADING_FLAGS) $(LINK_FALGS) -o $@ $<
 # not working: parsing error for clang-gpu	
 #	clang-gpu -g -o $@ $<
 #	xlc-gpu -DDEBUG -g -qsmp -qoffload -o $@ $<

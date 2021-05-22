@@ -258,7 +258,7 @@ int main(int argc, char* argv[]) {
     // int asz= m*n*sizeof(int);
     int asz= m*n;
 // choice 2: map data before the outer loop
-#pragma omp target map (to:a[0:m-1], b[0:n-1], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp target enter data map (to:a[0:m-1], b[0:n-1], nDiag, m,n,gapScore, matchScore, missmatchScore) map(to: H[0:asz], P[0:asz], maxPos)
 //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
       for (int i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
@@ -296,7 +296,7 @@ int main(int argc, char* argv[]) {
         {
 // choice 1: map data before the inner loop
 //#pragma omp target device(0) map (to:a[0:m-1], b[0:n-1], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
-#pragma omp parallel for default(none) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
+#pragma omp target teams distribute parallel for default(none) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
           for (int j = 0; j < nEle; ++j) 
 	  {  // going upwards : anti-diagnol direction
 	    long long int ai = si - j ; // going up vertically
@@ -360,6 +360,7 @@ int main(int argc, char* argv[]) {
         }
       } // for end nDiag
     } // end omp parallel
+#pragma omp target exit data map(from: H[0:asz], P[0:asz], maxPos)
 
   double finalTime = omp_get_wtime();
   printf("\nElapsed time for scoring matrix computation: %f\n", finalTime - initialTime);
@@ -385,6 +386,7 @@ int main(int argc, char* argv[]) {
     if (useBuiltInData)
     {
       printf ("Verifying results using the builtinIn data: %s\n", (H[n*m-1]==7)?"true":"false");
+      printMatrix(H);
       assert (H[n*m-1]==7);
 #if !SKIP_BACKTRACK      
       assert (maxPos==69);
