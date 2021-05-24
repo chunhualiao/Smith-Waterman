@@ -21,6 +21,16 @@ else
   LINK_FALGS=-Wl,--rpath,/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/lib	
 endif
 
+# OpenMP offloading versions	
+SRC_FILES = \
+  hasGPU.cpp \
+  omp_smithW-v5-target.cpp \
+  omp_smithW-v6.1-target-inlined.cpp \
+  omp_smithW-v6.2-target-inlined.cpp \
+  omp_smithW-v6.3-target-inlined.cpp \
+  omp_smithW-v7-adaptive.cpp
+
+
 all: omp_smithW-v6-target-inlined.out omp_smithW-v7-adaptive.out omp_smithW-v6.2-target-inlined.out
 v1:omp_smithW-v1-refinedOrig.out
 v7:omp_smithW-v7-adaptive.out
@@ -46,20 +56,8 @@ omp_smithW-v1-refinedOrig.out: omp_smithW-v1-refinedOrig.c parameters.h
 omp_smithW_O3.out: parameters.h omp_smithW.c	
 	$(CC) -O3 omp_smithW.c $(LINK_FALGS) -o $@ -fopenmp 
 
-# OpenMP offloading versions	
-omp_smithW-v7-adaptive.out: omp_smithW-v7-adaptive.c parameters.h
-	$(CC) $(BASE_FLAGS) -fopenmp $(LINK_FALGS) -g  -o $@ $<
-hasGPU.out: hasGPU.c
+%.out: %.cpp
 	$(CC) $(BASE_FLAGS) -fopenmp $(OFFLOADING_FLAGS) -o $@ $<
-omp_smithW-v5-target.out: omp_smithW-v5-target.c parameters.h
-	$(CC) $(BASE_FLAGS) -fopenmp $(OFFLOADING_FLAGS) $(LINK_FALGS) -o $@ $<
-omp_smithW-v6.1-target-inlined.out: omp_smithW-v6.1-target-inlined.cpp parameters.h
-	$(CC) $(BASE_FLAGS) -fopenmp $(OFFLOADING_FLAGS) $(LINK_FALGS) -o $@ $<
-omp_smithW-v6.2-target-inlined.out: omp_smithW-v6.2-target-inlined.c parameters.h	
-	$(CC) $(BASE_FLAGS) -fopenmp $(OFFLOADING_FLAGS) $(LINK_FALGS) -o $@ $<
-
-omp_smithW-v6.3-target-inlined.out: omp_smithW-v6.3-target-inlined.cpp parameters.h	
-	$(CC) $(BASE_FLAGS) -fopenmp $(OFFLOADING_FLAGS) $(LINK_FALGS) -o $@ $<
 # not working: parsing error for clang-gpu	
 #	clang-gpu -g -o $@ $<
 #	xlc-gpu -DDEBUG -g -qsmp -qoffload -o $@ $<

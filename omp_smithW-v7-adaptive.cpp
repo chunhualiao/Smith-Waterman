@@ -12,7 +12,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <omp.h>
 #include <time.h>
 #include <assert.h>
@@ -104,6 +103,9 @@ void calcFirstDiagElement(long long int i, long long int *si, long long int *sj)
  */
 bool useBuiltInData=true;
 
+int MEDIUM=10240;
+int LARGE=20480; // max 46340 for GPU of 16GB Device memory
+
 // the generated scoring matrix's size is m++ and n++ later to have the first row/column as 0s.
 
 /* End of global variables */
@@ -124,8 +126,11 @@ int main(int argc, char* argv[]) {
 
 //#ifdef DEBUG
   if (useBuiltInData)
+  {
+    printf ("Usage: %s m n\n", argv[0]);
     printf ("Using built-in data for testing ..\n");
-  printf("Problem size: Matrix[%lld][%lld], FACTOR=%d CUTOFF=%d\n", n, m, FACTOR, CUTOFF);
+  }
+  printf("Problem size: Matrix[%lld][%lld], Medium=%d Large=%d\n", n, m, MEDIUM, LARGE);
 //#endif
 
     //Allocates a and b
@@ -148,12 +153,11 @@ int main(int argc, char* argv[]) {
     int *P;
     P = (int *)calloc(m * n, sizeof(int));
 //    printf ("debug: P's address=%p\n", P);
-
    unsigned long long sz = (m+n +2*m*n)*sizeof(int)/1024/1024; 
    if (sz>=1024)
       printf("Total memory footprint is:%llu GB\n", sz/1024) ;
    else
-      printf("Total memory footprint is:%llu MB\n", sz);
+      printf("Total memory footprint is:%llu MB\n", sz) ;
 
     if (useBuiltInData)
     {
@@ -209,6 +213,8 @@ int main(int argc, char* argv[]) {
     //Start position for backtrack
     long long int maxPos = 0;
     //Calculates the similarity matrix
+    long long int i, j;
+
 
     // The way to generate all wavefront is to go through the top edge elements
     // starting from the left top of the matrix, go to the bottom top -> down, then left->right
@@ -230,6 +236,7 @@ int main(int argc, char* argv[]) {
         printf ("Using %d out of max %d threads...\n", thread_count, omp_get_max_threads());
       }
     }
+
      // detect GPU support 
     int runningOnGPU = 0;
 
@@ -245,10 +252,8 @@ int main(int argc, char* argv[]) {
     if (runningOnGPU == 1)
       printf("### Able to use the GPU! ### \n");
     else
-    {
       printf("### Unable to use the GPU, using CPU! ###\n");
-      assert (false);
-    }
+
 
 #endif
     //Gets Initial time
@@ -258,12 +263,14 @@ int main(int argc, char* argv[]) {
     // int asz= m*n*sizeof(int);
     int asz= m*n;
 // choice 2: map data before the outer loop
-#pragma omp target map (to:a[0:m-1], b[0:n-1], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
+//#pragma omp target map (to:a[0:m-1], b[0:n-1], nDiag, m,n,gapScore, matchScore, missmatchScore) map(tofrom: H[0:asz], P[0:asz], maxPos)
 //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
     {
-      for (int i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
+      for (i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
       {
         long long int nEle, si, sj;
+	// report at most 5 times for each diagonal line
+	long long interval = nDiag/5; 
        //  nEle = nElement(i);
 	//---------------inlined ------------
 	if (i < m && i < n) { // smaller than both directions
@@ -292,12 +299,41 @@ int main(int argc, char* argv[]) {
 	  sj = i - n + 2; // j position is the nDiag (id -n) +1 +1 // first +1 
 	}
 
+
+	// serial version: 0 to < medium: small data set
+        if (nEle< MEDIUM)
+	{
+	  if (i%interval==0)
+	    printf ("Serial version is activated since the diagonal element count %lld is less than MEDIUM %d\n", nEle, MEDIUM);
+          for (j = 0; j < nEle; ++j) 
+          {  // going upwards : anti-diagnol direction
+            long long int ai = si - j ; // going up vertically
+            long long int aj = sj + j;  //  going right in horizontal
+            similarityScore2(ai, aj, H, P, &maxPos); // a specialized version without a critical section used inside
+          }
+	}
+	else if (nEle<LARGE) // omp cpu version: medium to large: medium data set
+	{
+
+	  if (i%interval==0)
+	    printf ("OpenMP CPU version is activated since the diagonal element count %lld is less than LARGE %d\n", nEle, LARGE);
+   #pragma omp parallel for private(j) shared (nEle, si, sj, H, P, maxPos) 
+	  for (j = 0; j < nEle; ++j)
+	  {  // going upwards : anti-diagnol direction
+	    long long int ai = si - j ; // going up vertically
+	    long long int aj = sj + j;  //  going right in horizontal
+	    similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
+	  }
+	}
+	else // omp gpu version: large data set
         //--------------------------------------
         {
+	  if (i%interval==0)
+	    printf ("OpenMP GPU version is activated since the diagonal element count %lld >= LARGE %d\n", nEle, LARGE);
 // choice 1: map data before the inner loop
-//#pragma omp target device(0) map (to:a[0:m-1], b[0:n-1], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
-#pragma omp parallel for default(none) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
-          for (int j = 0; j < nEle; ++j) 
+#pragma omp target map (to:a[0:m-1], b[0:n-1], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp parallel for default(none) private(j) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
+          for (j = 0; j < nEle; ++j) 
 	  {  // going upwards : anti-diagnol direction
 	    long long int ai = si - j ; // going up vertically
 	    long long int aj = sj + j;  //  going right in horizontal
@@ -347,13 +383,13 @@ int main(int argc, char* argv[]) {
 	      //Inserts the value in the similarity and predecessor matrixes
 	      H[index] = max;
 	      P[index] = pred;
-#if !SKIP_BACKTRACK
+
 	      //Updates maximum score to be used as seed on backtrack
             #pragma omp critical
 	      if (max > H[maxPos]) {
 		maxPos = index;
 	      }
-#endif
+
 	    }
 	    // ---------------------------------------------------------------
 	  }
@@ -364,7 +400,6 @@ int main(int argc, char* argv[]) {
   double finalTime = omp_get_wtime();
   printf("\nElapsed time for scoring matrix computation: %f\n", finalTime - initialTime);
 
-#if !SKIP_BACKTRACK      
   initialTime = omp_get_wtime();
   backtrack(P, maxPos);
   finalTime = omp_get_wtime();
@@ -372,7 +407,6 @@ int main(int argc, char* argv[]) {
   //Gets backtrack time
   finalTime = omp_get_wtime();
   printf("Elapsed time for backtracking: %f\n", finalTime - initialTime);
-#endif
 
 #ifdef DEBUG
     printf("\nSimilarity Matrix:\n");
@@ -386,10 +420,8 @@ int main(int argc, char* argv[]) {
     {
       printf ("Verifying results using the builtinIn data: %s\n", (H[n*m-1]==7)?"true":"false");
       assert (H[n*m-1]==7);
-#if !SKIP_BACKTRACK      
       assert (maxPos==69);
       assert (H[maxPos]==13);
-#endif      
     }
 
     //Frees similarity matrixes
