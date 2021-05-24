@@ -44,13 +44,13 @@ clean:
 
 # serial version	
 # compiling without -fopenmp	
-v0-serial_smithW.out: omp_smithW-v1-refinedOrig.c
+v0-serial_smithW.out: omp_smithW-v1-refinedOrig.cpp
 	$(CC) $(BASE_FLAGS) -o $@ $<
 
 # OMP CPU threading versions
 omp_smithW_debug.out: parameters.h omp_smithW.c	
 	$(CC) omp_smithW.c $(LINK_FALGS) -o $@ -fopenmp -DDEBUG	
-omp_smithW-v1-refinedOrig.out: omp_smithW-v1-refinedOrig.c parameters.h
+omp_smithW-v1-refinedOrig.out: omp_smithW-v1-refinedOrig.cpp parameters.h
 	$(CC) $(BASE_FLAGS) -fopenmp $(LINK_FALGS) -o $@ $<
 
 omp_smithW_O3.out: parameters.h omp_smithW.c	

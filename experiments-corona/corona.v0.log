@@ -1,0 +1,1604 @@
++ '[' -z '' ']'
++ case "$-" in
++ __lmod_vx=x
++ '[' -n x ']'
++ set +x
+Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for this output (/usr/share/lmod/lmod/init/bash)
+Shell debugging restarted
++ unset __lmod_vx
++ EXE_FILE=v0-serial_smithW.out
+++ date +%Y%m%d_%H%M%S
++ TIMESTAMP=20210524_115151
+++ uname -n
++ NODE_NAME=corona154
+++ uname -m
++ HARDWAREE_NAME=x86_64
++ rm ./v0-serial_smithW.out
++ make ./v0-serial_smithW.out
+/opt/rocm-4.1.0/llvm/bin/clang++ -O3 -g -std=c++11 -DSKIP_BACKTRACK=1  -o v0-serial_smithW.out omp_smithW-v1-refinedOrig.cpp
++ export OMP_NUM_THREADS=44
++ OMP_NUM_THREADS=44
++ counter=
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=1, problem M=32 N=32'
+running count=1, problem M=32 N=32
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 32 32
+Problem size: Matrix[32][32]
+Total memory footprint is:0 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.000011
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 32 32
+Problem size: Matrix[32][32]
+Total memory footprint is:0 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.000011
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 32 32
+Problem size: Matrix[32][32]
+Total memory footprint is:0 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.000010
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=2, problem M=544 N=544'
+running count=2, problem M=544 N=544
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 544 544
+Problem size: Matrix[544][544]
+Total memory footprint is:2 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.003206
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 544 544
+Problem size: Matrix[544][544]
+Total memory footprint is:2 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.003028
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 544 544
+Problem size: Matrix[544][544]
+Total memory footprint is:2 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.003032
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=3, problem M=1056 N=1056'
+running count=3, problem M=1056 N=1056
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 1056 1056
+Problem size: Matrix[1056][1056]
+Total memory footprint is:8 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.011688
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 1056 1056
+Problem size: Matrix[1056][1056]
+Total memory footprint is:8 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.011526
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 1056 1056
+Problem size: Matrix[1056][1056]
+Total memory footprint is:8 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.011512
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=4, problem M=1568 N=1568'
+running count=4, problem M=1568 N=1568
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 1568 1568
+Problem size: Matrix[1568][1568]
+Total memory footprint is:18 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.025391
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 1568 1568
+Problem size: Matrix[1568][1568]
+Total memory footprint is:18 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.025521
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 1568 1568
+Problem size: Matrix[1568][1568]
+Total memory footprint is:18 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.025378
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=5, problem M=2080 N=2080'
+running count=5, problem M=2080 N=2080
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 2080 2080
+Problem size: Matrix[2080][2080]
+Total memory footprint is:33 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.051408
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 2080 2080
+Problem size: Matrix[2080][2080]
+Total memory footprint is:33 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.051229
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 2080 2080
+Problem size: Matrix[2080][2080]
+Total memory footprint is:33 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.050738
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=6, problem M=2592 N=2592'
+running count=6, problem M=2592 N=2592
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 2592 2592
+Problem size: Matrix[2592][2592]
+Total memory footprint is:51 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.079276
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 2592 2592
+Problem size: Matrix[2592][2592]
+Total memory footprint is:51 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.079214
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 2592 2592
+Problem size: Matrix[2592][2592]
+Total memory footprint is:51 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.079198
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=7, problem M=3104 N=3104'
+running count=7, problem M=3104 N=3104
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 3104 3104
+Problem size: Matrix[3104][3104]
+Total memory footprint is:73 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.115016
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 3104 3104
+Problem size: Matrix[3104][3104]
+Total memory footprint is:73 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.115438
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 3104 3104
+Problem size: Matrix[3104][3104]
+Total memory footprint is:73 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.115103
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=8, problem M=3616 N=3616'
+running count=8, problem M=3616 N=3616
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 3616 3616
+Problem size: Matrix[3616][3616]
+Total memory footprint is:99 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.159535
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 3616 3616
+Problem size: Matrix[3616][3616]
+Total memory footprint is:99 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.159700
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 3616 3616
+Problem size: Matrix[3616][3616]
+Total memory footprint is:99 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.159684
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=9, problem M=4128 N=4128'
+running count=9, problem M=4128 N=4128
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 4128 4128
+Problem size: Matrix[4128][4128]
+Total memory footprint is:130 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.211113
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 4128 4128
+Problem size: Matrix[4128][4128]
+Total memory footprint is:130 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.210947
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 4128 4128
+Problem size: Matrix[4128][4128]
+Total memory footprint is:130 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.211229
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=10, problem M=4640 N=4640'
+running count=10, problem M=4640 N=4640
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 4640 4640
+Problem size: Matrix[4640][4640]
+Total memory footprint is:164 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.270697
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 4640 4640
+Problem size: Matrix[4640][4640]
+Total memory footprint is:164 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.270931
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 4640 4640
+Problem size: Matrix[4640][4640]
+Total memory footprint is:164 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.271202
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=11, problem M=5152 N=5152'
+running count=11, problem M=5152 N=5152
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 5152 5152
+Problem size: Matrix[5152][5152]
+Total memory footprint is:202 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.338688
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 5152 5152
+Problem size: Matrix[5152][5152]
+Total memory footprint is:202 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.338412
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 5152 5152
+Problem size: Matrix[5152][5152]
+Total memory footprint is:202 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.337454
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=12, problem M=5664 N=5664'
+running count=12, problem M=5664 N=5664
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 5664 5664
+Problem size: Matrix[5664][5664]
+Total memory footprint is:244 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.412178
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 5664 5664
+Problem size: Matrix[5664][5664]
+Total memory footprint is:244 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.411734
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 5664 5664
+Problem size: Matrix[5664][5664]
+Total memory footprint is:244 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.413068
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=13, problem M=6176 N=6176'
+running count=13, problem M=6176 N=6176
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 6176 6176
+Problem size: Matrix[6176][6176]
+Total memory footprint is:291 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.494907
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 6176 6176
+Problem size: Matrix[6176][6176]
+Total memory footprint is:291 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.495114
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 6176 6176
+Problem size: Matrix[6176][6176]
+Total memory footprint is:291 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.494973
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=14, problem M=6688 N=6688'
+running count=14, problem M=6688 N=6688
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 6688 6688
+Problem size: Matrix[6688][6688]
+Total memory footprint is:341 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.583520
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 6688 6688
+Problem size: Matrix[6688][6688]
+Total memory footprint is:341 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.583835
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 6688 6688
+Problem size: Matrix[6688][6688]
+Total memory footprint is:341 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.584158
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=15, problem M=7200 N=7200'
+running count=15, problem M=7200 N=7200
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 7200 7200
+Problem size: Matrix[7200][7200]
+Total memory footprint is:395 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.679712
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 7200 7200
+Problem size: Matrix[7200][7200]
+Total memory footprint is:395 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.679953
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 7200 7200
+Problem size: Matrix[7200][7200]
+Total memory footprint is:395 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.678389
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=16, problem M=7712 N=7712'
+running count=16, problem M=7712 N=7712
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 7712 7712
+Problem size: Matrix[7712][7712]
+Total memory footprint is:453 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.786255
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 7712 7712
+Problem size: Matrix[7712][7712]
+Total memory footprint is:453 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.785590
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 7712 7712
+Problem size: Matrix[7712][7712]
+Total memory footprint is:453 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.785427
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=17, problem M=8224 N=8224'
+running count=17, problem M=8224 N=8224
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 8224 8224
+Problem size: Matrix[8224][8224]
+Total memory footprint is:516 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.895287
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 8224 8224
+Problem size: Matrix[8224][8224]
+Total memory footprint is:516 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.893860
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 8224 8224
+Problem size: Matrix[8224][8224]
+Total memory footprint is:516 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.893989
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=18, problem M=8736 N=8736'
+running count=18, problem M=8736 N=8736
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 8736 8736
+Problem size: Matrix[8736][8736]
+Total memory footprint is:582 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.015178
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 8736 8736
+Problem size: Matrix[8736][8736]
+Total memory footprint is:582 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.015139
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 8736 8736
+Problem size: Matrix[8736][8736]
+Total memory footprint is:582 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.014362
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=19, problem M=9248 N=9248'
+running count=19, problem M=9248 N=9248
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 9248 9248
+Problem size: Matrix[9248][9248]
+Total memory footprint is:652 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.136733
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 9248 9248
+Problem size: Matrix[9248][9248]
+Total memory footprint is:652 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.135345
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 9248 9248
+Problem size: Matrix[9248][9248]
+Total memory footprint is:652 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.135810
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=20, problem M=9760 N=9760'
+running count=20, problem M=9760 N=9760
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 9760 9760
+Problem size: Matrix[9760][9760]
+Total memory footprint is:726 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.267715
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 9760 9760
+Problem size: Matrix[9760][9760]
+Total memory footprint is:726 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.269174
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 9760 9760
+Problem size: Matrix[9760][9760]
+Total memory footprint is:726 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.268557
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=21, problem M=10272 N=10272'
+running count=21, problem M=10272 N=10272
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 10272 10272
+Problem size: Matrix[10272][10272]
+Total memory footprint is:805 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.409065
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 10272 10272
+Problem size: Matrix[10272][10272]
+Total memory footprint is:805 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.405294
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 10272 10272
+Problem size: Matrix[10272][10272]
+Total memory footprint is:805 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.408051
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=22, problem M=10784 N=10784'
+running count=22, problem M=10784 N=10784
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 10784 10784
+Problem size: Matrix[10784][10784]
+Total memory footprint is:887 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.554407
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 10784 10784
+Problem size: Matrix[10784][10784]
+Total memory footprint is:887 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.556351
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 10784 10784
+Problem size: Matrix[10784][10784]
+Total memory footprint is:887 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.555741
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=23, problem M=11296 N=11296'
+running count=23, problem M=11296 N=11296
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 11296 11296
+Problem size: Matrix[11296][11296]
+Total memory footprint is:973 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.707634
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 11296 11296
+Problem size: Matrix[11296][11296]
+Total memory footprint is:973 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.707394
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 11296 11296
+Problem size: Matrix[11296][11296]
+Total memory footprint is:973 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.709117
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=24, problem M=11808 N=11808'
+running count=24, problem M=11808 N=11808
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 11808 11808
+Problem size: Matrix[11808][11808]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.873509
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 11808 11808
+Problem size: Matrix[11808][11808]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.873916
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 11808 11808
+Problem size: Matrix[11808][11808]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 1.869054
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=25, problem M=12320 N=12320'
+running count=25, problem M=12320 N=12320
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 12320 12320
+Problem size: Matrix[12320][12320]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.042915
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 12320 12320
+Problem size: Matrix[12320][12320]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.045807
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 12320 12320
+Problem size: Matrix[12320][12320]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.043150
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=26, problem M=12832 N=12832'
+running count=26, problem M=12832 N=12832
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 12832 12832
+Problem size: Matrix[12832][12832]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.224693
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 12832 12832
+Problem size: Matrix[12832][12832]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.224071
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 12832 12832
+Problem size: Matrix[12832][12832]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.223064
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=27, problem M=13344 N=13344'
+running count=27, problem M=13344 N=13344
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 13344 13344
+Problem size: Matrix[13344][13344]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.416809
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 13344 13344
+Problem size: Matrix[13344][13344]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.417105
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 13344 13344
+Problem size: Matrix[13344][13344]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.410599
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=28, problem M=13856 N=13856'
+running count=28, problem M=13856 N=13856
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 13856 13856
+Problem size: Matrix[13856][13856]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.618907
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 13856 13856
+Problem size: Matrix[13856][13856]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.617683
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 13856 13856
+Problem size: Matrix[13856][13856]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.617319
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=29, problem M=14368 N=14368'
+running count=29, problem M=14368 N=14368
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 14368 14368
+Problem size: Matrix[14368][14368]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.827492
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 14368 14368
+Problem size: Matrix[14368][14368]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.832352
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 14368 14368
+Problem size: Matrix[14368][14368]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 2.831582
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=30, problem M=14880 N=14880'
+running count=30, problem M=14880 N=14880
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 14880 14880
+Problem size: Matrix[14880][14880]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.071148
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 14880 14880
+Problem size: Matrix[14880][14880]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.065343
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 14880 14880
+Problem size: Matrix[14880][14880]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.063578
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=31, problem M=15392 N=15392'
+running count=31, problem M=15392 N=15392
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 15392 15392
+Problem size: Matrix[15392][15392]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.322759
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 15392 15392
+Problem size: Matrix[15392][15392]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.322802
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 15392 15392
+Problem size: Matrix[15392][15392]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.326197
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=32, problem M=15904 N=15904'
+running count=32, problem M=15904 N=15904
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 15904 15904
+Problem size: Matrix[15904][15904]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.615560
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 15904 15904
+Problem size: Matrix[15904][15904]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.611983
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 15904 15904
+Problem size: Matrix[15904][15904]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.612426
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=33, problem M=16416 N=16416'
+running count=33, problem M=16416 N=16416
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 16416 16416
+Problem size: Matrix[16416][16416]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.888187
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 16416 16416
+Problem size: Matrix[16416][16416]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.886987
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 16416 16416
+Problem size: Matrix[16416][16416]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 3.890661
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=34, problem M=16928 N=16928'
+running count=34, problem M=16928 N=16928
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 16928 16928
+Problem size: Matrix[16928][16928]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.143157
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 16928 16928
+Problem size: Matrix[16928][16928]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.152970
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 16928 16928
+Problem size: Matrix[16928][16928]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.157350
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=35, problem M=17440 N=17440'
+running count=35, problem M=17440 N=17440
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 17440 17440
+Problem size: Matrix[17440][17440]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.422311
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 17440 17440
+Problem size: Matrix[17440][17440]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.417603
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 17440 17440
+Problem size: Matrix[17440][17440]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.427164
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=36, problem M=17952 N=17952'
+running count=36, problem M=17952 N=17952
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 17952 17952
+Problem size: Matrix[17952][17952]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.720131
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 17952 17952
+Problem size: Matrix[17952][17952]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.715662
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 17952 17952
+Problem size: Matrix[17952][17952]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.719176
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=37, problem M=18464 N=18464'
+running count=37, problem M=18464 N=18464
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 18464 18464
+Problem size: Matrix[18464][18464]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.868502
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 18464 18464
+Problem size: Matrix[18464][18464]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 4.991834
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 18464 18464
+Problem size: Matrix[18464][18464]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 5.013136
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=38, problem M=18976 N=18976'
+running count=38, problem M=18976 N=18976
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 18976 18976
+Problem size: Matrix[18976][18976]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 5.345686
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 18976 18976
+Problem size: Matrix[18976][18976]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 5.341099
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 18976 18976
+Problem size: Matrix[18976][18976]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 5.333929
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=39, problem M=19488 N=19488'
+running count=39, problem M=19488 N=19488
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 19488 19488
+Problem size: Matrix[19488][19488]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 5.685507
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 19488 19488
+Problem size: Matrix[19488][19488]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 5.671108
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 19488 19488
+Problem size: Matrix[19488][19488]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 5.673966
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=40, problem M=20000 N=20000'
+running count=40, problem M=20000 N=20000
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 20000 20000
+Problem size: Matrix[20000][20000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 5.964636
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 20000 20000
+Problem size: Matrix[20000][20000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 5.937607
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 20000 20000
+Problem size: Matrix[20000][20000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 6.037758
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=41, problem M=20512 N=20512'
+running count=41, problem M=20512 N=20512
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 20512 20512
+Problem size: Matrix[20512][20512]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 6.433212
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 20512 20512
+Problem size: Matrix[20512][20512]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 6.442693
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 20512 20512
+Problem size: Matrix[20512][20512]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 6.425577
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=42, problem M=21024 N=21024'
+running count=42, problem M=21024 N=21024
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 21024 21024
+Problem size: Matrix[21024][21024]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 6.821846
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 21024 21024
+Problem size: Matrix[21024][21024]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 6.810245
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 21024 21024
+Problem size: Matrix[21024][21024]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 6.807819
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=43, problem M=21536 N=21536'
+running count=43, problem M=21536 N=21536
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 21536 21536
+Problem size: Matrix[21536][21536]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 7.233443
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 21536 21536
+Problem size: Matrix[21536][21536]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 7.217241
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 21536 21536
+Problem size: Matrix[21536][21536]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 7.217482
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=44, problem M=22048 N=22048'
+running count=44, problem M=22048 N=22048
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 22048 22048
+Problem size: Matrix[22048][22048]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 7.707116
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 22048 22048
+Problem size: Matrix[22048][22048]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 7.652139
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 22048 22048
+Problem size: Matrix[22048][22048]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 7.671689
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=45, problem M=22560 N=22560'
+running count=45, problem M=22560 N=22560
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 22560 22560
+Problem size: Matrix[22560][22560]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.121451
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 22560 22560
+Problem size: Matrix[22560][22560]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.133764
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 22560 22560
+Problem size: Matrix[22560][22560]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 7.997968
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=46, problem M=23072 N=23072'
+running count=46, problem M=23072 N=23072
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 23072 23072
+Problem size: Matrix[23072][23072]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.601549
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 23072 23072
+Problem size: Matrix[23072][23072]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.609426
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 23072 23072
+Problem size: Matrix[23072][23072]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.539760
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=47, problem M=23584 N=23584'
+running count=47, problem M=23584 N=23584
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 23584 23584
+Problem size: Matrix[23584][23584]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.765961
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 23584 23584
+Problem size: Matrix[23584][23584]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.601654
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 23584 23584
+Problem size: Matrix[23584][23584]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.745079
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=48, problem M=24096 N=24096'
+running count=48, problem M=24096 N=24096
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 24096 24096
+Problem size: Matrix[24096][24096]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.801186
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 24096 24096
+Problem size: Matrix[24096][24096]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.774416
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 24096 24096
+Problem size: Matrix[24096][24096]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 8.782974
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=49, problem M=24608 N=24608'
+running count=49, problem M=24608 N=24608
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 24608 24608
+Problem size: Matrix[24608][24608]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 9.180124
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 24608 24608
+Problem size: Matrix[24608][24608]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 9.145799
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 24608 24608
+Problem size: Matrix[24608][24608]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 9.163399
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=50, problem M=25120 N=25120'
+running count=50, problem M=25120 N=25120
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 25120 25120
+Problem size: Matrix[25120][25120]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 9.600799
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 25120 25120
+Problem size: Matrix[25120][25120]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 9.615907
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 25120 25120
+Problem size: Matrix[25120][25120]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 9.603643
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=51, problem M=25632 N=25632'
+running count=51, problem M=25632 N=25632
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./v0-serial_smithW.out 25632 25632
+Problem size: Matrix[25632][25632]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 10.048115
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./v0-serial_smithW.out 25632 25632
+Problem size: Matrix[25632][25632]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 10.080823
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./v0-serial_smithW.out 25632 25632
+Problem size: Matrix[25632][25632]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 10.040959
++ N_SIZE 25632
+./run-v0.sh: line 40: N_SIZE: command not found

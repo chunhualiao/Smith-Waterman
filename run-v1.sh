@@ -20,7 +20,7 @@ make ./$EXE_FILE
 
 #M_SIZE=2000, we use equal sizes
 # using the actual core count on lasseb
-export OMP_NUM_THREADS=44
+export OMP_NUM_THREADS=48 # 48 for Corona, 44 for lassen
 # for each N size
 counter=""
 #for n_size in {256..7000..256}; do
