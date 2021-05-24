@@ -233,8 +233,8 @@ int main(int argc, char* argv[]) {
   // int asz= m*n*sizeof(int);
   int asz= m*n;
 
-//Choice 2: map the entire region to gpu, preparing data regions  
-  //  #pragma omp parallel default(none) shared(H, P, maxPos, nDiag, j) private(i)
+//Choice 3: map the entire region to gpu, preparing data regions  
+// Inner loop can not use  teams distribute parallel for
 #pragma omp target enter data map(to:a[0:m-1], b[0:n-1]) map(to: H[0:asz], P[0:asz], maxPos)
   {
     for (int i = 1; i <= nDiag; ++i) // start from 1 since 0 is the boundary padding
@@ -361,15 +361,15 @@ int main(int argc, char* argv[]) {
     assert (H[maxPos]==13);
 #endif      
   }
-
   //Frees similarity matrixes
   free(H);
   free(P);
 
+#if 0 // TODO: causing corona clang compiler core dump
   //Frees input arrays
   free(a);
   free(b);
-
+#endif
   return 0;
 }  /* End of main */
 
