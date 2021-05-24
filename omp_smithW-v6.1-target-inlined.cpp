@@ -263,78 +263,74 @@ int main(int argc, char* argv[]) {
       }
 
       //--------------------------------------
-      {
-        // choice 1: map data before the inner loop
-        //pragma omp target device(0) map (to:a[0:m-1], b[0:n-1], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
-        //#pragma omp target  map (to:a[0:m-1], b[0:n-1], nEle, m,n,gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+      // choice 1: map data before the inner loop
+//#pragma omp target  map (to:a[0:m-1], b[0:n-1], nEle, m, n, gapScore, matchScore, missmatchScore, si, sj) map(tofrom: H[0:asz], P[0:asz], maxPos)
+#pragma omp target  map(to:a[0:m-1], b[0:n-1]) map(tofrom: H[0:asz], P[0:asz], maxPos)
 #pragma omp parallel for default(none) shared (a,b, nEle, m, n, gapScore, matchScore, missmatchScore, si, sj, H, P, maxPos)
-        for (int j = 0; j < nEle; ++j) 
-        {  // going upwards : anti-diagnol direction
-          long long int ai = si - j ; // going up vertically
-          long long int aj = sj + j;  //  going right in horizontal
-          ///------------inlined ------------------------------------------
-          //            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
-          {
-            int up, left, diag;
+      for (int j = 0; j < nEle; ++j) 
+      {  // going upwards : anti-diagnol direction
+        long long int ai = si - j ; // going up vertically
+        long long int aj = sj + j;  //  going right in horizontal
+        ///------------inlined ------------------------------------------
+        //            similarityScore(ai, aj, H, P, &maxPos); // a critical section is used inside
+        int up, left, diag;
 
-            //Stores index of element
-            long long int index = m * ai + aj;
+        //Stores index of element
+        long long int index = m * ai + aj;
 
-            //Get element above
-            up = H[index - m] + gapScore;
+        //Get element above
+        up = H[index - m] + gapScore;
 
-            //Get element on the left
-            left = H[index - 1] + gapScore;
+        //Get element on the left
+        left = H[index - 1] + gapScore;
 
-            //Get element on the diagonal
-            int t_mms;
+        //Get element on the diagonal
+        int t_mms;
 
-            if (a[aj - 1] == b[ai - 1])
-              t_mms = matchScore;
-            else
-              t_mms = missmatchScore;
+        if (a[aj - 1] == b[ai - 1])
+          t_mms = matchScore;
+        else
+          t_mms = missmatchScore;
 
-            diag = H[index - m - 1] + t_mms; // matchMissmatchScore(i, j);
+        diag = H[index - m - 1] + t_mms; // matchMissmatchScore(i, j);
 
-            // degug here
-            // return;
-            //Calculates the maximum
-            int max = NONE;
-            int pred = NONE;
-            if (diag > max) { //same letter ↖
-              max = diag;
-              pred = DIAGONAL;
-            }
-
-            if (up > max) { //remove letter ↑
-              max = up;
-              pred = UP;
-            }
-
-            if (left > max) { //insert letter ←
-              max = left;
-              pred = LEFT;
-            }
-            //Inserts the value in the similarity and predecessor matrixes
-            H[index] = max;
-            P[index] = pred;
-#if !SKIP_BACKTRACK
-            //Updates maximum score to be used as seed on backtrack
-#pragma omp critical
-            if (max > H[maxPos]) {
-              maxPos = index;
-            }
-#endif
-          }
-          // ---------------------------------------------------------------
+        // degug here
+        // return;
+        //Calculates the maximum
+        int max = NONE;
+        int pred = NONE;
+        if (diag > max) { //same letter ↖
+          max = diag;
+          pred = DIAGONAL;
         }
+
+        if (up > max) { //remove letter ↑
+          max = up;
+          pred = UP;
+        }
+
+        if (left > max) { //insert letter ←
+          max = left;
+          pred = LEFT;
+        }
+        //Inserts the value in the similarity and predecessor matrixes
+        H[index] = max;
+        P[index] = pred;
+#if !SKIP_BACKTRACK
+        //Updates maximum score to be used as seed on backtrack
+#pragma omp critical
+        if (max > H[maxPos]) {
+          maxPos = index;
+        }
+#endif
+        // ---------------------------------------------------------------
       }
     } // for end nDiag
   } // end omp parallel
 
   double finalTime = omp_get_wtime();
   printf("\nElapsed time for scoring matrix computation: %f\n", finalTime - initialTime);
-
+#if !SKIP_BACKTRACK
   initialTime = omp_get_wtime();
   backtrack(P, maxPos);
   finalTime = omp_get_wtime();
@@ -342,7 +338,8 @@ int main(int argc, char* argv[]) {
   //Gets backtrack time
   finalTime = omp_get_wtime();
   printf("Elapsed time for backtracking: %f\n", finalTime - initialTime);
-
+#endif
+  
 #ifdef DEBUG
   printf("\nSimilarity Matrix:\n");
   printMatrix(H);
