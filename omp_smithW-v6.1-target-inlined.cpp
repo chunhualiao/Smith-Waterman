@@ -220,7 +220,10 @@ int main(int argc, char* argv[]) {
   if (runningOnGPU == 1)
     printf("### Able to use the GPU! ### \n");
   else
-    printf("### Unable to use the GPU, using CPU! ###\n");
+  {
+    printf("### Unable to use the GPU, Abort! ###\n");
+    assert (false);
+  }
 
 #endif
   //Gets Initial time

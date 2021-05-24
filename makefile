@@ -6,7 +6,7 @@ ifeq ($(findstring corona,$(HOSTNAME)), corona)
   CC=/opt/rocm-4.1.0/llvm/bin/clang++
 #  CXXFLAGS=-O3 -target x86_64-pc-linux-gnu -fopenmp -fopenmp-version=50 -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx906
 
-  BASE_FLAGS=-O3 -g -std=c++11 -DSKIP_BACKTRACK=1
+  BASE_FLAGS=-O3 -g -std=c++11 -DSKIP_BACKTRACK=1 #-DDEBUG
   OFFLOADING_FLAGS=-target x86_64-pc-linux-gnu -fopenmp -fopenmp-version=50 -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx906
 # on lassen, Nvidia GPU  
 else
