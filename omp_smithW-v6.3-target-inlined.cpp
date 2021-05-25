@@ -92,7 +92,6 @@ void backtrack(int* P, long long int maxPos);
 void printMatrix(int* matrix);
 void printPredecessorMatrix(int* matrix);
 void generate(void);
-long long int nElement(long long int i);
 void calcFirstDiagElement(long long int i, long long int *si, long long int *sj);
 
 /* End of prototypes */
@@ -373,27 +372,6 @@ int main(int argc, char* argv[]) {
   return 0;
 }  /* End of main */
 
-/*--------------------------------------------------------------------
- * Function:    nElement
- * Purpose:     Calculate the number of i-diagonal's elements
- * i value range 1 to nDiag.  we inclulde the upper bound value. 0 is for the padded wavefront, which is ignored.
- */
-long long int nElement(long long int i) {
-    if (i < m && i < n) { // smaller than both directions
-        //Number of elements in the diagonal is increasing
-        return i;
-    }
-    else if (i < max(m, n)) { // smaller than only one direction
-        //Number of elements in the diagonal is stable
-        long int min = min(m, n);  // the longer direction has the edge elements, the number is the smaller direction's size
-        return min - 1;
-    }
-    else {
-        //Number of elements in the diagonal is decreasing
-        long int min = min(m, n);
-        return 2 * min - i + llabs(m - n) - 2;
-    }
-}
 
 /*--------------------------------------------------------------------
  * Function:    calcElement: expect valid i value is from 1 to nDiag. since the first one is 0 padding

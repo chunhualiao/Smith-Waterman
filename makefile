@@ -12,7 +12,7 @@ ifeq ($(findstring corona,$(HOSTNAME)), corona)
 else
   # using C++ compiler to be more restrictive 	
   #CC=g++-8
-  #CC=clang++ # default compiler: still illegal memory access bug
+#  CC=clang++ # default compiler: still illegal memory access bug # crashes on 6.1
   CC=/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/bin/clang++
   BASE_FLAGS=-O3 -g -std=c++11 -DSKIP_BACKTRACK=1
   OFFLOADING_FLAGS=-fopenmp-targets=nvptx64-nvidia-cuda
@@ -57,7 +57,7 @@ omp_smithW_O3.out: parameters.h omp_smithW.c
 	$(CC) -O3 omp_smithW.c $(LINK_FALGS) -o $@ -fopenmp 
 
 %.out: %.cpp
-	$(CC) $(BASE_FLAGS) -fopenmp $(OFFLOADING_FLAGS) -o $@ $<
+	$(CC) $(BASE_FLAGS) -fopenmp $(OFFLOADING_FLAGS) $(LINK_FALGS) -o $@ $<
 # not working: parsing error for clang-gpu	
 #	clang-gpu -g -o $@ $<
 #	xlc-gpu -DDEBUG -g -qsmp -qoffload -o $@ $<
