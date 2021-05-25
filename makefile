@@ -31,14 +31,13 @@ SRC_FILES = \
   omp_smithW-v7-adaptive.cpp
 
 
-all: omp_smithW-v6-target-inlined.out omp_smithW-v7-adaptive.out omp_smithW-v6.2-target-inlined.out
 v1:omp_smithW-v1-refinedOrig.out
 v7:omp_smithW-v7-adaptive.out
 v5:omp_smithW-v5-target.out
 v6:omp_smithW-v6-target-inlined.out
 v6.2:omp_smithW-v6.2-target-inlined.out
 
-all: v0-serial_smithW.out omp_smithW-v1-refinedOrig.out omp_smithW-v6-target-inlined.out omp_smithW-v6.2-target-inlined.out
+all: v0-serial_smithW.out omp_smithW-v1-refinedOrig.out omp_smithW-v6.3-target-inlined.out
 clean:
 	rm -rf *.out *.core
 

@@ -20,20 +20,22 @@ make ./$EXE_FILE
 
 #M_SIZE=2000, we use equal sizes
 # using the actual core count on lasseb
-export OMP_NUM_THREADS=44 # corona should be 48 threads
+#export OMP_NUM_THREADS=44 # corona should be 48 threads
+# using default threads to be fair!!
 # for each N size
 counter=""
 #for n_size in {256..7000..256}; do
 #for N_SIZE in {32..16000..512}; do  # roughly 25 data points
 #for N_SIZE in {32..46000..512}; do  # roughly 100 data points
-for N_SIZE in {32..26000..512}; do  # about 50 points
+for N_SIZE in {2..150000..5000}; do  # about 50 points, sample larger data, 
  let "counter += 1"
 # echo "running count=$counter, problem m_size=$M_SIZE n_size=$n_size"
- echo "running count=$counter, problem M=$N_SIZE N=$N_SIZE"
+# echo "running count=$counter, problem M=$N_SIZE N=$N_SIZE"
 
     for repeat in 1 2 3;   do
     echo " Repeat=$repeat"
-       ./$EXE_FILE $N_SIZE $N_SIZE
+#./$EXE_FILE $N_SIZE $N_SIZE
+       ./$EXE_FILE 2000 $N_SIZE
     done
 
 done

@@ -1,0 +1,721 @@
+clang++  -O3 -g -std=c++11 -DSKIP_BACKTRACK=1 -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda  -o omp_smithW-v6.3-target-inlined.out omp_smithW-v6.3-target-inlined.cpp
+ Repeat=1
+Problem size: Matrix[2][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.065937
+ Repeat=2
+Problem size: Matrix[2][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.065921
+ Repeat=3
+Problem size: Matrix[2][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.065726
+ Repeat=1
+Problem size: Matrix[5002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:76 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.316942
+ Repeat=2
+Problem size: Matrix[5002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:76 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.317278
+ Repeat=3
+Problem size: Matrix[5002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:76 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.316410
+ Repeat=1
+Problem size: Matrix[10002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:152 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.567992
+ Repeat=2
+Problem size: Matrix[10002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:152 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.567453
+ Repeat=3
+Problem size: Matrix[10002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:152 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.566903
+ Repeat=1
+Problem size: Matrix[15002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:229 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.814083
+ Repeat=2
+Problem size: Matrix[15002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:229 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.813234
+ Repeat=3
+Problem size: Matrix[15002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:229 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.819455
+ Repeat=1
+Problem size: Matrix[20002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:305 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.071455
+ Repeat=2
+Problem size: Matrix[20002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:305 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.073915
+ Repeat=3
+Problem size: Matrix[20002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:305 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.068516
+ Repeat=1
+Problem size: Matrix[25002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:381 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.335541
+ Repeat=2
+Problem size: Matrix[25002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:381 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.336218
+ Repeat=3
+Problem size: Matrix[25002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:381 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.331451
+ Repeat=1
+Problem size: Matrix[30002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:458 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.580199
+ Repeat=2
+Problem size: Matrix[30002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:458 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.580016
+ Repeat=3
+Problem size: Matrix[30002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:458 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.583957
+ Repeat=1
+Problem size: Matrix[35002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:534 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.849634
+ Repeat=2
+Problem size: Matrix[35002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:534 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.847130
+ Repeat=3
+Problem size: Matrix[35002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:534 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.838685
+ Repeat=1
+Problem size: Matrix[40002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:610 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.096349
+ Repeat=2
+Problem size: Matrix[40002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:610 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.119400
+ Repeat=3
+Problem size: Matrix[40002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:610 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.102443
+ Repeat=1
+Problem size: Matrix[45002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:687 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.357219
+ Repeat=2
+Problem size: Matrix[45002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:687 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.345283
+ Repeat=3
+Problem size: Matrix[45002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:687 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.354386
+ Repeat=1
+Problem size: Matrix[50002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:763 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.604529
+ Repeat=2
+Problem size: Matrix[50002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:763 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.622106
+ Repeat=3
+Problem size: Matrix[50002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:763 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.607777
+ Repeat=1
+Problem size: Matrix[55002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:839 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.866051
+ Repeat=2
+Problem size: Matrix[55002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:839 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.850008
+ Repeat=3
+Problem size: Matrix[55002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:839 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.861852
+ Repeat=1
+Problem size: Matrix[60002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:916 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.108585
+ Repeat=2
+Problem size: Matrix[60002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:916 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.107826
+ Repeat=3
+Problem size: Matrix[60002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:916 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.116381
+ Repeat=1
+Problem size: Matrix[65002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:992 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.367980
+ Repeat=2
+Problem size: Matrix[65002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:992 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.379204
+ Repeat=3
+Problem size: Matrix[65002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:992 MB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.365438
+ Repeat=1
+Problem size: Matrix[70002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.609045
+ Repeat=2
+Problem size: Matrix[70002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.607946
+ Repeat=3
+Problem size: Matrix[70002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.612271
+ Repeat=1
+Problem size: Matrix[75002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.862956
+ Repeat=2
+Problem size: Matrix[75002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.872084
+ Repeat=3
+Problem size: Matrix[75002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.864871
+ Repeat=1
+Problem size: Matrix[80002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.125879
+ Repeat=2
+Problem size: Matrix[80002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.116318
+ Repeat=3
+Problem size: Matrix[80002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.142076
+ Repeat=1
+Problem size: Matrix[85002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.384158
+ Repeat=2
+Problem size: Matrix[85002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.403231
+ Repeat=3
+Problem size: Matrix[85002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.390355
+ Repeat=1
+Problem size: Matrix[90002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.656332
+ Repeat=2
+Problem size: Matrix[90002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.628548
+ Repeat=3
+Problem size: Matrix[90002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.594457
+ Repeat=1
+Problem size: Matrix[95002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.909940
+ Repeat=2
+Problem size: Matrix[95002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.884761
+ Repeat=3
+Problem size: Matrix[95002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.901603
+ Repeat=1
+Problem size: Matrix[100002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.144067
+ Repeat=2
+Problem size: Matrix[100002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.136452
+ Repeat=3
+Problem size: Matrix[100002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.153303
+ Repeat=1
+Problem size: Matrix[105002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.399436
+ Repeat=2
+Problem size: Matrix[105002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.366716
+ Repeat=3
+Problem size: Matrix[105002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.402859
+ Repeat=1
+Problem size: Matrix[110002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.606550
+ Repeat=2
+Problem size: Matrix[110002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.627963
+ Repeat=3
+Problem size: Matrix[110002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.650157
+ Repeat=1
+Problem size: Matrix[115002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.901874
+ Repeat=2
+Problem size: Matrix[115002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.918099
+ Repeat=3
+Problem size: Matrix[115002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.873430
+ Repeat=1
+Problem size: Matrix[120002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.176236
+ Repeat=2
+Problem size: Matrix[120002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.149274
+ Repeat=3
+Problem size: Matrix[120002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.132696
+ Repeat=1
+Problem size: Matrix[125002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.422584
+ Repeat=2
+Problem size: Matrix[125002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.395014
+ Repeat=3
+Problem size: Matrix[125002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.411532
+ Repeat=1
+Problem size: Matrix[130002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.644611
+ Repeat=2
+Problem size: Matrix[130002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.655332
+ Repeat=3
+Problem size: Matrix[130002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.636949
+ Repeat=1
+Problem size: Matrix[135002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.901335
+ Repeat=2
+Problem size: Matrix[135002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.879274
+ Repeat=3
+Problem size: Matrix[135002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.891760
+ Repeat=1
+Problem size: Matrix[140002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.084125
+ Repeat=2
+Problem size: Matrix[140002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.153660
+ Repeat=3
+Problem size: Matrix[140002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.124030
+ Repeat=1
+Problem size: Matrix[145002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.388610
+ Repeat=2
+Problem size: Matrix[145002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.399848
+ Repeat=3
+Problem size: Matrix[145002][2000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 160 out of max 160 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.372768

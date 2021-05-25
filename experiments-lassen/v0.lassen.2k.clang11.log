@@ -1,0 +1,541 @@
+clang++  -O3 -g -std=c++11 -DSKIP_BACKTRACK=1 -o v0-serial_smithW.out omp_smithW-v1-refinedOrig.cpp
+ Repeat=1
+Problem size: Matrix[2][2000]
+Total memory footprint is:0 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.000015
+ Repeat=2
+Problem size: Matrix[2][2000]
+Total memory footprint is:0 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.000016
+ Repeat=3
+Problem size: Matrix[2][2000]
+Total memory footprint is:0 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.000016
+ Repeat=1
+Problem size: Matrix[5002][2000]
+Total memory footprint is:76 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.032294
+ Repeat=2
+Problem size: Matrix[5002][2000]
+Total memory footprint is:76 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.031560
+ Repeat=3
+Problem size: Matrix[5002][2000]
+Total memory footprint is:76 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.031411
+ Repeat=1
+Problem size: Matrix[10002][2000]
+Total memory footprint is:152 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.064468
+ Repeat=2
+Problem size: Matrix[10002][2000]
+Total memory footprint is:152 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.064588
+ Repeat=3
+Problem size: Matrix[10002][2000]
+Total memory footprint is:152 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.064808
+ Repeat=1
+Problem size: Matrix[15002][2000]
+Total memory footprint is:229 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.097107
+ Repeat=2
+Problem size: Matrix[15002][2000]
+Total memory footprint is:229 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.098228
+ Repeat=3
+Problem size: Matrix[15002][2000]
+Total memory footprint is:229 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.097715
+ Repeat=1
+Problem size: Matrix[20002][2000]
+Total memory footprint is:305 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.131361
+ Repeat=2
+Problem size: Matrix[20002][2000]
+Total memory footprint is:305 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.130452
+ Repeat=3
+Problem size: Matrix[20002][2000]
+Total memory footprint is:305 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.130912
+ Repeat=1
+Problem size: Matrix[25002][2000]
+Total memory footprint is:381 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.163541
+ Repeat=2
+Problem size: Matrix[25002][2000]
+Total memory footprint is:381 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.163986
+ Repeat=3
+Problem size: Matrix[25002][2000]
+Total memory footprint is:381 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.163454
+ Repeat=1
+Problem size: Matrix[30002][2000]
+Total memory footprint is:458 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.196718
+ Repeat=2
+Problem size: Matrix[30002][2000]
+Total memory footprint is:458 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.196582
+ Repeat=3
+Problem size: Matrix[30002][2000]
+Total memory footprint is:458 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.197144
+ Repeat=1
+Problem size: Matrix[35002][2000]
+Total memory footprint is:534 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.229328
+ Repeat=2
+Problem size: Matrix[35002][2000]
+Total memory footprint is:534 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.231156
+ Repeat=3
+Problem size: Matrix[35002][2000]
+Total memory footprint is:534 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.230204
+ Repeat=1
+Problem size: Matrix[40002][2000]
+Total memory footprint is:610 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.263950
+ Repeat=2
+Problem size: Matrix[40002][2000]
+Total memory footprint is:610 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.262847
+ Repeat=3
+Problem size: Matrix[40002][2000]
+Total memory footprint is:610 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.263953
+ Repeat=1
+Problem size: Matrix[45002][2000]
+Total memory footprint is:687 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.295941
+ Repeat=2
+Problem size: Matrix[45002][2000]
+Total memory footprint is:687 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.295903
+ Repeat=3
+Problem size: Matrix[45002][2000]
+Total memory footprint is:687 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.294862
+ Repeat=1
+Problem size: Matrix[50002][2000]
+Total memory footprint is:763 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.329029
+ Repeat=2
+Problem size: Matrix[50002][2000]
+Total memory footprint is:763 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.328165
+ Repeat=3
+Problem size: Matrix[50002][2000]
+Total memory footprint is:763 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.330189
+ Repeat=1
+Problem size: Matrix[55002][2000]
+Total memory footprint is:839 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.361839
+ Repeat=2
+Problem size: Matrix[55002][2000]
+Total memory footprint is:839 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.362468
+ Repeat=3
+Problem size: Matrix[55002][2000]
+Total memory footprint is:839 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.361869
+ Repeat=1
+Problem size: Matrix[60002][2000]
+Total memory footprint is:916 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.394978
+ Repeat=2
+Problem size: Matrix[60002][2000]
+Total memory footprint is:916 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.394346
+ Repeat=3
+Problem size: Matrix[60002][2000]
+Total memory footprint is:916 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.394847
+ Repeat=1
+Problem size: Matrix[65002][2000]
+Total memory footprint is:992 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.425184
+ Repeat=2
+Problem size: Matrix[65002][2000]
+Total memory footprint is:992 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.428072
+ Repeat=3
+Problem size: Matrix[65002][2000]
+Total memory footprint is:992 MB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.425620
+ Repeat=1
+Problem size: Matrix[70002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.461234
+ Repeat=2
+Problem size: Matrix[70002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.459470
+ Repeat=3
+Problem size: Matrix[70002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.461432
+ Repeat=1
+Problem size: Matrix[75002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.491938
+ Repeat=2
+Problem size: Matrix[75002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.494152
+ Repeat=3
+Problem size: Matrix[75002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.491720
+ Repeat=1
+Problem size: Matrix[80002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.525033
+ Repeat=2
+Problem size: Matrix[80002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.523233
+ Repeat=3
+Problem size: Matrix[80002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.525210
+ Repeat=1
+Problem size: Matrix[85002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.555970
+ Repeat=2
+Problem size: Matrix[85002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.559723
+ Repeat=3
+Problem size: Matrix[85002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.557437
+ Repeat=1
+Problem size: Matrix[90002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.592171
+ Repeat=2
+Problem size: Matrix[90002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.589985
+ Repeat=3
+Problem size: Matrix[90002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.592534
+ Repeat=1
+Problem size: Matrix[95002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.623054
+ Repeat=2
+Problem size: Matrix[95002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.623514
+ Repeat=3
+Problem size: Matrix[95002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.621921
+ Repeat=1
+Problem size: Matrix[100002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.656992
+ Repeat=2
+Problem size: Matrix[100002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.654596
+ Repeat=3
+Problem size: Matrix[100002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.660304
+ Repeat=1
+Problem size: Matrix[105002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.688972
+ Repeat=2
+Problem size: Matrix[105002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.691583
+ Repeat=3
+Problem size: Matrix[105002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.689161
+ Repeat=1
+Problem size: Matrix[110002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.724480
+ Repeat=2
+Problem size: Matrix[110002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.721322
+ Repeat=3
+Problem size: Matrix[110002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.722331
+ Repeat=1
+Problem size: Matrix[115002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.752618
+ Repeat=2
+Problem size: Matrix[115002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.755388
+ Repeat=3
+Problem size: Matrix[115002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.752116
+ Repeat=1
+Problem size: Matrix[120002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.789987
+ Repeat=2
+Problem size: Matrix[120002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.786887
+ Repeat=3
+Problem size: Matrix[120002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.789835
+ Repeat=1
+Problem size: Matrix[125002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.819723
+ Repeat=2
+Problem size: Matrix[125002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.822138
+ Repeat=3
+Problem size: Matrix[125002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.819277
+ Repeat=1
+Problem size: Matrix[130002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.853563
+ Repeat=2
+Problem size: Matrix[130002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.849833
+ Repeat=3
+Problem size: Matrix[130002][2000]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.853411
+ Repeat=1
+Problem size: Matrix[135002][2000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.882372
+ Repeat=2
+Problem size: Matrix[135002][2000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.887900
+ Repeat=3
+Problem size: Matrix[135002][2000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.884573
+ Repeat=1
+Problem size: Matrix[140002][2000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.921498
+ Repeat=2
+Problem size: Matrix[140002][2000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.917284
+ Repeat=3
+Problem size: Matrix[140002][2000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.920287
+ Repeat=1
+Problem size: Matrix[145002][2000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.949990
+ Repeat=2
+Problem size: Matrix[145002][2000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.951101
+ Repeat=3
+Problem size: Matrix[145002][2000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+
+Elapsed time for scoring matrix computation: 0.947162
