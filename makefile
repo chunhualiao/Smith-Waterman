@@ -12,13 +12,13 @@ ifeq ($(findstring corona,$(HOSTNAME)), corona)
 else
   # using C++ compiler to be more restrictive 	
   #CC=g++-8
-#  CC=clang++ # default compiler: still illegal memory access bug # crashes on 6.1
-  CC=/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/bin/clang++
+  CC=clang++ # default clang 11 compiler: still illegal memory access bug # crashes on 6.1
+#  CC=/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/bin/clang++ # clang 12.0.x
   BASE_FLAGS=-O3 -g -std=c++11 -DSKIP_BACKTRACK=1
   OFFLOADING_FLAGS=-fopenmp-targets=nvptx64-nvidia-cuda
 # my own build of compiler
 #LINK_FALGS=-L/g/g17/liao6/workspace-wsa/parco-ldrd/apollo/install-lassen/lib -Wl,--rpath,/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/lib	
-  LINK_FALGS=-Wl,--rpath,/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/lib	
+#  LINK_FALGS=-Wl,--rpath,/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/lib	
 endif
 
 # OpenMP offloading versions	
@@ -48,8 +48,7 @@ v0-serial_smithW.out: omp_smithW-v1-refinedOrig.cpp
 	$(CC) $(BASE_FLAGS) -o $@ $<
 
 # OMP CPU threading versions
-omp_smithW_debug.out: parameters.h omp_smithW.c	
-	$(CC) omp_smithW.c $(LINK_FALGS) -o $@ -fopenmp -DDEBUG	
+
 omp_smithW-v1-refinedOrig.out: omp_smithW-v1-refinedOrig.cpp parameters.h
 	$(CC) $(BASE_FLAGS) -fopenmp $(LINK_FALGS) -o $@ $<
 

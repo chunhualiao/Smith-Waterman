@@ -1,0 +1,1594 @@
++ EXE_FILE=omp_smithW-v1-refinedOrig.out
+++ date +%Y%m%d_%H%M%S
++ TIMESTAMP=20210524_182011
+++ uname -n
++ NODE_NAME=lassen18
+++ uname -m
++ HARDWAREE_NAME=ppc64le
++ rm omp_smithW-v1-refinedOrig.out
++ make ./omp_smithW-v1-refinedOrig.out
+/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/bin/clang++  -O3 -g -std=c++11 -DSKIP_BACKTRACK=1 -fopenmp -Wl,--rpath,/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/lib	 -o omp_smithW-v1-refinedOrig.out omp_smithW-v1-refinedOrig.cpp
++ export OMP_NUM_THREADS=44
++ OMP_NUM_THREADS=44
++ counter=
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=1, problem M=32 N=32'
+running count=1, problem M=32 N=32
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 32 32
+Problem size: Matrix[32][32]
+Total memory footprint is:0 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.000577
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 32 32
+Problem size: Matrix[32][32]
+Total memory footprint is:0 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.000592
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 32 32
+Problem size: Matrix[32][32]
+Total memory footprint is:0 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.000540
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=2, problem M=544 N=544'
+running count=2, problem M=544 N=544
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 544 544
+Problem size: Matrix[544][544]
+Total memory footprint is:2 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.010990
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 544 544
+Problem size: Matrix[544][544]
+Total memory footprint is:2 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.009697
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 544 544
+Problem size: Matrix[544][544]
+Total memory footprint is:2 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.010250
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=3, problem M=1056 N=1056'
+running count=3, problem M=1056 N=1056
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 1056 1056
+Problem size: Matrix[1056][1056]
+Total memory footprint is:8 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.019656
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 1056 1056
+Problem size: Matrix[1056][1056]
+Total memory footprint is:8 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.022595
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 1056 1056
+Problem size: Matrix[1056][1056]
+Total memory footprint is:8 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.020129
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=4, problem M=1568 N=1568'
+running count=4, problem M=1568 N=1568
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 1568 1568
+Problem size: Matrix[1568][1568]
+Total memory footprint is:18 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.029096
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 1568 1568
+Problem size: Matrix[1568][1568]
+Total memory footprint is:18 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.029027
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 1568 1568
+Problem size: Matrix[1568][1568]
+Total memory footprint is:18 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.032834
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=5, problem M=2080 N=2080'
+running count=5, problem M=2080 N=2080
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 2080 2080
+Problem size: Matrix[2080][2080]
+Total memory footprint is:33 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.041163
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 2080 2080
+Problem size: Matrix[2080][2080]
+Total memory footprint is:33 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.045568
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 2080 2080
+Problem size: Matrix[2080][2080]
+Total memory footprint is:33 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.040507
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=6, problem M=2592 N=2592'
+running count=6, problem M=2592 N=2592
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 2592 2592
+Problem size: Matrix[2592][2592]
+Total memory footprint is:51 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.050838
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 2592 2592
+Problem size: Matrix[2592][2592]
+Total memory footprint is:51 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.057523
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 2592 2592
+Problem size: Matrix[2592][2592]
+Total memory footprint is:51 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.054389
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=7, problem M=3104 N=3104'
+running count=7, problem M=3104 N=3104
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 3104 3104
+Problem size: Matrix[3104][3104]
+Total memory footprint is:73 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.067271
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 3104 3104
+Problem size: Matrix[3104][3104]
+Total memory footprint is:73 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.062001
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 3104 3104
+Problem size: Matrix[3104][3104]
+Total memory footprint is:73 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.073697
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=8, problem M=3616 N=3616'
+running count=8, problem M=3616 N=3616
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 3616 3616
+Problem size: Matrix[3616][3616]
+Total memory footprint is:99 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.077113
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 3616 3616
+Problem size: Matrix[3616][3616]
+Total memory footprint is:99 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.076318
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 3616 3616
+Problem size: Matrix[3616][3616]
+Total memory footprint is:99 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.075369
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=9, problem M=4128 N=4128'
+running count=9, problem M=4128 N=4128
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 4128 4128
+Problem size: Matrix[4128][4128]
+Total memory footprint is:130 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.091719
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 4128 4128
+Problem size: Matrix[4128][4128]
+Total memory footprint is:130 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.090148
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 4128 4128
+Problem size: Matrix[4128][4128]
+Total memory footprint is:130 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.089675
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=10, problem M=4640 N=4640'
+running count=10, problem M=4640 N=4640
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 4640 4640
+Problem size: Matrix[4640][4640]
+Total memory footprint is:164 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.104710
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 4640 4640
+Problem size: Matrix[4640][4640]
+Total memory footprint is:164 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.104722
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 4640 4640
+Problem size: Matrix[4640][4640]
+Total memory footprint is:164 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.107007
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=11, problem M=5152 N=5152'
+running count=11, problem M=5152 N=5152
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 5152 5152
+Problem size: Matrix[5152][5152]
+Total memory footprint is:202 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.126049
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 5152 5152
+Problem size: Matrix[5152][5152]
+Total memory footprint is:202 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.136209
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 5152 5152
+Problem size: Matrix[5152][5152]
+Total memory footprint is:202 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.139430
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=12, problem M=5664 N=5664'
+running count=12, problem M=5664 N=5664
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 5664 5664
+Problem size: Matrix[5664][5664]
+Total memory footprint is:244 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.136599
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 5664 5664
+Problem size: Matrix[5664][5664]
+Total memory footprint is:244 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.144195
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 5664 5664
+Problem size: Matrix[5664][5664]
+Total memory footprint is:244 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.140425
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=13, problem M=6176 N=6176'
+running count=13, problem M=6176 N=6176
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 6176 6176
+Problem size: Matrix[6176][6176]
+Total memory footprint is:291 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.161135
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 6176 6176
+Problem size: Matrix[6176][6176]
+Total memory footprint is:291 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.156905
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 6176 6176
+Problem size: Matrix[6176][6176]
+Total memory footprint is:291 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.162493
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=14, problem M=6688 N=6688'
+running count=14, problem M=6688 N=6688
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 6688 6688
+Problem size: Matrix[6688][6688]
+Total memory footprint is:341 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.175521
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 6688 6688
+Problem size: Matrix[6688][6688]
+Total memory footprint is:341 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.189120
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 6688 6688
+Problem size: Matrix[6688][6688]
+Total memory footprint is:341 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.180701
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=15, problem M=7200 N=7200'
+running count=15, problem M=7200 N=7200
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 7200 7200
+Problem size: Matrix[7200][7200]
+Total memory footprint is:395 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.194279
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 7200 7200
+Problem size: Matrix[7200][7200]
+Total memory footprint is:395 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.201508
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 7200 7200
+Problem size: Matrix[7200][7200]
+Total memory footprint is:395 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.191522
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=16, problem M=7712 N=7712'
+running count=16, problem M=7712 N=7712
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 7712 7712
+Problem size: Matrix[7712][7712]
+Total memory footprint is:453 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.241693
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 7712 7712
+Problem size: Matrix[7712][7712]
+Total memory footprint is:453 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.214824
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 7712 7712
+Problem size: Matrix[7712][7712]
+Total memory footprint is:453 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.222692
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=17, problem M=8224 N=8224'
+running count=17, problem M=8224 N=8224
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 8224 8224
+Problem size: Matrix[8224][8224]
+Total memory footprint is:516 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.276377
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 8224 8224
+Problem size: Matrix[8224][8224]
+Total memory footprint is:516 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.247765
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 8224 8224
+Problem size: Matrix[8224][8224]
+Total memory footprint is:516 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.242142
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=18, problem M=8736 N=8736'
+running count=18, problem M=8736 N=8736
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 8736 8736
+Problem size: Matrix[8736][8736]
+Total memory footprint is:582 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.270463
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 8736 8736
+Problem size: Matrix[8736][8736]
+Total memory footprint is:582 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.253394
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 8736 8736
+Problem size: Matrix[8736][8736]
+Total memory footprint is:582 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.249062
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=19, problem M=9248 N=9248'
+running count=19, problem M=9248 N=9248
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 9248 9248
+Problem size: Matrix[9248][9248]
+Total memory footprint is:652 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.366186
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 9248 9248
+Problem size: Matrix[9248][9248]
+Total memory footprint is:652 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.291920
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 9248 9248
+Problem size: Matrix[9248][9248]
+Total memory footprint is:652 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.334136
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=20, problem M=9760 N=9760'
+running count=20, problem M=9760 N=9760
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 9760 9760
+Problem size: Matrix[9760][9760]
+Total memory footprint is:726 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.328287
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 9760 9760
+Problem size: Matrix[9760][9760]
+Total memory footprint is:726 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.301577
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 9760 9760
+Problem size: Matrix[9760][9760]
+Total memory footprint is:726 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.332017
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=21, problem M=10272 N=10272'
+running count=21, problem M=10272 N=10272
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 10272 10272
+Problem size: Matrix[10272][10272]
+Total memory footprint is:805 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.398072
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 10272 10272
+Problem size: Matrix[10272][10272]
+Total memory footprint is:805 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.334136
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 10272 10272
+Problem size: Matrix[10272][10272]
+Total memory footprint is:805 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.348122
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=22, problem M=10784 N=10784'
+running count=22, problem M=10784 N=10784
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 10784 10784
+Problem size: Matrix[10784][10784]
+Total memory footprint is:887 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.394736
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 10784 10784
+Problem size: Matrix[10784][10784]
+Total memory footprint is:887 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.360192
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 10784 10784
+Problem size: Matrix[10784][10784]
+Total memory footprint is:887 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.422919
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=23, problem M=11296 N=11296'
+running count=23, problem M=11296 N=11296
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 11296 11296
+Problem size: Matrix[11296][11296]
+Total memory footprint is:973 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.474956
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 11296 11296
+Problem size: Matrix[11296][11296]
+Total memory footprint is:973 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.529310
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 11296 11296
+Problem size: Matrix[11296][11296]
+Total memory footprint is:973 MB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.431795
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=24, problem M=11808 N=11808'
+running count=24, problem M=11808 N=11808
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 11808 11808
+Problem size: Matrix[11808][11808]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.421446
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 11808 11808
+Problem size: Matrix[11808][11808]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.457803
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 11808 11808
+Problem size: Matrix[11808][11808]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.459430
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=25, problem M=12320 N=12320'
+running count=25, problem M=12320 N=12320
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 12320 12320
+Problem size: Matrix[12320][12320]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.581963
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 12320 12320
+Problem size: Matrix[12320][12320]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.481317
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 12320 12320
+Problem size: Matrix[12320][12320]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.447301
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=26, problem M=12832 N=12832'
+running count=26, problem M=12832 N=12832
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 12832 12832
+Problem size: Matrix[12832][12832]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.524089
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 12832 12832
+Problem size: Matrix[12832][12832]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.591982
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 12832 12832
+Problem size: Matrix[12832][12832]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.601973
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=27, problem M=13344 N=13344'
+running count=27, problem M=13344 N=13344
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 13344 13344
+Problem size: Matrix[13344][13344]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.653661
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 13344 13344
+Problem size: Matrix[13344][13344]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.575485
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 13344 13344
+Problem size: Matrix[13344][13344]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.583034
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=28, problem M=13856 N=13856'
+running count=28, problem M=13856 N=13856
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 13856 13856
+Problem size: Matrix[13856][13856]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.612580
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 13856 13856
+Problem size: Matrix[13856][13856]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.696672
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 13856 13856
+Problem size: Matrix[13856][13856]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.694103
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=29, problem M=14368 N=14368'
+running count=29, problem M=14368 N=14368
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 14368 14368
+Problem size: Matrix[14368][14368]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.649838
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 14368 14368
+Problem size: Matrix[14368][14368]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.660408
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 14368 14368
+Problem size: Matrix[14368][14368]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.655315
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=30, problem M=14880 N=14880'
+running count=30, problem M=14880 N=14880
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 14880 14880
+Problem size: Matrix[14880][14880]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.687563
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 14880 14880
+Problem size: Matrix[14880][14880]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.787257
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 14880 14880
+Problem size: Matrix[14880][14880]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.699584
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=31, problem M=15392 N=15392'
+running count=31, problem M=15392 N=15392
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 15392 15392
+Problem size: Matrix[15392][15392]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.652988
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 15392 15392
+Problem size: Matrix[15392][15392]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.741461
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 15392 15392
+Problem size: Matrix[15392][15392]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.750962
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=32, problem M=15904 N=15904'
+running count=32, problem M=15904 N=15904
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 15904 15904
+Problem size: Matrix[15904][15904]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.709727
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 15904 15904
+Problem size: Matrix[15904][15904]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.902037
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 15904 15904
+Problem size: Matrix[15904][15904]
+Total memory footprint is:1 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.701544
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=33, problem M=16416 N=16416'
+running count=33, problem M=16416 N=16416
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 16416 16416
+Problem size: Matrix[16416][16416]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.841754
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 16416 16416
+Problem size: Matrix[16416][16416]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.742160
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 16416 16416
+Problem size: Matrix[16416][16416]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.926034
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=34, problem M=16928 N=16928'
+running count=34, problem M=16928 N=16928
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 16928 16928
+Problem size: Matrix[16928][16928]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.993530
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 16928 16928
+Problem size: Matrix[16928][16928]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.876752
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 16928 16928
+Problem size: Matrix[16928][16928]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.993659
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=35, problem M=17440 N=17440'
+running count=35, problem M=17440 N=17440
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 17440 17440
+Problem size: Matrix[17440][17440]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.812837
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 17440 17440
+Problem size: Matrix[17440][17440]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.910450
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 17440 17440
+Problem size: Matrix[17440][17440]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.921678
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=36, problem M=17952 N=17952'
+running count=36, problem M=17952 N=17952
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 17952 17952
+Problem size: Matrix[17952][17952]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.962162
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 17952 17952
+Problem size: Matrix[17952][17952]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.953003
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 17952 17952
+Problem size: Matrix[17952][17952]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.944101
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=37, problem M=18464 N=18464'
+running count=37, problem M=18464 N=18464
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 18464 18464
+Problem size: Matrix[18464][18464]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.889972
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 18464 18464
+Problem size: Matrix[18464][18464]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.996784
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 18464 18464
+Problem size: Matrix[18464][18464]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.968058
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=38, problem M=18976 N=18976'
+running count=38, problem M=18976 N=18976
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 18976 18976
+Problem size: Matrix[18976][18976]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.940866
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 18976 18976
+Problem size: Matrix[18976][18976]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.052769
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 18976 18976
+Problem size: Matrix[18976][18976]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.938280
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=39, problem M=19488 N=19488'
+running count=39, problem M=19488 N=19488
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 19488 19488
+Problem size: Matrix[19488][19488]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 0.978132
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 19488 19488
+Problem size: Matrix[19488][19488]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.095748
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 19488 19488
+Problem size: Matrix[19488][19488]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.089186
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=40, problem M=20000 N=20000'
+running count=40, problem M=20000 N=20000
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 20000 20000
+Problem size: Matrix[20000][20000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.018325
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 20000 20000
+Problem size: Matrix[20000][20000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.015064
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 20000 20000
+Problem size: Matrix[20000][20000]
+Total memory footprint is:2 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.041700
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=41, problem M=20512 N=20512'
+running count=41, problem M=20512 N=20512
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 20512 20512
+Problem size: Matrix[20512][20512]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.174838
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 20512 20512
+Problem size: Matrix[20512][20512]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.040050
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 20512 20512
+Problem size: Matrix[20512][20512]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.171842
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=42, problem M=21024 N=21024'
+running count=42, problem M=21024 N=21024
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 21024 21024
+Problem size: Matrix[21024][21024]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.084035
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 21024 21024
+Problem size: Matrix[21024][21024]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.235196
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 21024 21024
+Problem size: Matrix[21024][21024]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.222001
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=43, problem M=21536 N=21536'
+running count=43, problem M=21536 N=21536
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 21536 21536
+Problem size: Matrix[21536][21536]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.266122
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 21536 21536
+Problem size: Matrix[21536][21536]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.275240
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 21536 21536
+Problem size: Matrix[21536][21536]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.155438
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=44, problem M=22048 N=22048'
+running count=44, problem M=22048 N=22048
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 22048 22048
+Problem size: Matrix[22048][22048]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.184229
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 22048 22048
+Problem size: Matrix[22048][22048]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.301645
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 22048 22048
+Problem size: Matrix[22048][22048]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.285449
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=45, problem M=22560 N=22560'
+running count=45, problem M=22560 N=22560
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 22560 22560
+Problem size: Matrix[22560][22560]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.358723
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 22560 22560
+Problem size: Matrix[22560][22560]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.358005
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 22560 22560
+Problem size: Matrix[22560][22560]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.304643
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=46, problem M=23072 N=23072'
+running count=46, problem M=23072 N=23072
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 23072 23072
+Problem size: Matrix[23072][23072]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.399321
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 23072 23072
+Problem size: Matrix[23072][23072]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.302551
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 23072 23072
+Problem size: Matrix[23072][23072]
+Total memory footprint is:3 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.563311
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=47, problem M=23584 N=23584'
+running count=47, problem M=23584 N=23584
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 23584 23584
+Problem size: Matrix[23584][23584]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.320016
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 23584 23584
+Problem size: Matrix[23584][23584]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.465289
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 23584 23584
+Problem size: Matrix[23584][23584]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.456562
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=48, problem M=24096 N=24096'
+running count=48, problem M=24096 N=24096
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 24096 24096
+Problem size: Matrix[24096][24096]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.356140
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 24096 24096
+Problem size: Matrix[24096][24096]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.501144
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 24096 24096
+Problem size: Matrix[24096][24096]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.478519
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=49, problem M=24608 N=24608'
+running count=49, problem M=24608 N=24608
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 24608 24608
+Problem size: Matrix[24608][24608]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.551181
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 24608 24608
+Problem size: Matrix[24608][24608]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.571102
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 24608 24608
+Problem size: Matrix[24608][24608]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.542977
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=50, problem M=25120 N=25120'
+running count=50, problem M=25120 N=25120
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 25120 25120
+Problem size: Matrix[25120][25120]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.603424
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 25120 25120
+Problem size: Matrix[25120][25120]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.593444
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 25120 25120
+Problem size: Matrix[25120][25120]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.588494
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=51, problem M=25632 N=25632'
+running count=51, problem M=25632 N=25632
++ for repeat in 1 2 3
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v1-refinedOrig.out 25632 25632
+Problem size: Matrix[25632][25632]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.644992
++ for repeat in 1 2 3
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v1-refinedOrig.out 25632 25632
+Problem size: Matrix[25632][25632]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.499310
++ for repeat in 1 2 3
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v1-refinedOrig.out 25632 25632
+Problem size: Matrix[25632][25632]
+Total memory footprint is:4 GB
+Skipping backtrack ...
+Using 44 out of max 44 threads...
+Elapsed time for scoring matrix computation: 1.566216
