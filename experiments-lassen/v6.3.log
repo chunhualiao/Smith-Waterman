@@ -1,0 +1,3022 @@
++ EXE_FILE=omp_smithW-v6.3-target-inlined.out
+++ date +%Y%m%d_%H%M%S
++ TIMESTAMP=20210524_175137
+++ uname -n
++ NODE_NAME=lassen18
+++ uname -m
++ HARDWAREE_NAME=ppc64le
++ rm omp_smithW-v6.3-target-inlined.out
++ make ./omp_smithW-v6.3-target-inlined.out
+/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/bin/clang++ -O3 -g -std=c++11 -DSKIP_BACKTRACK=1 -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -Wl,--rpath,/g/g17/liao6/workspace-wsa/opt/llvm-master-offload/lib	 -o omp_smithW-v6.3-target-inlined.out omp_smithW-v6.3-target-inlined.cpp
++ export OMP_NUM_THREADS=44
++ OMP_NUM_THREADS=44
++ counter=
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=1, problem M=32 N=32'
+running count=1, problem M=32 N=32
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 32 32
+Problem size: Matrix[32][32], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.003457
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 32 32
+Problem size: Matrix[32][32], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.003412
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 32 32
+Problem size: Matrix[32][32], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.003927
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 32 32
+Problem size: Matrix[32][32], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.005770
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 32 32
+Problem size: Matrix[32][32], FACTOR=128 CUTOFF=1024
+Total memory footprint is:0 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.003687
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=2, problem M=544 N=544'
+running count=2, problem M=544 N=544
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 544 544
+Problem size: Matrix[544][544], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.066609
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 544 544
+Problem size: Matrix[544][544], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.070132
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 544 544
+Problem size: Matrix[544][544], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.061617
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 544 544
+Problem size: Matrix[544][544], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.064523
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 544 544
+Problem size: Matrix[544][544], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.070008
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=3, problem M=1056 N=1056'
+running count=3, problem M=1056 N=1056
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 1056 1056
+Problem size: Matrix[1056][1056], FACTOR=128 CUTOFF=1024
+Total memory footprint is:8 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.137690
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 1056 1056
+Problem size: Matrix[1056][1056], FACTOR=128 CUTOFF=1024
+Total memory footprint is:8 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.121230
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 1056 1056
+Problem size: Matrix[1056][1056], FACTOR=128 CUTOFF=1024
+Total memory footprint is:8 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.141643
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 1056 1056
+Problem size: Matrix[1056][1056], FACTOR=128 CUTOFF=1024
+Total memory footprint is:8 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.122235
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 1056 1056
+Problem size: Matrix[1056][1056], FACTOR=128 CUTOFF=1024
+Total memory footprint is:8 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.149657
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=4, problem M=1568 N=1568'
+running count=4, problem M=1568 N=1568
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 1568 1568
+Problem size: Matrix[1568][1568], FACTOR=128 CUTOFF=1024
+Total memory footprint is:18 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.210033
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 1568 1568
+Problem size: Matrix[1568][1568], FACTOR=128 CUTOFF=1024
+Total memory footprint is:18 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.183751
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 1568 1568
+Problem size: Matrix[1568][1568], FACTOR=128 CUTOFF=1024
+Total memory footprint is:18 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.209659
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 1568 1568
+Problem size: Matrix[1568][1568], FACTOR=128 CUTOFF=1024
+Total memory footprint is:18 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.202334
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 1568 1568
+Problem size: Matrix[1568][1568], FACTOR=128 CUTOFF=1024
+Total memory footprint is:18 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.222677
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=5, problem M=2080 N=2080'
+running count=5, problem M=2080 N=2080
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 2080 2080
+Problem size: Matrix[2080][2080], FACTOR=128 CUTOFF=1024
+Total memory footprint is:33 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.286664
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 2080 2080
+Problem size: Matrix[2080][2080], FACTOR=128 CUTOFF=1024
+Total memory footprint is:33 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.259421
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 2080 2080
+Problem size: Matrix[2080][2080], FACTOR=128 CUTOFF=1024
+Total memory footprint is:33 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.285853
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 2080 2080
+Problem size: Matrix[2080][2080], FACTOR=128 CUTOFF=1024
+Total memory footprint is:33 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.251576
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 2080 2080
+Problem size: Matrix[2080][2080], FACTOR=128 CUTOFF=1024
+Total memory footprint is:33 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.273135
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=6, problem M=2592 N=2592'
+running count=6, problem M=2592 N=2592
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 2592 2592
+Problem size: Matrix[2592][2592], FACTOR=128 CUTOFF=1024
+Total memory footprint is:51 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.329730
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 2592 2592
+Problem size: Matrix[2592][2592], FACTOR=128 CUTOFF=1024
+Total memory footprint is:51 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.333740
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 2592 2592
+Problem size: Matrix[2592][2592], FACTOR=128 CUTOFF=1024
+Total memory footprint is:51 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.378549
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 2592 2592
+Problem size: Matrix[2592][2592], FACTOR=128 CUTOFF=1024
+Total memory footprint is:51 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.336109
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 2592 2592
+Problem size: Matrix[2592][2592], FACTOR=128 CUTOFF=1024
+Total memory footprint is:51 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.365887
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=7, problem M=3104 N=3104'
+running count=7, problem M=3104 N=3104
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 3104 3104
+Problem size: Matrix[3104][3104], FACTOR=128 CUTOFF=1024
+Total memory footprint is:73 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.450498
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 3104 3104
+Problem size: Matrix[3104][3104], FACTOR=128 CUTOFF=1024
+Total memory footprint is:73 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.457154
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 3104 3104
+Problem size: Matrix[3104][3104], FACTOR=128 CUTOFF=1024
+Total memory footprint is:73 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.446758
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 3104 3104
+Problem size: Matrix[3104][3104], FACTOR=128 CUTOFF=1024
+Total memory footprint is:73 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.469142
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 3104 3104
+Problem size: Matrix[3104][3104], FACTOR=128 CUTOFF=1024
+Total memory footprint is:73 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.449126
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=8, problem M=3616 N=3616'
+running count=8, problem M=3616 N=3616
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 3616 3616
+Problem size: Matrix[3616][3616], FACTOR=128 CUTOFF=1024
+Total memory footprint is:99 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.493334
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 3616 3616
+Problem size: Matrix[3616][3616], FACTOR=128 CUTOFF=1024
+Total memory footprint is:99 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.536045
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 3616 3616
+Problem size: Matrix[3616][3616], FACTOR=128 CUTOFF=1024
+Total memory footprint is:99 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.494272
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 3616 3616
+Problem size: Matrix[3616][3616], FACTOR=128 CUTOFF=1024
+Total memory footprint is:99 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.477631
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 3616 3616
+Problem size: Matrix[3616][3616], FACTOR=128 CUTOFF=1024
+Total memory footprint is:99 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.547605
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=9, problem M=4128 N=4128'
+running count=9, problem M=4128 N=4128
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 4128 4128
+Problem size: Matrix[4128][4128], FACTOR=128 CUTOFF=1024
+Total memory footprint is:130 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.571627
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 4128 4128
+Problem size: Matrix[4128][4128], FACTOR=128 CUTOFF=1024
+Total memory footprint is:130 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.584919
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 4128 4128
+Problem size: Matrix[4128][4128], FACTOR=128 CUTOFF=1024
+Total memory footprint is:130 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.567632
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 4128 4128
+Problem size: Matrix[4128][4128], FACTOR=128 CUTOFF=1024
+Total memory footprint is:130 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.561234
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 4128 4128
+Problem size: Matrix[4128][4128], FACTOR=128 CUTOFF=1024
+Total memory footprint is:130 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.578299
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=10, problem M=4640 N=4640'
+running count=10, problem M=4640 N=4640
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 4640 4640
+Problem size: Matrix[4640][4640], FACTOR=128 CUTOFF=1024
+Total memory footprint is:164 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.721316
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 4640 4640
+Problem size: Matrix[4640][4640], FACTOR=128 CUTOFF=1024
+Total memory footprint is:164 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.723169
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 4640 4640
+Problem size: Matrix[4640][4640], FACTOR=128 CUTOFF=1024
+Total memory footprint is:164 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.669804
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 4640 4640
+Problem size: Matrix[4640][4640], FACTOR=128 CUTOFF=1024
+Total memory footprint is:164 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.655143
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 4640 4640
+Problem size: Matrix[4640][4640], FACTOR=128 CUTOFF=1024
+Total memory footprint is:164 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.656310
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=11, problem M=5152 N=5152'
+running count=11, problem M=5152 N=5152
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 5152 5152
+Problem size: Matrix[5152][5152], FACTOR=128 CUTOFF=1024
+Total memory footprint is:202 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.744391
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 5152 5152
+Problem size: Matrix[5152][5152], FACTOR=128 CUTOFF=1024
+Total memory footprint is:202 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.772962
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 5152 5152
+Problem size: Matrix[5152][5152], FACTOR=128 CUTOFF=1024
+Total memory footprint is:202 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.814863
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 5152 5152
+Problem size: Matrix[5152][5152], FACTOR=128 CUTOFF=1024
+Total memory footprint is:202 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.813165
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 5152 5152
+Problem size: Matrix[5152][5152], FACTOR=128 CUTOFF=1024
+Total memory footprint is:202 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.746555
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=12, problem M=5664 N=5664'
+running count=12, problem M=5664 N=5664
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 5664 5664
+Problem size: Matrix[5664][5664], FACTOR=128 CUTOFF=1024
+Total memory footprint is:244 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.921916
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 5664 5664
+Problem size: Matrix[5664][5664], FACTOR=128 CUTOFF=1024
+Total memory footprint is:244 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.903769
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 5664 5664
+Problem size: Matrix[5664][5664], FACTOR=128 CUTOFF=1024
+Total memory footprint is:244 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.844536
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 5664 5664
+Problem size: Matrix[5664][5664], FACTOR=128 CUTOFF=1024
+Total memory footprint is:244 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.923764
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 5664 5664
+Problem size: Matrix[5664][5664], FACTOR=128 CUTOFF=1024
+Total memory footprint is:244 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.830324
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=13, problem M=6176 N=6176'
+running count=13, problem M=6176 N=6176
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 6176 6176
+Problem size: Matrix[6176][6176], FACTOR=128 CUTOFF=1024
+Total memory footprint is:291 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.938637
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 6176 6176
+Problem size: Matrix[6176][6176], FACTOR=128 CUTOFF=1024
+Total memory footprint is:291 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.963556
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 6176 6176
+Problem size: Matrix[6176][6176], FACTOR=128 CUTOFF=1024
+Total memory footprint is:291 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.953637
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 6176 6176
+Problem size: Matrix[6176][6176], FACTOR=128 CUTOFF=1024
+Total memory footprint is:291 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 0.939326
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 6176 6176
+Problem size: Matrix[6176][6176], FACTOR=128 CUTOFF=1024
+Total memory footprint is:291 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.013491
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=14, problem M=6688 N=6688'
+running count=14, problem M=6688 N=6688
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 6688 6688
+Problem size: Matrix[6688][6688], FACTOR=128 CUTOFF=1024
+Total memory footprint is:341 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.028796
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 6688 6688
+Problem size: Matrix[6688][6688], FACTOR=128 CUTOFF=1024
+Total memory footprint is:341 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.075609
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 6688 6688
+Problem size: Matrix[6688][6688], FACTOR=128 CUTOFF=1024
+Total memory footprint is:341 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.059519
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 6688 6688
+Problem size: Matrix[6688][6688], FACTOR=128 CUTOFF=1024
+Total memory footprint is:341 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.145922
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 6688 6688
+Problem size: Matrix[6688][6688], FACTOR=128 CUTOFF=1024
+Total memory footprint is:341 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.030782
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=15, problem M=7200 N=7200'
+running count=15, problem M=7200 N=7200
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 7200 7200
+Problem size: Matrix[7200][7200], FACTOR=128 CUTOFF=1024
+Total memory footprint is:395 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.155290
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 7200 7200
+Problem size: Matrix[7200][7200], FACTOR=128 CUTOFF=1024
+Total memory footprint is:395 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.262130
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 7200 7200
+Problem size: Matrix[7200][7200], FACTOR=128 CUTOFF=1024
+Total memory footprint is:395 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.226486
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 7200 7200
+Problem size: Matrix[7200][7200], FACTOR=128 CUTOFF=1024
+Total memory footprint is:395 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.248208
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 7200 7200
+Problem size: Matrix[7200][7200], FACTOR=128 CUTOFF=1024
+Total memory footprint is:395 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.241500
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=16, problem M=7712 N=7712'
+running count=16, problem M=7712 N=7712
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 7712 7712
+Problem size: Matrix[7712][7712], FACTOR=128 CUTOFF=1024
+Total memory footprint is:453 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.373131
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 7712 7712
+Problem size: Matrix[7712][7712], FACTOR=128 CUTOFF=1024
+Total memory footprint is:453 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.352204
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 7712 7712
+Problem size: Matrix[7712][7712], FACTOR=128 CUTOFF=1024
+Total memory footprint is:453 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.374521
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 7712 7712
+Problem size: Matrix[7712][7712], FACTOR=128 CUTOFF=1024
+Total memory footprint is:453 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.279630
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 7712 7712
+Problem size: Matrix[7712][7712], FACTOR=128 CUTOFF=1024
+Total memory footprint is:453 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.361894
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=17, problem M=8224 N=8224'
+running count=17, problem M=8224 N=8224
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 8224 8224
+Problem size: Matrix[8224][8224], FACTOR=128 CUTOFF=1024
+Total memory footprint is:516 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.495879
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 8224 8224
+Problem size: Matrix[8224][8224], FACTOR=128 CUTOFF=1024
+Total memory footprint is:516 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.411631
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 8224 8224
+Problem size: Matrix[8224][8224], FACTOR=128 CUTOFF=1024
+Total memory footprint is:516 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.378481
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 8224 8224
+Problem size: Matrix[8224][8224], FACTOR=128 CUTOFF=1024
+Total memory footprint is:516 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.487398
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 8224 8224
+Problem size: Matrix[8224][8224], FACTOR=128 CUTOFF=1024
+Total memory footprint is:516 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.470870
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=18, problem M=8736 N=8736'
+running count=18, problem M=8736 N=8736
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 8736 8736
+Problem size: Matrix[8736][8736], FACTOR=128 CUTOFF=1024
+Total memory footprint is:582 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.581488
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 8736 8736
+Problem size: Matrix[8736][8736], FACTOR=128 CUTOFF=1024
+Total memory footprint is:582 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.479720
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 8736 8736
+Problem size: Matrix[8736][8736], FACTOR=128 CUTOFF=1024
+Total memory footprint is:582 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.571886
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 8736 8736
+Problem size: Matrix[8736][8736], FACTOR=128 CUTOFF=1024
+Total memory footprint is:582 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.496619
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 8736 8736
+Problem size: Matrix[8736][8736], FACTOR=128 CUTOFF=1024
+Total memory footprint is:582 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.573963
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=19, problem M=9248 N=9248'
+running count=19, problem M=9248 N=9248
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 9248 9248
+Problem size: Matrix[9248][9248], FACTOR=128 CUTOFF=1024
+Total memory footprint is:652 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.738904
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 9248 9248
+Problem size: Matrix[9248][9248], FACTOR=128 CUTOFF=1024
+Total memory footprint is:652 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.635436
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 9248 9248
+Problem size: Matrix[9248][9248], FACTOR=128 CUTOFF=1024
+Total memory footprint is:652 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.707221
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 9248 9248
+Problem size: Matrix[9248][9248], FACTOR=128 CUTOFF=1024
+Total memory footprint is:652 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.606687
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 9248 9248
+Problem size: Matrix[9248][9248], FACTOR=128 CUTOFF=1024
+Total memory footprint is:652 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.765046
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=20, problem M=9760 N=9760'
+running count=20, problem M=9760 N=9760
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 9760 9760
+Problem size: Matrix[9760][9760], FACTOR=128 CUTOFF=1024
+Total memory footprint is:726 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.762038
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 9760 9760
+Problem size: Matrix[9760][9760], FACTOR=128 CUTOFF=1024
+Total memory footprint is:726 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.753015
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 9760 9760
+Problem size: Matrix[9760][9760], FACTOR=128 CUTOFF=1024
+Total memory footprint is:726 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.730669
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 9760 9760
+Problem size: Matrix[9760][9760], FACTOR=128 CUTOFF=1024
+Total memory footprint is:726 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.752895
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 9760 9760
+Problem size: Matrix[9760][9760], FACTOR=128 CUTOFF=1024
+Total memory footprint is:726 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.863940
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=21, problem M=10272 N=10272'
+running count=21, problem M=10272 N=10272
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 10272 10272
+Problem size: Matrix[10272][10272], FACTOR=128 CUTOFF=1024
+Total memory footprint is:805 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.893814
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 10272 10272
+Problem size: Matrix[10272][10272], FACTOR=128 CUTOFF=1024
+Total memory footprint is:805 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.959697
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 10272 10272
+Problem size: Matrix[10272][10272], FACTOR=128 CUTOFF=1024
+Total memory footprint is:805 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.965176
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 10272 10272
+Problem size: Matrix[10272][10272], FACTOR=128 CUTOFF=1024
+Total memory footprint is:805 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.964940
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 10272 10272
+Problem size: Matrix[10272][10272], FACTOR=128 CUTOFF=1024
+Total memory footprint is:805 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.895582
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=22, problem M=10784 N=10784'
+running count=22, problem M=10784 N=10784
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 10784 10784
+Problem size: Matrix[10784][10784], FACTOR=128 CUTOFF=1024
+Total memory footprint is:887 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.101961
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 10784 10784
+Problem size: Matrix[10784][10784], FACTOR=128 CUTOFF=1024
+Total memory footprint is:887 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.027826
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 10784 10784
+Problem size: Matrix[10784][10784], FACTOR=128 CUTOFF=1024
+Total memory footprint is:887 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 1.966412
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 10784 10784
+Problem size: Matrix[10784][10784], FACTOR=128 CUTOFF=1024
+Total memory footprint is:887 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.012696
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 10784 10784
+Problem size: Matrix[10784][10784], FACTOR=128 CUTOFF=1024
+Total memory footprint is:887 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.050799
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=23, problem M=11296 N=11296'
+running count=23, problem M=11296 N=11296
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 11296 11296
+Problem size: Matrix[11296][11296], FACTOR=128 CUTOFF=1024
+Total memory footprint is:973 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.241596
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 11296 11296
+Problem size: Matrix[11296][11296], FACTOR=128 CUTOFF=1024
+Total memory footprint is:973 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.076624
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 11296 11296
+Problem size: Matrix[11296][11296], FACTOR=128 CUTOFF=1024
+Total memory footprint is:973 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.081773
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 11296 11296
+Problem size: Matrix[11296][11296], FACTOR=128 CUTOFF=1024
+Total memory footprint is:973 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.114900
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 11296 11296
+Problem size: Matrix[11296][11296], FACTOR=128 CUTOFF=1024
+Total memory footprint is:973 MB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.047124
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=24, problem M=11808 N=11808'
+running count=24, problem M=11808 N=11808
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 11808 11808
+Problem size: Matrix[11808][11808], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.190801
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 11808 11808
+Problem size: Matrix[11808][11808], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.292180
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 11808 11808
+Problem size: Matrix[11808][11808], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.201071
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 11808 11808
+Problem size: Matrix[11808][11808], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.244460
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 11808 11808
+Problem size: Matrix[11808][11808], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.291872
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=25, problem M=12320 N=12320'
+running count=25, problem M=12320 N=12320
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 12320 12320
+Problem size: Matrix[12320][12320], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.398612
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 12320 12320
+Problem size: Matrix[12320][12320], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.322573
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 12320 12320
+Problem size: Matrix[12320][12320], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.328126
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 12320 12320
+Problem size: Matrix[12320][12320], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.325989
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 12320 12320
+Problem size: Matrix[12320][12320], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.263450
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=26, problem M=12832 N=12832'
+running count=26, problem M=12832 N=12832
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 12832 12832
+Problem size: Matrix[12832][12832], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.508624
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 12832 12832
+Problem size: Matrix[12832][12832], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.481047
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 12832 12832
+Problem size: Matrix[12832][12832], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.566921
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 12832 12832
+Problem size: Matrix[12832][12832], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.430331
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 12832 12832
+Problem size: Matrix[12832][12832], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.433263
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=27, problem M=13344 N=13344'
+running count=27, problem M=13344 N=13344
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 13344 13344
+Problem size: Matrix[13344][13344], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.679633
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 13344 13344
+Problem size: Matrix[13344][13344], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.628056
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 13344 13344
+Problem size: Matrix[13344][13344], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.771933
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 13344 13344
+Problem size: Matrix[13344][13344], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.613539
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 13344 13344
+Problem size: Matrix[13344][13344], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.640773
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=28, problem M=13856 N=13856'
+running count=28, problem M=13856 N=13856
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 13856 13856
+Problem size: Matrix[13856][13856], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.812620
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 13856 13856
+Problem size: Matrix[13856][13856], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.731168
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 13856 13856
+Problem size: Matrix[13856][13856], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.733937
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 13856 13856
+Problem size: Matrix[13856][13856], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.852188
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 13856 13856
+Problem size: Matrix[13856][13856], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.792332
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=29, problem M=14368 N=14368'
+running count=29, problem M=14368 N=14368
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 14368 14368
+Problem size: Matrix[14368][14368], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.928040
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 14368 14368
+Problem size: Matrix[14368][14368], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.021984
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 14368 14368
+Problem size: Matrix[14368][14368], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.912241
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 14368 14368
+Problem size: Matrix[14368][14368], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.897155
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 14368 14368
+Problem size: Matrix[14368][14368], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 2.888705
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=30, problem M=14880 N=14880'
+running count=30, problem M=14880 N=14880
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 14880 14880
+Problem size: Matrix[14880][14880], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.030130
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 14880 14880
+Problem size: Matrix[14880][14880], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.133968
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 14880 14880
+Problem size: Matrix[14880][14880], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.238756
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 14880 14880
+Problem size: Matrix[14880][14880], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.016981
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 14880 14880
+Problem size: Matrix[14880][14880], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.039070
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=31, problem M=15392 N=15392'
+running count=31, problem M=15392 N=15392
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 15392 15392
+Problem size: Matrix[15392][15392], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.395035
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 15392 15392
+Problem size: Matrix[15392][15392], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.268141
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 15392 15392
+Problem size: Matrix[15392][15392], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.221695
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 15392 15392
+Problem size: Matrix[15392][15392], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.176271
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 15392 15392
+Problem size: Matrix[15392][15392], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.229267
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=32, problem M=15904 N=15904'
+running count=32, problem M=15904 N=15904
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 15904 15904
+Problem size: Matrix[15904][15904], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.513534
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 15904 15904
+Problem size: Matrix[15904][15904], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.580219
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 15904 15904
+Problem size: Matrix[15904][15904], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.452856
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 15904 15904
+Problem size: Matrix[15904][15904], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.362237
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 15904 15904
+Problem size: Matrix[15904][15904], FACTOR=128 CUTOFF=1024
+Total memory footprint is:1 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.516291
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=33, problem M=16416 N=16416'
+running count=33, problem M=16416 N=16416
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 16416 16416
+Problem size: Matrix[16416][16416], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.650619
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 16416 16416
+Problem size: Matrix[16416][16416], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.656235
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 16416 16416
+Problem size: Matrix[16416][16416], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.574654
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 16416 16416
+Problem size: Matrix[16416][16416], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.547450
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 16416 16416
+Problem size: Matrix[16416][16416], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.635752
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=34, problem M=16928 N=16928'
+running count=34, problem M=16928 N=16928
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 16928 16928
+Problem size: Matrix[16928][16928], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.807357
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 16928 16928
+Problem size: Matrix[16928][16928], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.841538
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 16928 16928
+Problem size: Matrix[16928][16928], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.801153
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 16928 16928
+Problem size: Matrix[16928][16928], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.726154
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 16928 16928
+Problem size: Matrix[16928][16928], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.939419
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=35, problem M=17440 N=17440'
+running count=35, problem M=17440 N=17440
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 17440 17440
+Problem size: Matrix[17440][17440], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.225788
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 17440 17440
+Problem size: Matrix[17440][17440], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.176484
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 17440 17440
+Problem size: Matrix[17440][17440], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.057530
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 17440 17440
+Problem size: Matrix[17440][17440], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 3.923561
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 17440 17440
+Problem size: Matrix[17440][17440], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.038976
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=36, problem M=17952 N=17952'
+running count=36, problem M=17952 N=17952
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 17952 17952
+Problem size: Matrix[17952][17952], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.205914
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 17952 17952
+Problem size: Matrix[17952][17952], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.054118
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 17952 17952
+Problem size: Matrix[17952][17952], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.041834
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 17952 17952
+Problem size: Matrix[17952][17952], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.219419
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 17952 17952
+Problem size: Matrix[17952][17952], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.235785
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=37, problem M=18464 N=18464'
+running count=37, problem M=18464 N=18464
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 18464 18464
+Problem size: Matrix[18464][18464], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.302815
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 18464 18464
+Problem size: Matrix[18464][18464], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.439637
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 18464 18464
+Problem size: Matrix[18464][18464], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.448886
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 18464 18464
+Problem size: Matrix[18464][18464], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.440628
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 18464 18464
+Problem size: Matrix[18464][18464], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.242197
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=38, problem M=18976 N=18976'
+running count=38, problem M=18976 N=18976
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 18976 18976
+Problem size: Matrix[18976][18976], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.690281
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 18976 18976
+Problem size: Matrix[18976][18976], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.479672
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 18976 18976
+Problem size: Matrix[18976][18976], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.445571
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 18976 18976
+Problem size: Matrix[18976][18976], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.654899
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 18976 18976
+Problem size: Matrix[18976][18976], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.699373
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=39, problem M=19488 N=19488'
+running count=39, problem M=19488 N=19488
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 19488 19488
+Problem size: Matrix[19488][19488], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.726045
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 19488 19488
+Problem size: Matrix[19488][19488], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.797966
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 19488 19488
+Problem size: Matrix[19488][19488], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.743496
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 19488 19488
+Problem size: Matrix[19488][19488], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.002656
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 19488 19488
+Problem size: Matrix[19488][19488], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.724644
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=40, problem M=20000 N=20000'
+running count=40, problem M=20000 N=20000
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 20000 20000
+Problem size: Matrix[20000][20000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.063049
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 20000 20000
+Problem size: Matrix[20000][20000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.862672
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 20000 20000
+Problem size: Matrix[20000][20000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.098906
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 20000 20000
+Problem size: Matrix[20000][20000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.264593
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 20000 20000
+Problem size: Matrix[20000][20000], FACTOR=128 CUTOFF=1024
+Total memory footprint is:2 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 4.936245
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=41, problem M=20512 N=20512'
+running count=41, problem M=20512 N=20512
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 20512 20512
+Problem size: Matrix[20512][20512], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.097502
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 20512 20512
+Problem size: Matrix[20512][20512], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.261009
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 20512 20512
+Problem size: Matrix[20512][20512], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.421549
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 20512 20512
+Problem size: Matrix[20512][20512], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.233743
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 20512 20512
+Problem size: Matrix[20512][20512], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.037681
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=42, problem M=21024 N=21024'
+running count=42, problem M=21024 N=21024
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 21024 21024
+Problem size: Matrix[21024][21024], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.407567
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 21024 21024
+Problem size: Matrix[21024][21024], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.480573
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 21024 21024
+Problem size: Matrix[21024][21024], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.495863
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 21024 21024
+Problem size: Matrix[21024][21024], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.477684
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 21024 21024
+Problem size: Matrix[21024][21024], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.230490
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=43, problem M=21536 N=21536'
+running count=43, problem M=21536 N=21536
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 21536 21536
+Problem size: Matrix[21536][21536], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.759404
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 21536 21536
+Problem size: Matrix[21536][21536], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.984344
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 21536 21536
+Problem size: Matrix[21536][21536], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.890751
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 21536 21536
+Problem size: Matrix[21536][21536], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.717457
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 21536 21536
+Problem size: Matrix[21536][21536], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.772940
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=44, problem M=22048 N=22048'
+running count=44, problem M=22048 N=22048
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 22048 22048
+Problem size: Matrix[22048][22048], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.944561
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 22048 22048
+Problem size: Matrix[22048][22048], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.710876
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 22048 22048
+Problem size: Matrix[22048][22048], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.864602
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 22048 22048
+Problem size: Matrix[22048][22048], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.798431
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 22048 22048
+Problem size: Matrix[22048][22048], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.961500
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=45, problem M=22560 N=22560'
+running count=45, problem M=22560 N=22560
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 22560 22560
+Problem size: Matrix[22560][22560], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.974201
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 22560 22560
+Problem size: Matrix[22560][22560], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.894125
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 22560 22560
+Problem size: Matrix[22560][22560], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.374534
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 22560 22560
+Problem size: Matrix[22560][22560], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.915741
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 22560 22560
+Problem size: Matrix[22560][22560], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 5.942317
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=46, problem M=23072 N=23072'
+running count=46, problem M=23072 N=23072
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 23072 23072
+Problem size: Matrix[23072][23072], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.152875
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 23072 23072
+Problem size: Matrix[23072][23072], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.445014
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 23072 23072
+Problem size: Matrix[23072][23072], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.199691
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 23072 23072
+Problem size: Matrix[23072][23072], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.180818
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 23072 23072
+Problem size: Matrix[23072][23072], FACTOR=128 CUTOFF=1024
+Total memory footprint is:3 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.499607
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=47, problem M=23584 N=23584'
+running count=47, problem M=23584 N=23584
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 23584 23584
+Problem size: Matrix[23584][23584], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.794811
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 23584 23584
+Problem size: Matrix[23584][23584], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.649419
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 23584 23584
+Problem size: Matrix[23584][23584], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.449691
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 23584 23584
+Problem size: Matrix[23584][23584], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.663781
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 23584 23584
+Problem size: Matrix[23584][23584], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.566800
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=48, problem M=24096 N=24096'
+running count=48, problem M=24096 N=24096
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 24096 24096
+Problem size: Matrix[24096][24096], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.980366
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 24096 24096
+Problem size: Matrix[24096][24096], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.649624
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 24096 24096
+Problem size: Matrix[24096][24096], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.961564
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 24096 24096
+Problem size: Matrix[24096][24096], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.907343
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 24096 24096
+Problem size: Matrix[24096][24096], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.673909
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=49, problem M=24608 N=24608'
+running count=49, problem M=24608 N=24608
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 24608 24608
+Problem size: Matrix[24608][24608], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.234784
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 24608 24608
+Problem size: Matrix[24608][24608], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.360144
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 24608 24608
+Problem size: Matrix[24608][24608], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.907040
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 24608 24608
+Problem size: Matrix[24608][24608], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.913812
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 24608 24608
+Problem size: Matrix[24608][24608], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 6.904036
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=50, problem M=25120 N=25120'
+running count=50, problem M=25120 N=25120
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 25120 25120
+Problem size: Matrix[25120][25120], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.540981
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 25120 25120
+Problem size: Matrix[25120][25120], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.202803
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 25120 25120
+Problem size: Matrix[25120][25120], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.284573
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 25120 25120
+Problem size: Matrix[25120][25120], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.185117
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 25120 25120
+Problem size: Matrix[25120][25120], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.419018
++ for N_SIZE in '{32..26000..512}'
++ let 'counter += 1'
++ echo 'running count=51, problem M=25632 N=25632'
+running count=51, problem M=25632 N=25632
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=1'
+ Repeat=1
++ ./omp_smithW-v6.3-target-inlined.out 25632 25632
+Problem size: Matrix[25632][25632], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.452108
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=2'
+ Repeat=2
++ ./omp_smithW-v6.3-target-inlined.out 25632 25632
+Problem size: Matrix[25632][25632], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.869346
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=3'
+ Repeat=3
++ ./omp_smithW-v6.3-target-inlined.out 25632 25632
+Problem size: Matrix[25632][25632], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 8.063527
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=4'
+ Repeat=4
++ ./omp_smithW-v6.3-target-inlined.out 25632 25632
+Problem size: Matrix[25632][25632], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.746172
++ for repeat in 1 2 3 4 5
++ echo ' Repeat=5'
+ Repeat=5
++ ./omp_smithW-v6.3-target-inlined.out 25632 25632
+Problem size: Matrix[25632][25632], FACTOR=128 CUTOFF=1024
+Total memory footprint is:4 GB
+Using 44 out of max 44 threads...
+The number of target devices =4
+### Able to use the GPU! ### 
+
+Elapsed time for scoring matrix computation: 7.953507
